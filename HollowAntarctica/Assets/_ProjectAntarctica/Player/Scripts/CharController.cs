@@ -52,6 +52,8 @@ namespace SimpleCharController
         public ClimbingType climbingType;
         [HideInInspector]
         public Transform currentTargetClimb;
+        [HideInInspector]
+        public Transform offTargetClimb;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         [Header("Cinemachine")]
@@ -75,6 +77,7 @@ namespace SimpleCharController
         public bool isJumping = false;
         public bool isFalling = false;
         public bool isClimbing = false;
+        public bool isOffClimb = false;
 
         #region Private Variable
 
@@ -96,7 +99,7 @@ namespace SimpleCharController
         private bool wasGroundedOnClimb = false;
         private bool canClimbAgain = true;
         private float _speedOffClimbObj;
-        private float distanceToClimbObj;
+        //private float distanceToClimbObj;
 
         // Cinemachine
         private float _cinemachineTargetYaw;
@@ -130,8 +133,19 @@ namespace SimpleCharController
 
             JumpAndGravity();
 
-            if (!isClimbing) Move();
-            else MoveClimbing();            
+            if (!isClimbing)
+            {
+                if (!isOffClimb)
+                {
+                    Move();
+                }                    
+                isOffClimb = false;
+            } 
+            else
+            {
+                MoveClimbing();
+                MoveOffLadder();
+            }          
 
             CameraRotation();
             UpdateFOV();
@@ -155,13 +169,15 @@ namespace SimpleCharController
         }
         private void JumpAndGravity()
         {
+
             if (isGrounded)
             {
                 _fallTimeoutDelta = fallTimeout;
                 isJumping = false;
+                isFalling = false;
 
                 // stop our velocity dropping infinitely when grounded
-                if (_verticalVelocity < 0.0f) _verticalVelocity = gravity;
+                if (_verticalVelocity != -0.15) _verticalVelocity = -0.15f;
 
                 // Jump
                 if (!isClimbing && canJump && _input.jump && _jumpTimeoutDelta <= 0.0f && canControl)
@@ -187,6 +203,14 @@ namespace SimpleCharController
             {
                 _jumpTimeoutDelta = jumpTimeout;
 
+                if (!isJumping && !isClimbing)
+                {
+                    if (!isFalling)
+                    {
+                        isFalling = true;
+                        _verticalVelocity = -0.1f;
+                    }
+                }
                 if (isJumping) _input.jump = false;
 
                 if (_fallTimeoutDelta >= 0.0f)
@@ -332,6 +356,14 @@ namespace SimpleCharController
             }
         }
 
+        private void MoveOffLadder()
+        {
+            if (isOffClimb)
+            {
+                MoveToTarget(offTargetClimb, 0);
+            }
+        }
+
         private void MoveToTarget(Transform targetObject, byte typeTransition)
         {
             if (targetObject == null)
@@ -365,6 +397,13 @@ namespace SimpleCharController
             if (distanceToClimbObj <= 0.01f)
             {
                 charInTargetPosition = true;
+
+                if (isOffClimb)
+                {
+                    isOffClimb = false;
+                    ExitModeClimb();
+                }
+                
                 return;
             }
 
@@ -480,6 +519,7 @@ namespace SimpleCharController
             
             return directionOffClimb;
         }
+
         private void ExitModeClimb()
         {
             isClimbing = false;

@@ -261,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 0
   targetClimbObject: {fileID: 101352357}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.1
 --- !u!65 &101352356
@@ -1271,6 +1272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 0
   targetClimbObject: {fileID: 537164384}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.1
 --- !u!65 &537164383
@@ -1610,7 +1612,7 @@ Transform:
   m_GameObject: {fileID: 866093608}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.72, y: 21.099998, z: -0.18999982}
+  m_LocalPosition: {x: 4.9, y: 3.1, z: 2.3000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1834,6 +1836,37 @@ Transform:
   - {fileID: 793463834}
   - {fileID: 1577977996}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &947697223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947697224}
+  m_Layer: 0
+  m_Name: OffClimbPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &947697224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947697223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1256474034}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &974596111 stripped
 Transform:
@@ -2178,7 +2211,7 @@ Transform:
   m_GameObject: {fileID: 1105319443}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.72, y: 21.099998, z: -0.18999982}
+  m_LocalPosition: {x: 4.9, y: 3.1, z: 2.3000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2567,6 +2600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 0
   targetClimbObject: {fileID: 1256474034}
+  offClimbObject: {fileID: 947697224}
   boostSpeed: 1
   boostForceJumpOff: 0.1
 --- !u!65 &1256474033
@@ -2588,8 +2622,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.50411373, y: 4.6994042, z: 0.14210796}
-  m_Center: {x: 0, y: 2.3497021, z: 0.17218447}
+  m_Size: {x: 0.50411373, y: 4.019692, z: 0.14210796}
+  m_Center: {x: 0, y: 2.009846, z: 0.17218447}
 --- !u!4 &1256474034
 Transform:
   m_ObjectHideFlags: 0
@@ -2604,6 +2638,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2132580860}
+  - {fileID: 947697224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1314593773
@@ -3146,6 +3181,111 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08b87ecbff930804b9047cab4f1400c9, type: 3}
+--- !u!1 &1484684188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1484684192}
+  - component: {fileID: 1484684191}
+  - component: {fileID: 1484684190}
+  - component: {fileID: 1484684189}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1484684189
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484684188}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1484684190
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484684188}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1484684191
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484684188}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1484684192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484684188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6, y: -0.90000004, z: 5.4}
+  m_LocalScale: {x: 3.58, y: 3.58, z: 3.58}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1493122878
 GameObject:
   m_ObjectHideFlags: 0
@@ -3356,44 +3496,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523574871}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!84 &1558741518
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 512
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!4 &1570845610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3272730663406648682, guid: 05ede0d129798784281212e60d5c48f1,
@@ -3438,6 +3540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 1
   targetClimbObject: {fileID: 1604603890}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.2
 --- !u!136 &1604603889
@@ -3719,7 +3822,7 @@ Transform:
   m_GameObject: {fileID: 1788331123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.32, y: 19.3, z: 2.91}
+  m_LocalPosition: {x: 4.5, y: 1.3000001, z: 5.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3801,7 +3904,7 @@ MonoBehaviour:
   moving: 0
   jump: 0
   sprint: 0
-  cursorLocked: 0
+  cursorLocked: 1
   cursorInputForLook: 1
 --- !u!114 &1788331128
 MonoBehaviour:
@@ -3880,6 +3983,7 @@ MonoBehaviour:
   boostClimbSpeed: 1
   climbingType: 0
   currentTargetClimb: {fileID: 0}
+  offTargetClimb: {fileID: 0}
   cinemachineBrain: {fileID: 866093614}
   CinemachineCameraTarget: {fileID: 134091139}
   mainCamera: {fileID: 866093611}
@@ -3916,6 +4020,7 @@ MonoBehaviour:
   isJumping: 0
   isFalling: 0
   isClimbing: 0
+  isOffClimb: 0
 --- !u!1 &1833321719
 GameObject:
   m_ObjectHideFlags: 0
@@ -4134,6 +4239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 1
   targetClimbObject: {fileID: 1866120997}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.2
 --- !u!136 &1866120996
@@ -4458,7 +4564,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1558741518}
+      objectReference: {fileID: 2028693109}
     - target: {fileID: 5494774921161507882, guid: 06c5035e16df67943960f89f2d5b3096,
         type: 3}
       propertyPath: orthographic size
@@ -4539,6 +4645,44 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06c5035e16df67943960f89f2d5b3096, type: 3}
+--- !u!84 &2028693109
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 512
+  m_Height: 512
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 4
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &2050959278
 GameObject:
   m_ObjectHideFlags: 0
@@ -4571,6 +4715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 1
   targetClimbObject: {fileID: 2050959281}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.2
 --- !u!136 &2050959280
@@ -4660,6 +4805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 0
   targetClimbObject: {fileID: 2093020778}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.1
 --- !u!65 &2093020780
@@ -4788,6 +4934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climbingType: 0
   targetClimbObject: {fileID: 2093597402}
+  offClimbObject: {fileID: 0}
   boostSpeed: 1
   boostForceJumpOff: 0.1
 --- !u!65 &2093597401
@@ -5099,3 +5246,4 @@ SceneRoots:
   - {fileID: 2050959281}
   - {fileID: 1866120997}
   - {fileID: 1604603890}
+  - {fileID: 1484684192}

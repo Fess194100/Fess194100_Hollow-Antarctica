@@ -5,6 +5,7 @@ public class ClimbHandler : MonoBehaviour
 {
     public ClimbingType climbingType;
     public Transform targetClimbObject;
+    public Transform offClimbObject;
     public float boostSpeed = 1.0f;
     public float boostForceJumpOff = 0.2f;
 
@@ -35,6 +36,21 @@ public class ClimbHandler : MonoBehaviour
             {
                 controller.isClimbing = true;
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (climbingType == ClimbingType.climbLadder && other.CompareTag("Player"))
+        {
+            if (controller != null && offClimbObject != null)
+            {
+                controller.offTargetClimb = offClimbObject;
+
+                if (Vector3.Distance(controller.transform.position, offClimbObject.position) < 2f) controller.isOffClimb = true;
+                else controller.isOffClimb = false;
+            }
+            else Debug.Log("offClimbObject = null");
         }
     }
 }
