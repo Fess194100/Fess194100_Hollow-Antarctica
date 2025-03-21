@@ -109,8 +109,8 @@ Material:
     - _GrassAmount: 0.97
     - _GrassLevel: 2.94
     - _GreenSub: 0
-    - _HeightGradient: 0.2
-    - _HeightStartGradient: 0.076
+    - _HeightGradient: 0.126
+    - _HeightStartGradient: 0.034
     - _InflateGround: 35
     - _IntersectionPow: 5.78
     - _IntersectionScale: 1
@@ -127,7 +127,7 @@ Material:
     - _RedAdd: 0
     - _SCALE: 0
     - _Shadow: 0
-    - _ShadowControl: 0
+    - _ShadowControl: -0.05
     - _SmoothnessTextureChannel: 0
     - _SnowAmount: 0.34
     - _SnowMode: 1
@@ -152,8 +152,8 @@ Material:
     - _clip: 0.5
     m_Colors:
     - _Color: {r: 1, g: 0.94187903, b: 0.514151, a: 1}
-    - _Color0: {r: 0.6915238, g: 1, b: 0, a: 1}
-    - _Color1: {r: 0.42151082, g: 0.49056602, b: 0, a: 1}
+    - _Color0: {r: 0.84705883, g: 1, b: 0.38039216, a: 1}
+    - _Color1: {r: 0.67058825, g: 1, b: 0.2509804, a: 1}
     - _Color2: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GrassColor: {r: 0.7009608, g: 1, b: 0.06132078, a: 0}

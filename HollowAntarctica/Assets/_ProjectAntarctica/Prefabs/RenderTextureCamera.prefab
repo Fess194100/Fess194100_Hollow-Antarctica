@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5494774921161507882}
   - component: {fileID: 8028641776714173198}
   - component: {fileID: 5731475572403550373}
-  - component: {fileID: 3393408187073351827}
   m_Layer: 0
   m_Name: RenderTextureCamera
   m_TagString: Untagged
@@ -150,19 +149,3 @@ MonoBehaviour:
   terrains: []
   resolution: 512
   RealTimeDiffuse: 1
---- !u!114 &3393408187073351827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2680994714138708589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43044eb7383316443891eed14f650fef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useGUI: 1
-  UIText: {fileID: 0}
-  textAreaPosition: {x: 10, y: 10}
-  textAreaSize: {x: 200, y: 100}

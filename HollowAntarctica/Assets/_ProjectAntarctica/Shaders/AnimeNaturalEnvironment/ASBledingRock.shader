@@ -403,7 +403,7 @@ Shader "AwaiiStudio/URP_BlendingRock"
 				float3 WorldPosition = IN.worldPos;
 				#endif
 				float4 ShadowCoords = float4( 0, 0, 0, 0 );
-
+				float3 objectCenter = mul(unity_ObjectToWorld, float4(0, 0, 0, 1)).xyz;
 				#if defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 						ShadowCoords = IN.shadowCoord;
@@ -424,7 +424,7 @@ Shader "AwaiiStudio/URP_BlendingRock"
 				float3 WorldPosition8_g1 = worldPosValue44_g1;
 				float3 localAdditionalLightsFlat8_g1 = AdditionalLightsFlat( WorldPosition8_g1 );
 				float3 FlatResult29_g1 = localAdditionalLightsFlat8_g1;
-				float4 lerpResult163 = lerp( ( tex2D( TB_DEPTH, ( ( appendResult119 - appendResult118 ) / TB_SCALE ).xy ) * ase_lightAtten ) , ( ( tex2D( _Texture, uv_Texture ) * _Tint ) * float4( ( _MainLightColor.rgb * ( bakedGI185 + ase_lightAtten + FlatResult29_g1 ) ) , 0.0 ) ) , saturate( ( ( ( _WorldPositionOffset + WorldPosition.y ) - _HeightStartGradient ) / _HeightGradient ) ));
+        float4 lerpResult163 = lerp((tex2D(TB_DEPTH, ((appendResult119 - appendResult118) / TB_SCALE).xy) * ase_lightAtten), ((tex2D(_Texture, uv_Texture) * _Tint) * float4((_MainLightColor.rgb * (bakedGI185 + ase_lightAtten + FlatResult29_g1)), 0.0)), saturate((((_WorldPositionOffset + WorldPosition.y) - (_HeightStartGradient + objectCenter.y)) / _HeightGradient)));
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;

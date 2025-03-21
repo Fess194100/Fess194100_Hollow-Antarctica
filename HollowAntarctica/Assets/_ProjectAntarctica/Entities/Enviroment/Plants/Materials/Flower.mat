@@ -41,7 +41,7 @@ Material:
     - _ShadowControl: 0
     - _WindFoliageAmplitude: 0.15
     - _WindFoliageAmplitude1: 0
-    - _WindFoliageSpeed: 0.5
+    - _WindFoliageSpeed: 0.47
     - _WindFoliageSpeed1: 0
     m_Colors:
     - _Color0: {r: 1, g: 1, b: 1, a: 1}

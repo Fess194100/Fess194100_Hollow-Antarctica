@@ -393,7 +393,6 @@ Shader "AwaiiStudio/URP_BlendingGrass"
 				float3 WorldPosition = IN.worldPos;
 				#endif
 				float4 ShadowCoords = float4( 0, 0, 0, 0 );
-
 				#if defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 						ShadowCoords = IN.shadowCoord;
@@ -409,7 +408,7 @@ Shader "AwaiiStudio/URP_BlendingGrass"
 				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
 				float3 bakedGI115 = ASEIndirectDiffuse( IN.lightmapUVOrVertexSH.xy, ase_worldNormal);
 				MixRealtimeAndBakedGI(ase_mainLight, ase_worldNormal, bakedGI115, half4(0,0,0,0));
-				float clampResult45 = clamp( _HeightStartGradient , 0.0 , 0.5 );
+				float clampResult45 = clamp(_HeightStartGradient, 0.0, 0.5);
 				float temp_output_50_0 = saturate( ( ( IN.ase_texcoord5.xyz.y - clampResult45 ) / _HeightGradient ) );
 				float4 lerpResult61 = lerp( _Color0 , _Color1 , temp_output_50_0);
 				float4 lerpResult30 = lerp( ( tex2D( TB_DEPTH, ( ( appendResult3 - appendResult7 ) / TB_SCALE ).xy ) * ( ase_lightAtten - _ShadowControl ) ) , ( float4( ( _MainLightColor.rgb * ( bakedGI115 + ase_lightAtten ) ) , 0.0 ) * lerpResult61 ) , temp_output_50_0);

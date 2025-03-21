@@ -6,6 +6,8 @@ namespace SimpleCharController
 {
     public class CharController : MonoBehaviour
     {
+        public GameObject modelOrigin;
+
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         [Header("Permission")]
         public bool canControl = true;
@@ -108,6 +110,11 @@ namespace SimpleCharController
         private float velocityFOV = 0.0f;
         private float FOV = 60;
 
+        //Animation Parametrs
+        private bool _hasAnimator;
+        private Animator _animator;
+        private int _animParamMoveSpeed;
+
         //Ower
         private SimpleInputActions _input;
         private CharacterController _controller;
@@ -119,11 +126,14 @@ namespace SimpleCharController
         {
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<SimpleInputActions>();
+
+            GetAnimator();
+            AssignAnimationIDs();
         }
 
         void Update()
         {
-
+            AnimationUpdate();
         }
 
         private void FixedUpdate()
@@ -279,7 +289,6 @@ namespace SimpleCharController
 
             if (inputDirection.z < 0)
             {
-                targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.back;
                 _currentTargetDirection_Z = -1;
                 _currentTargetDirection_X = 0;
             }
@@ -287,27 +296,12 @@ namespace SimpleCharController
             {
                 _currentTargetDirection_Z = 1;
             }
-            if (inputDirection.z == 0)
+            if (inputDirection.z == 0 && _currentTargetDirection_Z < 0 & inputDirection.x != 0)
             {
-                if (_currentTargetDirection_Z < 0 & inputDirection.x == 0)
-                {
-                    if (_currentTargetDirection_X == 0)
-                    {
-                        targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.back;
-                    }
-                    else
-                    {
-                        targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-                    }
-                }
-                if (_currentTargetDirection_Z < 0 & inputDirection.x != 0)
-                {
-                    targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-                    _currentTargetDirection_X = 1;
-                }
+                _currentTargetDirection_X = 1;
             }
 
-            Vector3 Moved = targetDirectional.normalized * (_currentSpeed * Time.fixedDeltaTime);
+            Vector3 Moved = transform.forward * (_currentSpeed * Time.fixedDeltaTime);
             Vector3 Velocity = new Vector3(0, _verticalVelocity, 0);
             Vector3 JumpOff = DirectionOffClimb() * SpeedOffClimb();
             _controller.Move(Moved + Velocity + JumpOff);
@@ -535,6 +529,35 @@ namespace SimpleCharController
             canClimbAgain = true; // Позволяем повторое карабканье
         }
 
+        #endregion
+
+        #region Animation
+
+        public void GetAnimator()
+        {
+            _hasAnimator = modelOrigin.TryGetComponent(out _animator);
+        }
+        private void AssignAnimationIDs()
+        {
+            _animParamMoveSpeed = Animator.StringToHash("MoveSpeed");
+        }
+
+        private void AnimationUpdate()
+        {
+            if (_animator != null)
+            {
+                if (_input.move.y < 0)
+                {
+                    _animator.SetFloat(_animParamMoveSpeed, _currentSpeed);
+                }
+                else
+                {
+                    _animator.SetFloat(_animParamMoveSpeed, _currentSpeed);
+                }
+                
+            }
+            else Debug.Log("_animator - null :(");
+        }
         #endregion
     }
 }
