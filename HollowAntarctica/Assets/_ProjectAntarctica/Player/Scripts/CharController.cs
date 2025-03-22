@@ -21,12 +21,13 @@ namespace SimpleCharController
         public float MoveSpeedBack = 2.0f;
         public float SprintSpeed = 5.0f;
         public AnimationCurve curveMoveSpeedForward;
-        public float speedChengedCurveMoveSpeed = 7.0f;
+        public float speedChengedCurveMoveSpeed = 5.0f;        
 
         [Space(6)]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
-        public float speedTransitionToTarget = 3.0f;
+        public float speedTransitionToTarget = 5.0f;
+        public float distanceToOffTarget = 0.05f;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         [Header("Jump&Gravity")]
@@ -88,9 +89,9 @@ namespace SimpleCharController
         private float currentValueEvaluate;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
-        private Vector3 targetDirectional;
-        private int _currentTargetDirection_Z = 1;
-        private int _currentTargetDirection_X = 0;
+        //private Vector3 targetDirectional;
+        //private int _currentTargetDirection_Z = 1;
+        //private int _currentTargetDirection_X = 0;
 
         //Jump&Gravity
         private float _verticalVelocity;
@@ -113,7 +114,12 @@ namespace SimpleCharController
         //Animation Parametrs
         private bool _hasAnimator;
         private Animator _animator;
-        private int _animParamMoveSpeed;
+        private int _animParamMoveSpeed;   
+        private int _animParamIsJump;
+        private int _animParamIsGround;
+        private int _animParamIsFailing;
+        private int _animParamTypeClimb; 
+        //private int _animParamIsOffClimb;
 
         //Ower
         private SimpleInputActions _input;
@@ -143,19 +149,22 @@ namespace SimpleCharController
 
             JumpAndGravity();
 
+            //if (isOffClimb) ExitModeClimb();
+
             if (!isClimbing)
             {
                 if (!isOffClimb)
                 {
                     Move();
-                }                    
+                }
                 isOffClimb = false;
             } 
             else
             {
                 MoveClimbing();
-                MoveOffLadder();
-            }          
+            }
+
+            MoveOffLadder();
 
             CameraRotation();
             UpdateFOV();
@@ -285,21 +294,21 @@ namespace SimpleCharController
             }
 
             //Get Target Directional
-            targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+            //targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            if (inputDirection.z < 0)
+            /*if (inputDirection.z < 0)
             {
-                _currentTargetDirection_Z = -1;
-                _currentTargetDirection_X = 0;
+                //_currentTargetDirection_Z = -1;
+                //_currentTargetDirection_X = 0;
             }
             if (inputDirection.z > 0)
             {
-                _currentTargetDirection_Z = 1;
+                //_currentTargetDirection_Z = 1;
             }
             if (inputDirection.z == 0 && _currentTargetDirection_Z < 0 & inputDirection.x != 0)
             {
-                _currentTargetDirection_X = 1;
-            }
+                //_currentTargetDirection_X = 1;
+            }*/
 
             Vector3 Moved = transform.forward * (_currentSpeed * Time.fixedDeltaTime);
             Vector3 Velocity = new Vector3(0, _verticalVelocity, 0);
@@ -334,10 +343,10 @@ namespace SimpleCharController
                 }
 
                 //Get Speed
-                _currentSpeed = _input.move.y * climbingSpeed * boostClimbSpeed * Time.fixedDeltaTime;
+                _currentSpeed = _input.move.y * climbingSpeed * boostClimbSpeed;
 
                 //Movement
-                Vector3 Moved = Vector3.up * _currentSpeed;
+                Vector3 Moved = transform.up * _currentSpeed * Time.fixedDeltaTime;
                 _controller.Move(Moved);
 
                 //ExitMode
@@ -388,14 +397,14 @@ namespace SimpleCharController
             float distanceToClimbObj = Vector3.Distance(currentPosition, targetPosition);
             float speedAtDistance = speedTransitionToTarget * distanceToClimbObj;
 
-            if (distanceToClimbObj <= 0.01f)
+            if (distanceToClimbObj <= distanceToOffTarget)
             {
                 charInTargetPosition = true;
 
                 if (isOffClimb)
                 {
                     isOffClimb = false;
-                    ExitModeClimb();
+                    //ExitModeClimb();
                 }
                 
                 return;
@@ -540,6 +549,11 @@ namespace SimpleCharController
         private void AssignAnimationIDs()
         {
             _animParamMoveSpeed = Animator.StringToHash("MoveSpeed");
+            _animParamIsJump = Animator.StringToHash("IsJump");
+            _animParamIsGround = Animator.StringToHash("IsGround");
+            _animParamIsFailing = Animator.StringToHash("IsFailing");
+            _animParamTypeClimb = Animator.StringToHash("TypeClimb");
+            //_animParamIsOffClimb = Animator.StringToHash("IsOffClimb");
         }
 
         private void AnimationUpdate()
@@ -554,11 +568,37 @@ namespace SimpleCharController
                 {
                     _animator.SetFloat(_animParamMoveSpeed, _currentSpeed);
                 }
-                
-            }
+
+                _animator.SetBool(_animParamIsJump, isJumping);
+                _animator.SetBool(_animParamIsGround, isGrounded);
+                _animator.SetBool(_animParamIsFailing, isFalling);
+
+                if (isClimbing)
+                {
+                    switch (climbingType)
+                    {
+                        case ClimbingType.climbLadder:
+                            _animator.SetInteger(_animParamTypeClimb, 1);
+                            break;
+
+                        case ClimbingType.ropeLadder:
+                            _animator.SetInteger(_animParamTypeClimb, 2);
+                            break;
+
+                        default:
+                            _animator.SetInteger(_animParamTypeClimb, 0);
+                            break;
+                    }
+                }
+                else
+                {
+                    _animator.SetInteger(_animParamTypeClimb, 0);
+                }
+
+                }
             else Debug.Log("_animator - null :(");
         }
-        #endregion
+        #endregion TypeClimb
     }
 }
 

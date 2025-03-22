@@ -34,7 +34,7 @@ public class ClimbHandler : MonoBehaviour
         {
             if (controller != null)
             {
-                controller.isClimbing = true;
+                if (!controller.isGrounded) controller.isClimbing = true;
             }
         }
     }
