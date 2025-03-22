@@ -264,7 +264,7 @@ namespace SimpleCharController
         {
             Vector3 inputDirection = new Vector3();
             float targetSpeed;
-            float inputMagnitude = _input.move.magnitude == 0 ? 0 : 1;
+            float inputMagnitude = 0;
             wasGroundedOnClimb = isGrounded;
 
             // Get direction input
@@ -273,6 +273,7 @@ namespace SimpleCharController
                 inputDirection.x = _input.move.x;
                 inputDirection.z = _input.move.y;
                 inputDirection.Normalize();
+                inputMagnitude = _input.move.magnitude == 0 ? 0 : 1;
             }
 
             // Get Target Speed
@@ -292,23 +293,6 @@ namespace SimpleCharController
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
-
-            //Get Target Directional
-            //targetDirectional = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
-            /*if (inputDirection.z < 0)
-            {
-                //_currentTargetDirection_Z = -1;
-                //_currentTargetDirection_X = 0;
-            }
-            if (inputDirection.z > 0)
-            {
-                //_currentTargetDirection_Z = 1;
-            }
-            if (inputDirection.z == 0 && _currentTargetDirection_Z < 0 & inputDirection.x != 0)
-            {
-                //_currentTargetDirection_X = 1;
-            }*/
 
             Vector3 Moved = transform.forward * (_currentSpeed * Time.fixedDeltaTime);
             Vector3 Velocity = new Vector3(0, _verticalVelocity, 0);

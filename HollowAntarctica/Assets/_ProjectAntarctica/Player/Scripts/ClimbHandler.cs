@@ -47,7 +47,7 @@ public class ClimbHandler : MonoBehaviour
             {
                 controller.offTargetClimb = offClimbObject;
 
-                if (Vector3.Distance(controller.transform.position, offClimbObject.position) < 2f) controller.isOffClimb = true;
+                if (Vector3.Distance(controller.transform.position, offClimbObject.position) < 2f && !controller.isJumping) controller.isOffClimb = true;
                 else controller.isOffClimb = false;
             }
             else Debug.Log("offClimbObject = null");

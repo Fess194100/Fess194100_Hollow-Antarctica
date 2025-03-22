@@ -13,9 +13,27 @@ MonoBehaviour:
   m_Name: PlayMakerGlobals
   m_EditorClassIdentifier: 
   variables:
-    floatVariables: []
+    floatVariables:
+    - useVariable: 1
+      name: Settings/Cam/DistanceOffsetSide
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0.33
     intVariables: []
-    boolVariables: []
+    boolVariables:
+    - useVariable: 1
+      name: Player/Permission/CanUse_Inventory
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 1
+    - useVariable: 1
+      name: Player/State/Use_Inventory
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
     stringVariables: []
     vector2Variables: []
     vector3Variables: []
@@ -43,9 +61,17 @@ MonoBehaviour:
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 0000000000000000
+    variableCategoryIDs: 0000000000000000000000000000000000000000
   events:
   - IsInViewCam
   - OffInView
   - Activation
   - Deactivation
+  - Player_ClimbingOFF
+  - Player_ClimbingON
+  - Player_UnLockCam
+  - Player_LockCam
+  - Player_CanControlON
+  - Player_CanControlOFF
+  - Player_InventoryON
+  - Player_InventoryOFF
