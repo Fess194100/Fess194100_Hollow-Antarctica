@@ -292,7 +292,7 @@ MonoBehaviour:
         x: 282
         y: 229
         width: 107
-        height: 32
+        height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
@@ -306,17 +306,28 @@ MonoBehaviour:
         linkConstraint: 0
         linkTarget: 0
         colorIndex: 0
+      - fsmEvent:
+          name: '-'
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: CheckInventory
+        linkStyle: 0
+        linkConstraint: 0
+        linkTarget: 0
+        colorIndex: 0
       actionData:
         actionNames:
+        - HutongGames.PlayMaker.Actions.BoolTest
         - HutongGames.PlayMaker.Actions.PlayerInputButtonEvents
         - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0000
-        actionStartIndex: 0000000007000000
-        actionHashCodes: 0d4efe00a4c8bf00
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010000
+        actionStartIndex: 00000000040000000b000000
+        actionHashCodes: a4c8bf000d4efe00a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -351,6 +362,12 @@ MonoBehaviour:
         fsmIntParams: []
         fsmBoolParams:
         - useVariable: 1
+          name: Player/State/Use_Inventory
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
           name: activate
           tooltip: 
           showInInspector: 0
@@ -368,18 +385,24 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
+        - '-'
+        - 
         - 
         - 
         - 
         - NextState
         - 
-        byteData: 0200000001
+        byteData: 010200000001
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1100000017000000170000001700000014000000180000000700000011000000170000001700000001000000
+        paramDataType: 110000001700000017000000010000001100000017000000170000001700000014000000180000000700000011000000170000001700000001000000
         paramName:
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
         - isPressed
         - isPressedEvent
         - wasPressedThisFrame
@@ -391,8 +414,8 @@ MonoBehaviour:
         - isTrue
         - isFalse
         - everyFrame
-        paramDataPos: 0000000000000000010000000200000000000000000000000000000001000000030000000400000004000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000400000000000000000000000000000001000000
+        paramDataPos: 000000000000000001000000000000000100000002000000030000000400000000000000000000000100000002000000050000000600000005000000
+        paramByteDataSize: 000000000000000000000000010000000000000000000000000000000000000000000000000000000400000000000000000000000000000001000000
     - name: Activeted
       description: 
       colorIndex: 0
@@ -2136,7 +2159,7 @@ MonoBehaviour:
         customNames:
         - 
         actionEnabled: 01
-        actionIsOpen: 00
+        actionIsOpen: 01
         actionStartIndex: 00000000
         actionHashCodes: a4c8bf00
         unityObjectParams: []
