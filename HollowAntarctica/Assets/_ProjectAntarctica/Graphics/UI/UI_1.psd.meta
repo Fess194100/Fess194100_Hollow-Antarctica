@@ -156,18 +156,144 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1290
-        y: 1454
+        y: 1444
         width: 598
-        height: 594
+        height: 604
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 184, y: 172, z: 184, w: 177}
+      border: {x: 184, y: 177, z: 184, w: 177}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 08d22cff0c3769a47b5eb8177225d93a
       internalID: 900567852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Slider
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1402
+        width: 326
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 162, y: 0, z: 162, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848bfeb9329a13a49b91fa8f773ef796
+      internalID: 2050020553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Handler
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 1426
+        width: 68
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6aaaee24b021a949b041a6b66f49fde
+      internalID: -1225120248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_LineHorizont
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1364
+        width: 286
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 140, y: 0, z: 140, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd297fc7816e54148bf46a7bf30811be
+      internalID: 1462435155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_CharShadow
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 1387
+        width: 114
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 037ede6bdc3facc449adcef64b8b5e9e
+      internalID: -174700771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_ButtonMenu
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 1300
+        width: 1020
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf8345d3cff7afa4babbd279f69ea01c
+      internalID: -233617680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Label
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 1291
+        width: 286
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 143, y: 0, z: 143, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687280c28acff864ca892f3ac9bdc841
+      internalID: 1248650758
       vertices: []
       indices: 
       edges: []
@@ -184,7 +310,13 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       UI_Button: 900567852
+      UI_ButtonMenu: -233617680
+      UI_CharShadow: -174700771
+      UI_Handler: -1225120248
+      UI_Label: 1248650758
+      UI_LineHorizont: 1462435155
       UI_PopUp: 1103040026
+      UI_Slider: 2050020553
       UI_Window: -829725212
   mipmapLimitGroupName: 
   pSDRemoveMatte: 1

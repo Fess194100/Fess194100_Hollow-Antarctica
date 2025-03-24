@@ -35,9 +35,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _WindFoliageAmplitude: 0.15
+    - _WindFoliageAmplitude: 0.08
     - _WindFoliageAmplitude1: 0
-    - _WindFoliageSpeed: 0.5
+    - _WindFoliageSpeed: 0.811
     - _WindFoliageSpeed1: 0
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
