@@ -20,7 +20,61 @@ MonoBehaviour:
       showInInspector: 0
       networkSync: 0
       value: 0.33
-    intVariables: []
+    - useVariable: 1
+      name: TestSave/Float
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Settings/VolumeSound
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 1
+    - useVariable: 1
+      name: Settings/VolumeMusic
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 1
+    - useVariable: 1
+      name: Settings/Sesitive
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0.5
+    intVariables:
+    - useVariable: 1
+      name: TestSave/Int
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/Data/OpenLevel
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/Data/Resource_2
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/Data/Resource_1
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/Data/Coin
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
     boolVariables:
     - useVariable: 1
       name: Player/Permission/CanUse_Inventory
@@ -61,7 +115,7 @@ MonoBehaviour:
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 0000000000000000000000000000000000000000
+    variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   events:
   - IsInViewCam
   - OffInView
@@ -75,3 +129,5 @@ MonoBehaviour:
   - Player_CanControlOFF
   - Player_InventoryON
   - Player_InventoryOFF
+  - Data_IsLoaded
+  - Data_SAVE
