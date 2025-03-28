@@ -10,7 +10,7 @@ public class TotalSave : MonoBehaviour
     public int Resource_1 = 0;
     public int Resource_2 = 0;
     public float Sensitive = 0.5f;
-    public float VolumeMusic = 1f;
+    public float VolumeMusic = 0.5f;
     public float VolumeSound = 1f;
     public float OffsetCam = 0.33f;
 
@@ -152,7 +152,7 @@ public class TotalSave : MonoBehaviour
         Resource_1 = 0;
         Resource_2 = 0;
         Sensitive = 0.5f;
-        VolumeMusic = 1f;
+        VolumeMusic = 0.5f;
         VolumeSound = 1f;
         OffsetCam = 0.33f;
 

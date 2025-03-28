@@ -13,6 +13,7 @@ namespace SimpleCharController
         public bool canControl = true;
         public bool canJump = true;
         public bool canClimb = true;
+        public bool useStamina = true;
         public bool LockCameraPosition = false;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,13 +22,28 @@ namespace SimpleCharController
         public float MoveSpeedBack = 2.0f;
         public float SprintSpeed = 5.0f;
         public AnimationCurve curveMoveSpeedForward;
-        public float speedChengedCurveMoveSpeed = 5.0f;        
+        public float speedChengedCurveMoveSpeed = 5.0f;
 
         [Space(6)]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
         public float speedTransitionToTarget = 5.0f;
         public float distanceToOffTarget = 0.05f;
+
+        [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
+        [Header("Stamina Settings")]
+        public float normalStamina = 1;
+        public float maxStamina = 100f;
+        public float minStaminaToSprint = 20f;
+
+        [Space(6)]
+        public float speedDownStamina = 1f;
+        public float speedUpStamina = 1f;
+        public float staminaRegenDelay = 3f;
+
+        private float currentStamina = 100f;
+        private float _timeSinceLastSprint; // Время с последнего использования спринта
+        //private bool _canRegenerateStamina = true; // Может ли восстанавливаться стамина
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         [Header("Jump&Gravity")]
@@ -89,9 +105,6 @@ namespace SimpleCharController
         private float currentValueEvaluate;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
-        //private Vector3 targetDirectional;
-        //private int _currentTargetDirection_Z = 1;
-        //private int _currentTargetDirection_X = 0;
 
         //Jump&Gravity
         private float _verticalVelocity;
@@ -148,8 +161,6 @@ namespace SimpleCharController
             PermissionCheck();
 
             JumpAndGravity();
-
-            //if (isOffClimb) ExitModeClimb();
 
             if (!isClimbing)
             {
@@ -248,12 +259,6 @@ namespace SimpleCharController
                     _speedOffClimbObj = jumpForceOffClimb;
 
                     ExitModeClimb();
-
-                    /*// update animator if using character
-                    if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDJump, true);
-                    }*/
                 }
             }
         }
@@ -262,6 +267,9 @@ namespace SimpleCharController
 
         private void Move()
         {
+            // Обновляем стамину
+            UpdateStamina();
+
             Vector3 inputDirection = new Vector3();
             float targetSpeed;
             float inputMagnitude = 0;
@@ -278,7 +286,7 @@ namespace SimpleCharController
 
             // Get Target Speed
             if (inputDirection.z < 0) targetSpeed = MoveSpeedBack;
-            else targetSpeed = _input.sprint ? SprintSpeed : MoveSpeedForward;
+            else targetSpeed = (_input.sprint && currentStamina > 0) ? SprintSpeed : MoveSpeedForward;
 
             //Get Current Speed
             currentValueEvaluate = Mathf.Lerp(currentValueEvaluate, targetSpeed * inputMagnitude, Time.fixedDeltaTime * speedChengedCurveMoveSpeed);
@@ -305,6 +313,8 @@ namespace SimpleCharController
             _input.jump = false;
             isJumping = false;
             isFalling = false;
+
+            if (currentStamina < maxStamina && useStamina) StaminaRecovery();
 
             if (canControl)
             {
@@ -351,6 +361,45 @@ namespace SimpleCharController
             }
         }
 
+        private void UpdateStamina()
+        {
+            if (!useStamina) return;
+
+            if (_input.sprint)
+            {
+                if (_input.move.y != -1)
+                {
+                    // Тратим стамину при спринте
+                    currentStamina -= speedDownStamina * Time.deltaTime;
+                    currentStamina = Mathf.Max(currentStamina, 0f);
+                    normalStamina = currentStamina / maxStamina;
+                    _timeSinceLastSprint = 0f;
+
+                    // Если стамина закончилась, отключаем спринт
+                    if (currentStamina <= 0f)
+                    {
+                        _input.sprint = false;
+                    }
+
+                    
+                }
+                else StaminaRecovery();
+            }
+            else StaminaRecovery();
+        }
+
+        private void StaminaRecovery()
+        {
+            _timeSinceLastSprint += Time.fixedDeltaTime;
+
+            // Восстанавливаем стамину после задержки
+            if (_timeSinceLastSprint >= staminaRegenDelay && currentStamina < maxStamina)
+            {
+                currentStamina += speedUpStamina * Time.fixedDeltaTime;
+                currentStamina = Mathf.Min(currentStamina, maxStamina);
+                normalStamina = currentStamina / maxStamina;
+            }
+        }
         private void MoveToTarget(Transform targetObject, byte typeTransition)
         {
             if (targetObject == null)
@@ -438,6 +487,7 @@ namespace SimpleCharController
             }
             else charInTargetRotation = true;
         }
+
         #endregion
 
         private void CameraRotation()

@@ -76,10 +76,42 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 106d750e8a747d1469127782fa5d4bee,
         type: 3}
       propertyPath: m_Name
-      value: Rock_06_Mesh
+      value: Stone_06_Prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 106d750e8a747d1469127782fa5d4bee,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1250389869023060227}
   m_SourcePrefab: {fileID: 100100000, guid: 106d750e8a747d1469127782fa5d4bee, type: 3}
+--- !u!1 &8625690045000349350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 106d750e8a747d1469127782fa5d4bee,
+    type: 3}
+  m_PrefabInstance: {fileID: 8896283497184054263}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1250389869023060227
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625690045000349350}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8227610908598702715, guid: 106d750e8a747d1469127782fa5d4bee, type: 3}

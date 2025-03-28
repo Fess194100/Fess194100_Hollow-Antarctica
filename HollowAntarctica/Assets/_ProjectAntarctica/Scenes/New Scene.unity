@@ -259,6 +259,134 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1211566190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1211566192}
+  - component: {fileID: 1211566191}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1211566191
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211566190}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d51da9962d891ae4b904dde392e670a0, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1211566192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211566190}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 827.44006, y: 488.29272, z: -6.8517237}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1561031536
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,70 +418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc900bee227140b2998c9124dd65ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrawInEditMode: 0
-  FollowCam: 0
-  MainCamPos: {x: 0, y: 0, z: 0}
-  MainCamRot: {x: 0, y: 0, z: 0}
-  rtCameraSelection: 0
-  rtIngnoreOcclusion: 1
-  rtBurstRadius: 50
-  Cam: {fileID: 0}
-  IngnoreOcclusion: 1
-  showGrid: 0
-  ProjMat: {fileID: 0}
-  ATGSeed: 0
-  ter: {fileID: 1561031539}
-  terData: {fileID: 15600000, guid: 5733c94e1a8504747a70a941071582c2, type: 2}
-  SavedTerrainData: {fileID: 0}
-  useBurst: 0
-  BurstRadius: 50
-  CellsPerFrame: 1
-  DetailDensity: 1
-  usingSRP: 1
-  CameraSelection: 0
-  CameraLayer: 0
-  renderingLayerMask: 1
-  CullDistance: 80
-  FadeLength: 20
-  CacheDistance: 120
-  VertexFadeStart: 10
-  VertexFadeLength: 10
-  DetailFadeStart: 20
-  DetailFadeLength: 30
-  ShadowStart: 10
-  ShadowFadeLength: 20
-  ShadowStartFoliage: 30
-  ShadowFadeLengthFoliage: 20
-  CullingGroupDistanceFactor: 1
-  lppv: {fileID: 0}
-  v_mesh: []
-  v_mat: []
-  v_clip: []
-  InstanceRotation: 
-  WriteNormalBuffer: 
-  ShadowCastingMode: 
-  motionVectorGenerationMode: 
-  MinSize: []
-  MaxSize: []
-  Noise: []
-  LayerToMergeWith: 
-  DoSoftMerge: 
-  rtUseCompute: 0
-  UseCompute: 0
-  GrassInstanceSize: 2
-  HiZBuffer: {fileID: 0}
-  vrForceSinglePassInstanced: 0
-  EnableTerrainShift: 0
-  NumberOfBucketsPerCellEnum: 16
-  FreezeSizeAndColor: 0
-  DebugStats: 0
-  DebugCells: 0
-  FirstTimeSynced: 0
-  LayerEditMode: 0
-  LayerSelection: 0
-  Foldout_Rendersettings: 1
-  Foldout_Advancedsettings: 1
-  Foldout_Prototypes: 1
 --- !u!154 &1561031538
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -554,3 +618,4 @@ SceneRoots:
   - {fileID: 790218635}
   - {fileID: 1611194042}
   - {fileID: 1561031540}
+  - {fileID: 1211566192}

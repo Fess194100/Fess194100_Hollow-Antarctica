@@ -219,12 +219,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1364
-        width: 286
-        height: 38
+        y: 1352
+        width: 298
+        height: 50
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 140, y: 0, z: 140, w: 0}
+      border: {x: 148, y: 0, z: 148, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -298,6 +298,174 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI_Frame_Item
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 1306
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 47, y: 47, z: 47, w: 47}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d0f1be8172d61047bfe3f3fd0c837f8
+      internalID: 1973118725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Mask_Slider
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1335
+        width: 232
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c17a9dd78e1cc49998d925b818081d
+      internalID: -1453028924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_BG
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 1317
+        width: 820
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 621, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e98d5b8bb13e41d4b963cc22c9cd64c1
+      internalID: 1742505830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Statuette
+      rect:
+        serializedVersion: 2
+        x: 1888
+        y: 1644
+        width: 160
+        height: 404
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9638bd93284815b47becb51d7921072d
+      internalID: 571255099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Light
+      rect:
+        serializedVersion: 2
+        x: 1888
+        y: 1464
+        width: 160
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38fd24eefcc3a2743a6eeef8fadce0bc
+      internalID: -496759488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Lock
+      rect:
+        serializedVersion: 2
+        x: 1888
+        y: 1232
+        width: 160
+        height: 232
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03a0248eb863248428ced6b9122af924
+      internalID: -1564056008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Prew_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f26a8dbde1a069846b8ecd7f74b5c3e8
+      internalID: 1831888356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Light_Broken
+      rect:
+        serializedVersion: 2
+        x: 1888
+        y: 1052
+        width: 160
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb795ea26c424d244b81d909339354b7
+      internalID: -50249097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -309,14 +477,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      UI_BG: 1742505830
       UI_Button: 900567852
       UI_ButtonMenu: -233617680
       UI_CharShadow: -174700771
+      UI_Frame_Item: 1973118725
       UI_Handler: -1225120248
       UI_Label: 1248650758
+      UI_Light: -496759488
+      UI_Light_Broken: -50249097
       UI_LineHorizont: 1462435155
+      UI_Lock: -1564056008
+      UI_Mask_Slider: -1453028924
       UI_PopUp: 1103040026
+      UI_Prew_1: 1831888356
       UI_Slider: 2050020553
+      UI_Statuette: 571255099
       UI_Window: -829725212
   mipmapLimitGroupName: 
   pSDRemoveMatte: 1

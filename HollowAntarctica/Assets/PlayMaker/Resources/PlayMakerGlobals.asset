@@ -75,6 +75,24 @@ MonoBehaviour:
       showInInspector: 0
       networkSync: 0
       value: 0
+    - useVariable: 1
+      name: Game/CountOpenWindows
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/ItemID
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/Item/currentID
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
     boolVariables:
     - useVariable: 1
       name: Player/Permission/CanUse_Inventory
@@ -84,6 +102,12 @@ MonoBehaviour:
       value: 1
     - useVariable: 1
       name: Player/State/Use_Inventory
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
+    - useVariable: 1
+      name: Game/Item/Valid/Statuette
       tooltip: 
       showInInspector: 0
       networkSync: 0
@@ -109,13 +133,48 @@ MonoBehaviour:
       networkSync: 0
       typeName: UnityEngine.Camera
       value: {fileID: 0}
+    - useVariable: 1
+      name: Audio/Music/MainMenu
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: d51da9962d891ae4b904dde392e670a0, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/UI_Save
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/UI_Hover
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 91d3aec1720360146825776c4368f052, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/UI_Click
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 54e726549c057b446890ca3e8ee88458, type: 3}
+    - useVariable: 1
+      name: Audio/currentSound
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 0}
     materialVariables: []
     textureVariables: []
     arrayVariables: []
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   events:
   - IsInViewCam
   - OffInView
@@ -131,3 +190,11 @@ MonoBehaviour:
   - Player_InventoryOFF
   - Data_IsLoaded
   - Data_SAVE
+  - Player_CursorON
+  - Player_CursorOFF
+  - Player_GetItem
+  - Settings_Cheng_Sensativ
+  - Settings_Cheng_Music
+  - Settings_Cheng_Sound
+  - Settings_Cheng_OffsetCam
+  - Audio_PlaySound
