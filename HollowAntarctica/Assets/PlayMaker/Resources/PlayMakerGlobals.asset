@@ -168,13 +168,83 @@ MonoBehaviour:
       networkSync: 0
       typeName: UnityEngine.AudioClip
       value: {fileID: 0}
+    - useVariable: 1
+      name: Audio/Char/UseItem
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: f98f013dea697ce4ea65b0f68d723e66, type: 3}
+    - useVariable: 1
+      name: Audio/Char/Step_3
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: e61714fb9e1007944b1abd84a5cd169f, type: 3}
+    - useVariable: 1
+      name: Audio/Char/Step_2
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: fbece426f4b4f1340a018a9636a73d17, type: 3}
+    - useVariable: 1
+      name: Audio/Char/Step_1
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 2beef9a856e0eb84c9067141457a6586, type: 3}
+    - useVariable: 1
+      name: Audio/Char/Landing
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: a8fbf6dd0b490c64da1ae54c2b952b8e, type: 3}
+    - useVariable: 1
+      name: Audio/Char/Jump
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: dd6fd583be6ec9e42b587c777a356935, type: 3}
+    - useVariable: 1
+      name: Audio/Char/GetItem
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: e9dd4c823a00c41459f381708fe4969e, type: 3}
+    - useVariable: 1
+      name: Audio/Char/ClimbingRope
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: ece8fa95204b5254a997217d13c567ec, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Game/Lever
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: abf7b830ee1627745b5bac79cf362362, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/UI_LoadScreen
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 7d915d0de2fcada48a98227aec1cb6c4, type: 3}
     materialVariables: []
     textureVariables: []
     arrayVariables: []
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    variableCategoryIDs: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   events:
   - IsInViewCam
   - OffInView
@@ -198,3 +268,4 @@ MonoBehaviour:
   - Settings_Cheng_Sound
   - Settings_Cheng_OffsetCam
   - Audio_PlaySound
+  - Player_UseItem
