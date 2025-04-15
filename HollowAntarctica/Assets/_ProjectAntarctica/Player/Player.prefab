@@ -4344,8 +4344,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3034349185888348970}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.33, y: 1.4, z: -2.4}
+  m_LocalRotation: {x: 0, y: -0.6662722, z: 0, w: 0.74570864}
+  m_LocalPosition: {x: -23.528131, y: -7.2599998, z: 170.39871}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5092,11 +5092,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5499869708016450456}
   - {fileID: 1369169632712765351}
   - {fileID: 2823415487923650915}
   - {fileID: 6003506155503515698}
   - {fileID: 8678036127801304030}
+  - {fileID: 5499869708016450456}
   - {fileID: 4901899812706355856}
   - {fileID: 1530885837145514335}
   m_Father: {fileID: 6231770693478357331}
@@ -5264,7 +5264,7 @@ MonoBehaviour:
         x: 253.39844
         y: 99.99219
         width: 120
-        height: 48
+        height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
@@ -5283,6 +5283,15 @@ MonoBehaviour:
           isSystemEvent: 0
           isGlobal: 0
         toState: Lever
+        linkStyle: 0
+        linkConstraint: 0
+        linkTarget: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: 2
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Stone
         linkStyle: 0
         linkConstraint: 0
         linkTarget: 0
@@ -5330,6 +5339,12 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 2
         fsmBoolParams: []
         fsmVector2Params: []
         fsmVector3Params: []
@@ -5339,25 +5354,28 @@ MonoBehaviour:
         stringParams:
         - 0
         - 1
+        - 2
         byteData: 00
-        arrayParamSizes: 0200000002000000
+        arrayParamSizes: 0300000003000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmInt
         - HutongGames.PlayMaker.FsmEvent
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 100000000c00000010000000100000000c000000170000001700000001000000
+        paramDataType: 100000000c0000001000000010000000100000000c00000017000000170000001700000001000000
         paramName:
         - intVariable
         - compareTo
         - 
         - 
+        - 
         - sendEvent
         - 
         - 
+        - 
         - everyFrame
-        paramDataPos: 0000000000000000010000000200000001000000000000000100000000000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000001000000
+        paramDataPos: 00000000000000000100000002000000030000000100000000000000010000000200000000000000
+        paramByteDataSize: 00000000000000000000000000000000000000000000000000000000000000000000000001000000
     - name: Statuette
       description: 
       colorIndex: 0
@@ -5556,9 +5574,9 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 251
-        y: 229.70312
+        y: 304.70312
         width: 125
-        height: 48
+        height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
@@ -5577,6 +5595,15 @@ MonoBehaviour:
           isSystemEvent: 0
           isGlobal: 0
         toState: Lever 2
+        linkStyle: 0
+        linkConstraint: 0
+        linkTarget: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: 2
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Stone 2
         linkStyle: 0
         linkConstraint: 0
         linkTarget: 0
@@ -5624,6 +5651,12 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 2
         fsmBoolParams: []
         fsmVector2Params: []
         fsmVector3Params: []
@@ -5633,32 +5666,35 @@ MonoBehaviour:
         stringParams:
         - 0
         - 1
+        - 2
         byteData: 00
-        arrayParamSizes: 0200000002000000
+        arrayParamSizes: 0300000003000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmInt
         - HutongGames.PlayMaker.FsmEvent
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 100000000c00000010000000100000000c000000170000001700000001000000
+        paramDataType: 100000000c0000001000000010000000100000000c00000017000000170000001700000001000000
         paramName:
         - intVariable
         - compareTo
         - 
         - 
+        - 
         - sendEvent
         - 
         - 
+        - 
         - everyFrame
-        paramDataPos: 0000000000000000010000000200000001000000000000000100000000000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000001000000
+        paramDataPos: 00000000000000000100000002000000030000000100000000000000010000000200000000000000
+        paramByteDataSize: 00000000000000000000000000000000000000000000000000000000000000000000000001000000
     - name: Statuette 2
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 432.79688
-        y: 199
+        y: 274
         width: 100
         height: 16
       isBreakpoint: 0
@@ -5754,7 +5790,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 436.60156
-        y: 235.71094
+        y: 310.71094
         width: 100
         height: 16
       isBreakpoint: 0
@@ -5844,6 +5880,198 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 0000000000000000010000000000000001000000020000000300000002000000
         paramByteDataSize: 0000000000000000000000000100000001000000000000000000000001000000
+    - name: Stone
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 437
+        y: 144
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.ActivateGameObject
+        - HutongGames.PlayMaker.Actions.SetBoolValue
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000005000000
+        actionHashCodes: b2cf100027fbe103
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 1
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 3483745399547029036}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: Game/Item/Valid/Stone
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 1400000011000000110000000100000001000000110000001100000001000000
+        paramName:
+        - gameObject
+        - activate
+        - recursive
+        - resetOnExit
+        - everyFrame
+        - boolVariable
+        - boolValue
+        - everyFrame
+        paramDataPos: 0000000000000000010000000000000001000000020000000300000002000000
+        paramByteDataSize: 0000000000000000000000000100000001000000000000000000000001000000
+    - name: Stone 2
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 441
+        y: 347
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.ActivateGameObject
+        - HutongGames.PlayMaker.Actions.SetBoolValue
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000005000000
+        actionHashCodes: b2cf100027fbe103
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 1
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 3483745399547029036}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: Game/Item/Valid/Stone
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 1400000011000000110000000100000001000000110000001100000001000000
+        paramName:
+        - gameObject
+        - activate
+        - recursive
+        - resetOnExit
+        - everyFrame
+        - boolVariable
+        - boolValue
+        - everyFrame
+        paramDataPos: 0000000000000000010000000000000001000000020000000300000002000000
+        paramByteDataSize: 0000000000000000000000000100000001000000000000000000000001000000
     events:
     - name: 0
       isSystemEvent: 0
@@ -5857,6 +6085,9 @@ MonoBehaviour:
     - name: Player_LostItem
       isSystemEvent: 0
       isGlobal: 1
+    - name: 2
+      isSystemEvent: 0
+      isGlobal: 0
     globalTransitions:
     - fsmEvent:
         name: Player_GetItem
@@ -16280,13 +16511,18 @@ PrefabInstance:
     - target: {fileID: 778367374575504032, guid: 7e43a1eed48e1da4684d58a1315c3c75,
         type: 3}
       propertyPath: m_Name
-      value: UI_Ques_Item (2)
+      value: UI_Ques_Item_Stone
       objectReference: {fileID: 0}
     - target: {fileID: 778367374575504032, guid: 7e43a1eed48e1da4684d58a1315c3c75,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6487633042342558566, guid: 7e43a1eed48e1da4684d58a1315c3c75,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8558695985980970772, guid: 7e43a1eed48e1da4684d58a1315c3c75,
         type: 3}
       propertyPath: m_Pivot.x
@@ -16365,7 +16601,7 @@ PrefabInstance:
     - target: {fileID: 8558695985980970772, guid: 7e43a1eed48e1da4684d58a1315c3c75,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 234
+      value: 382
       objectReference: {fileID: 0}
     - target: {fileID: 8558695985980970772, guid: 7e43a1eed48e1da4684d58a1315c3c75,
         type: 3}
@@ -16392,6 +16628,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e43a1eed48e1da4684d58a1315c3c75, type: 3}
+--- !u!1 &3483745399547029036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 778367374575504032, guid: 7e43a1eed48e1da4684d58a1315c3c75,
+    type: 3}
+  m_PrefabInstance: {fileID: 4221542989173189772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5499869708016450456 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8558695985980970772, guid: 7e43a1eed48e1da4684d58a1315c3c75,
