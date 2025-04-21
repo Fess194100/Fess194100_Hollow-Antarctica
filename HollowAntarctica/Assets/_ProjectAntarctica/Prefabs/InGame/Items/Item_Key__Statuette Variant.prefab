@@ -28,6 +28,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.2532919
       objectReference: {fileID: 0}
+    - target: {fileID: 3342863939623431947, guid: 1382efd7978a3f146bddff2808a2904d,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3851716636896863629, guid: 1382efd7978a3f146bddff2808a2904d,
         type: 3}
       propertyPath: m_AnchoredPosition.y

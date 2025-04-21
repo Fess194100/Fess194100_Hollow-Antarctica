@@ -48,7 +48,20 @@ public class ClimbHandler : MonoBehaviour
                 controller.offTargetClimb = offClimbObject;
 
                 if (Vector3.Distance(controller.transform.position, offClimbObject.position) < 2f && !controller.isJumping) controller.isOffClimb = true;
-                else controller.isOffClimb = false;
+                else
+                {
+                    controller.isOffClimb = false;
+                    controller.ExitModeClimb();
+                } 
+            }
+            else Debug.Log("offClimbObject = null");
+        }
+        
+        if (climbingType == ClimbingType.ropeLadder && other.CompareTag("Player"))
+        {
+            if (controller != null)
+            {
+                if (!controller.isJumping) controller.ExitModeClimb();
             }
             else Debug.Log("offClimbObject = null");
         }

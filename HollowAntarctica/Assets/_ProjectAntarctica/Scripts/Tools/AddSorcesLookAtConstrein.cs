@@ -4,6 +4,7 @@ using UnityEngine.Animations;
 public class AddSourcesLookAtConstraint : MonoBehaviour
 {
     public LookAtConstraint lookAtConstraint;
+    public bool setMainCam = true;
 
     void Start()
     {
@@ -18,11 +19,17 @@ public class AddSourcesLookAtConstraint : MonoBehaviour
             }
         }
 
+        if (setMainCam) AddSourceTransform(Camera.main.transform, 1f);
+        
+    }
+
+    public void AddSourceTransform(Transform transform, float weight)
+    {
         // Создаем ConstraintSource и добавляем камеру
         ConstraintSource source = new ConstraintSource
         {
-            sourceTransform = Camera.main.transform,
-            weight = 1f // Вес влияния (1 = полное влияние)
+            sourceTransform = transform,
+            weight = weight // Вес влияния (1 = полное влияние)
         };
 
         lookAtConstraint.AddSource(source);

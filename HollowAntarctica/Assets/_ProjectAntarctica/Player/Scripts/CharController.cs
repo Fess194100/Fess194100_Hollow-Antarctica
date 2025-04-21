@@ -365,7 +365,7 @@ namespace SimpleCharController
         {
             if (!useStamina) return;
 
-            if (_input.sprint)
+            if (_input.sprint && _input.move != Vector2.zero)
             {
                 if (_input.move.y != -1)
                 {
@@ -557,7 +557,7 @@ namespace SimpleCharController
             return directionOffClimb;
         }
 
-        private void ExitModeClimb()
+        public void ExitModeClimb()
         {
             isClimbing = false;
             canClimbAgain = false;

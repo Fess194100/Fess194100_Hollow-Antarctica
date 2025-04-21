@@ -308,3 +308,4 @@ MonoBehaviour:
   - Player_UseItem
   - Player_LostItem
   - Player_GetEnergy
+  - Disable
