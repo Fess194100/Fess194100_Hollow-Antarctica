@@ -966,7 +966,8 @@ GameObject:
   - component: {fileID: 828815810221126406}
   - component: {fileID: 6963096091090302483}
   - component: {fileID: 4110316915268660817}
-  - component: {fileID: 673815703085808547}
+  - component: {fileID: 7358847319889054943}
+  - component: {fileID: 1311992036364972323}
   m_Layer: 0
   m_Name: ModelCrystal
   m_TagString: Untagged
@@ -2057,8 +2058,8 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 0
---- !u!64 &673815703085808547
-MeshCollider:
+--- !u!65 &7358847319889054943
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2075,10 +2076,30 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 192bd8e77f1ad3e4b9e0a8b088dc9535, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2.1962128, y: 0.6098261, z: 2.145684}
+  m_Center: {x: 0.0012464523, y: -1.1920838, z: -0.0007289648}
+--- !u!65 &1311992036364972323
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6909982892509855655}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4379447, y: 2.4367685, z: 1.3534393}
+  m_Center: {x: 0.0012464523, y: 0.26533175, z: 0.01108551}
 --- !u!1 &7194888203978030699
 GameObject:
   m_ObjectHideFlags: 0
