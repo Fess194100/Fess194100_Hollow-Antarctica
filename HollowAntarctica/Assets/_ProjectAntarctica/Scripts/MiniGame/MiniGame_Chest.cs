@@ -37,13 +37,17 @@ public class MiniGame_Chest : MonoBehaviour
 
     [Space(10)]
     [Header("Events")]
-    public UnityEvent OnWin;
+    public UnityEvent OnMovePlayer; // Когда игрок просто двигается
+    public UnityEvent OnMoveBox;    // Когда игрок толкает ящик
+    public UnityEvent OnBoxInTarget; // Когда ящик попадает на цель
+    public UnityEvent OnWin;        // Когда уровень пройден
 
     private GameObject[,] cellObjects;
     private CellContent[,] cells;
     private Vector2Int playerPosition;
     private TileType[,] grid;
     private List<Vector2Int> targetPositions = new List<Vector2Int>();
+    private bool win = false;
 
     void Start()
     {
@@ -317,20 +321,48 @@ public class MiniGame_Chest : MonoBehaviour
 
     void TryMovePlayer(Vector2Int direction)
     {
-        Vector2Int newPos = playerPosition + direction;
+        if (CheckWinCondition()) return;
 
+        Vector2Int newPos = playerPosition + direction;
         if (!IsPositionValid(newPos)) return;
+
+        bool movedBox = false;
+        bool correctBoxOnTarget = false;
 
         if (IsBoxAtPosition(newPos))
         {
             Vector2Int boxNewPos = newPos + direction;
             if (!CanMoveBox(boxNewPos)) return;
 
+            // Запоминаем, был ли ящик уже на правильной цели
+            bool wasOnCorrectTarget = IsBoxOnTarget(newPos, out _);
+
+            // Перемещаем ящик
+            int boxType = (int)grid[newPos.x, newPos.y] - (int)TileType.Box1;
             MoveBox(newPos, boxNewPos);
+            movedBox = true;
+
+            // Проверяем, попал ли ящик на правильную цель
+            bool nowOnCorrectTarget = IsBoxOnTarget(boxNewPos, out _);
+            correctBoxOnTarget = !wasOnCorrectTarget && nowOnCorrectTarget;
         }
 
         MovePlayer(newPos);
-        CheckWinCondition();
+
+        // Вызываем события
+        if (correctBoxOnTarget)
+        {
+            OnBoxInTarget.Invoke();
+            CheckWinCondition();
+        }
+        else if (movedBox)
+        {
+            OnMoveBox.Invoke();
+        }
+        else
+        {
+            OnMovePlayer.Invoke();
+        }
     }
 
     void MovePlayer(Vector2Int newPos)
@@ -389,21 +421,16 @@ public class MiniGame_Chest : MonoBehaviour
 
     void UpdateBoxSprite(Vector2Int pos, int boxType)
     {
-        CellContent cell = cells[pos.x, pos.y];
-        bool onTarget = false;
+        bool isOnTarget = IsBoxOnTarget(pos, out int targetType);
 
-        foreach (var targetPos in targetPositions)
+        if (isOnTarget && boxType == targetType)
         {
-            if (targetPos == pos)
-            {
-                onTarget = true;
-                break;
-            }
+            cells[pos.x, pos.y].boxes[boxType].sprite = boxOnTargetPrefabs[boxType].sprite;
         }
-
-        cell.boxes[boxType].sprite = onTarget ?
-            boxOnTargetPrefabs[boxType].sprite :
-            boxPrefabs[boxType].sprite;
+        else
+        {
+            cells[pos.x, pos.y].boxes[boxType].sprite = boxPrefabs[boxType].sprite;
+        }
     }
 
     Vector2Int GetRandomEmptyPosition(bool awayFromWalls, int disFromWall)
@@ -474,7 +501,32 @@ public class MiniGame_Chest : MonoBehaviour
                 grid[pos.x, pos.y] >= TileType.Target1 && grid[pos.x, pos.y] <= TileType.Target3);
     }
 
-    void CheckWinCondition()
+    bool IsBoxOnTarget(Vector2Int pos, out int targetType)
+    {
+        targetType = -1;
+
+        // Проверяем, что в этой клетке вообще есть ящик
+        if (grid[pos.x, pos.y] < TileType.Box1 || grid[pos.x, pos.y] > TileType.Box3)
+            return false;
+
+        // Получаем тип ящика (0, 1 или 2)
+        int boxType = (int)grid[pos.x, pos.y] - (int)TileType.Box1;
+
+        // Проверяем все цели в этой клетке
+        CellContent cell = cells[pos.x, pos.y];
+        for (int i = 0; i < 3; i++)
+        {
+            if (cell.targets[i] != null)
+            {
+                targetType = i;
+                return boxType == i; // Возвращаем true только если типы совпадают
+            }
+        }
+
+        return false;
+    }
+
+    bool CheckWinCondition()
     {
         // 1. Собираем информацию о типах целей
         Dictionary<Vector2Int, int> realTargetTypes = new Dictionary<Vector2Int, int>();
@@ -519,7 +571,7 @@ public class MiniGame_Chest : MonoBehaviour
         }
 
         // 3. Проверяем победу
-        bool win = true;
+        win = true;
         for (int i = 0; i < 3; i++)
         {
             if (totalBoxes[i] > 0 && correctBoxes[i] != totalBoxes[i])
@@ -528,16 +580,17 @@ public class MiniGame_Chest : MonoBehaviour
             }
         }
 
-        if (win) OnLevelComplete();
+        if (win)
+        {
+            OnWin.Invoke();
+            return true;
+        }
+        return false;
     }
 
     public void RestartLevel()
     {
+        win = false;
         GenerateLevel();
-    }
-
-    private void OnLevelComplete() 
-    {
-        OnWin.Invoke();
     }
 }

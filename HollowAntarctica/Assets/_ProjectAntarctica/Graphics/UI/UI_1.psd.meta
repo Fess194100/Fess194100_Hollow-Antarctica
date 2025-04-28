@@ -454,7 +454,7 @@ TextureImporter:
         width: 160
         height: 180
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -462,6 +462,258 @@ TextureImporter:
       bones: []
       spriteID: eb795ea26c424d244b81d909339354b7
       internalID: -50249097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Wall_1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 1188
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fef0feef29653e48afb64267886ec1a
+      internalID: 2115430514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Floor
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be91e5325b84d5444b53618493c65e89
+      internalID: -1228163241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Player
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d6d217ac4ef40543b7cfb1721c5d74c
+      internalID: 706152400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Box_1
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76e1f8485188ab349a18205e8a7731a4
+      internalID: -636856229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Box_2
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 380146aa6208f5e4f9a3f44fd251b3cc
+      internalID: 937769159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Box_3
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 248fc5716daa1984a8ccfb13c5ede7ae
+      internalID: 1257429954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Target_1
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c98eacdce8d406f49a33858e0801225e
+      internalID: -840386505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Target_2
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7447ce90aaac426438af009e51d4d08e
+      internalID: 1811330291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_Target_3
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 1082
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa7990d811dd36641aea103fdf06505e
+      internalID: -947646141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_BoxTarget_1
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1188
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5989b3b70bd971b48987fbfe950073dc
+      internalID: -344047256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_BoxTarget_2
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 1188
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ea165e92e9ec4248be148ce98d9188f
+      internalID: 1017875337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Chest_BoxTarget_3
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 1188
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12a1119c3a529a94687564b96deab149
+      internalID: 231706918
       vertices: []
       indices: 
       edges: []
@@ -488,6 +740,18 @@ TextureImporter:
       UI_Light_Broken: -50249097
       UI_LineHorizont: 1462435155
       UI_Lock: -1564056008
+      UI_MG_Chest_BoxTarget_1: -344047256
+      UI_MG_Chest_BoxTarget_2: 1017875337
+      UI_MG_Chest_BoxTarget_3: 231706918
+      UI_MG_Chest_Box_1: -636856229
+      UI_MG_Chest_Box_2: 937769159
+      UI_MG_Chest_Box_3: 1257429954
+      UI_MG_Chest_Floor: -1228163241
+      UI_MG_Chest_Player: 706152400
+      UI_MG_Chest_Target_1: -840386505
+      UI_MG_Chest_Target_2: 1811330291
+      UI_MG_Chest_Target_3: -947646141
+      UI_MG_Chest_Wall_1: 2115430514
       UI_Mask_Slider: -1453028924
       UI_PopUp: 1103040026
       UI_Prew_1: 1831888356
