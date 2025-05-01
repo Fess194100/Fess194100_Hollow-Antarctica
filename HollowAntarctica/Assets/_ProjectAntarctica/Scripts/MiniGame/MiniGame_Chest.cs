@@ -43,7 +43,7 @@ public class MiniGame_Chest : MonoBehaviour
     public UnityEvent OnWin;        // Когда уровень пройден
 
     private GameObject[,] cellObjects;
-    private CellContent[,] cells;
+    private MiniGame_Chest_Cell[,] cells;
     private Vector2Int playerPosition;
     private TileType[,] grid;
     private List<Vector2Int> targetPositions = new List<Vector2Int>();
@@ -65,7 +65,7 @@ public class MiniGame_Chest : MonoBehaviour
 
         // Создание массивов
         cellObjects = new GameObject[gridSize.x, gridSize.y];
-        cells = new CellContent[gridSize.x, gridSize.y];
+        cells = new MiniGame_Chest_Cell[gridSize.x, gridSize.y];
         grid = new TileType[gridSize.x, gridSize.y];
     }
 
@@ -114,7 +114,7 @@ public class MiniGame_Chest : MonoBehaviour
     {
         GameObject cellObj = Instantiate(cellPrefab, gridLayout.transform);
         cellObjects[x, y] = cellObj;
-        cells[x, y] = cellObj.GetComponent<CellContent>();
+        cells[x, y] = cellObj.GetComponent<MiniGame_Chest_Cell>();
 
         // Стены по краям, пол внутри
         if (x == 0 || y == 0 || x == gridSize.x - 1 || y == gridSize.y - 1)
@@ -252,7 +252,7 @@ public class MiniGame_Chest : MonoBehaviour
 
     void PlacePlayer(Vector2Int pos)
     {
-        CellContent cell = cells[pos.x, pos.y];
+        MiniGame_Chest_Cell cell = cells[pos.x, pos.y];
         cell.player = Instantiate(playerPrefab, cellObjects[pos.x, pos.y].transform);
         cell.player.transform.localPosition = Vector3.zero;
         playerPosition = pos;
@@ -262,7 +262,7 @@ public class MiniGame_Chest : MonoBehaviour
     void PlaceTarget(int typeIndex)
     {
         Vector2Int pos = GetRandomEmptyPosition(false, 1);
-        CellContent cell = cells[pos.x, pos.y];
+        MiniGame_Chest_Cell cell = cells[pos.x, pos.y];
 
         // Убедимся, что очищаем другие цели
         for (int i = 0; i < 3; i++)
@@ -277,7 +277,7 @@ public class MiniGame_Chest : MonoBehaviour
     void PlaceBox(int typeIndex)
     {
         Vector2Int pos = GetRandomEmptyPosition(true, 2);
-        CellContent cell = cells[pos.x, pos.y];
+        MiniGame_Chest_Cell cell = cells[pos.x, pos.y];
 
         cell.boxes[typeIndex] = Instantiate(boxPrefabs[typeIndex], cell.transform);
         cell.boxes[typeIndex].transform.localPosition = Vector3.zero;
@@ -372,8 +372,8 @@ public class MiniGame_Chest : MonoBehaviour
         GameObject newCell = cellObjects[newPos.x, newPos.y];
 
         // Получаем компоненты CellContent
-        CellContent oldCellContent = oldCell.GetComponent<CellContent>();
-        CellContent newCellContent = newCell.GetComponent<CellContent>();
+        MiniGame_Chest_Cell oldCellContent = oldCell.GetComponent<MiniGame_Chest_Cell>();
+        MiniGame_Chest_Cell newCellContent = newCell.GetComponent<MiniGame_Chest_Cell>();
 
         // Переносим игрока
         oldCellContent.player.transform.SetParent(newCell.transform); // Важно: newCell.transform, а не parent!
@@ -399,8 +399,8 @@ public class MiniGame_Chest : MonoBehaviour
         GameObject toCell = cellObjects[to.x, to.y];
 
         // Получаем компоненты CellContent
-        CellContent fromCellContent = fromCell.GetComponent<CellContent>();
-        CellContent toCellContent = toCell.GetComponent<CellContent>();
+        MiniGame_Chest_Cell fromCellContent = fromCell.GetComponent<MiniGame_Chest_Cell>();
+        MiniGame_Chest_Cell toCellContent = toCell.GetComponent<MiniGame_Chest_Cell>();
 
         // Переносим ящик
         Image box = fromCellContent.boxes[boxType];
@@ -513,7 +513,7 @@ public class MiniGame_Chest : MonoBehaviour
         int boxType = (int)grid[pos.x, pos.y] - (int)TileType.Box1;
 
         // Проверяем все цели в этой клетке
-        CellContent cell = cells[pos.x, pos.y];
+        MiniGame_Chest_Cell cell = cells[pos.x, pos.y];
         for (int i = 0; i < 3; i++)
         {
             if (cell.targets[i] != null)
@@ -533,7 +533,7 @@ public class MiniGame_Chest : MonoBehaviour
         foreach (Vector2Int pos in targetPositions)
         {
             int foundType = -1;
-            CellContent cell = cells[pos.x, pos.y];
+            MiniGame_Chest_Cell cell = cells[pos.x, pos.y];
 
             for (int i = 0; i < 3; i++)
             {
