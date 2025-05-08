@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactive
   - TriggerEvent
+  - Portable
   layers:
   - Default
   - TransparentFX

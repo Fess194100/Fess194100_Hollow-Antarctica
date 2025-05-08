@@ -55,6 +55,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 745118103148997785, guid: 1382efd7978a3f146bddff2808a2904d,
         type: 3}
+      propertyPath: fsm.states.Array.data[6].actionData.fsmFloatParams.Array.data[7].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 745118103148997785, guid: 1382efd7978a3f146bddff2808a2904d,
+        type: 3}
       propertyPath: fsm.states.Array.data[2].actionData.fsmIntParams.Array.data[1].showInInspector
       value: 1
       objectReference: {fileID: 0}

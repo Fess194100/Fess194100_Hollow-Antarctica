@@ -5481,7 +5481,7 @@ MonoBehaviour:
     dataVersion: 2
     usedInTemplate: {fileID: 0}
     name: Windows Menager
-    startState: Start
+    startState: State 1
     states:
     - name: Start
       description: 
@@ -5489,7 +5489,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 67
-        y: 103
+        y: 167
         width: 100
         height: 32
       isBreakpoint: 0
@@ -5521,7 +5521,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 010101010101
-        actionIsOpen: 000000000001
+        actionIsOpen: 000000000000
         actionStartIndex: 00000000050000000a0000000f0000001400000019000000
         actionHashCodes: b2cf1000b2cf1000b2cf1000b2cf1000b2cf10005e69bb04
         unityObjectParams: []
@@ -5730,7 +5730,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 65
-        y: 158
+        y: 222
         width: 100
         height: 48
       isBreakpoint: 0
@@ -5864,7 +5864,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 546.25
-        y: 99.5
+        y: 163.5
         width: 100
         height: 96
       isBreakpoint: 0
@@ -6133,7 +6133,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 828.25
-        y: 95.5
+        y: 159.5
         width: 117
         height: 48
       isBreakpoint: 0
@@ -6259,7 +6259,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 829.25
-        y: 163.5
+        y: 227.5
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6444,7 +6444,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 549.7969
-        y: 248.0625
+        y: 312.0625
         width: 100
         height: 48
       isBreakpoint: 0
@@ -6632,7 +6632,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 840.6094
-        y: 245.78906
+        y: 309.78906
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6765,7 +6765,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 206
-        y: 154
+        y: 218
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6871,7 +6871,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 209
-        y: 218
+        y: 282
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6977,7 +6977,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 215
-        y: 91
+        y: 155
         width: 100
         height: 32
       isBreakpoint: 0
@@ -7083,7 +7083,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 691
-        y: 247
+        y: 311
         width: 100
         height: 32
       isBreakpoint: 0
@@ -7183,6 +7183,129 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
+    - name: State 1
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 69
+        y: 113
+        width: 100
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: NextState
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Start
+        linkStyle: 0
+        linkConstraint: 0
+        linkTarget: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.SetBoolValue
+        - HutongGames.PlayMaker.Actions.SendEvent
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000003000000
+        actionHashCodes: 27fbe1035e69bb04
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams:
+        - target: 0
+          excludeSelf:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          gameObject:
+            ownerOption: 0
+            gameObject:
+              useVariable: 0
+              name: 
+              tooltip: 
+              showInInspector: 0
+              networkSync: 0
+              value: {fileID: 0}
+          fsmName:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 
+          sendToChildren:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          fsmComponent: {fileID: 0}
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0.04
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: Player/Permission/CanUse_Inventory
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - NextState
+        byteData: 0000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 1100000011000000010000001f000000170000000f00000001000000
+        paramName:
+        - boolVariable
+        - boolValue
+        - everyFrame
+        - eventTarget
+        - sendEvent
+        - delay
+        - everyFrame
+        paramDataPos: 00000000010000000000000000000000000000000000000001000000
+        paramByteDataSize: 00000000000000000100000000000000000000000000000001000000
     events:
     - name: NextState
       isSystemEvent: 0
@@ -16914,7 +17037,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.85
+  m_fontSize: 28.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

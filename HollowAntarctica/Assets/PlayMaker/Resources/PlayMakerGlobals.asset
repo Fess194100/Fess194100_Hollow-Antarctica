@@ -56,6 +56,18 @@ MonoBehaviour:
       showInInspector: 0
       networkSync: 0
       value: 0
+    - useVariable: 1
+      name: Settings/PostProcess/SplitToning
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 20
+    - useVariable: 1
+      name: Player/State/SpeedMoveInCarries
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 1.5
     intVariables:
     - useVariable: 1
       name: TestSave/Int
@@ -142,6 +154,12 @@ MonoBehaviour:
       showInInspector: 0
       networkSync: 0
       value: 0
+    - useVariable: 1
+      name: Player/Permission/CanCarries
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 1
     stringVariables: []
     vector2Variables: []
     vector3Variables: []
@@ -151,6 +169,36 @@ MonoBehaviour:
     gameObjectVariables:
     - useVariable: 1
       name: Player/CharacterObj
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    - useVariable: 1
+      name: Player/ItemRightHand
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    - useVariable: 1
+      name: Player/ItemLeftHand
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    - useVariable: 1
+      name: Player/CurrentSetItem
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    - useVariable: 1
+      name: Player/currentItem_To_Hand
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    - useVariable: 1
+      name: Player/currentHand_To_Item
       tooltip: 
       showInInspector: 0
       networkSync: 0
@@ -281,7 +329,7 @@ MonoBehaviour:
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   events:
   - IsInViewCam
   - OffInView
@@ -309,3 +357,6 @@ MonoBehaviour:
   - Player_LostItem
   - Player_GetEnergy
   - Disable
+  - Settings_Cheng_PostProcess
+  - Player_isCarriesON
+  - Player_isCarriesOFF
