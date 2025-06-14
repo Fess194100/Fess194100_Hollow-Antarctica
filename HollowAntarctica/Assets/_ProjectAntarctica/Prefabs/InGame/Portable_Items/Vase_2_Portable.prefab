@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6602894393286347020}
   - component: {fileID: 7411408465752650175}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collision
   m_TagString: Interactive
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 770751179696798969}
   - component: {fileID: 3342863939623431947}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collision
   m_TagString: Interactive
   m_Icon: {fileID: 0}
@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookAtConstraint: {fileID: 495424707949831960}
+  setMainCam: 1
 --- !u!1 &4485779681396702481
 GameObject:
   m_ObjectHideFlags: 0
