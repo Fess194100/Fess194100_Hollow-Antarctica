@@ -9387,14 +9387,16 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.DestroyObject
+        - HutongGames.PlayMaker.Actions.SetMaterialTexture
         - HutongGames.PlayMaker.Actions.NextFrameEvent
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000003000000
-        actionHashCodes: 9ff80c0288611604
+        - 
+        actionEnabled: 000101
+        actionIsOpen: 000101
+        actionStartIndex: 000000000300000008000000
+        actionHashCodes: 9ff80c027227c60088611604
         unityObjectParams: []
         fsmGameObjectParams:
         - useVariable: 0
@@ -9403,15 +9405,43 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: {fileID: 0}
-        fsmOwnerDefaultParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 1
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 2116449095046103239}
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: _BaseMap
+        fsmObjectParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: 
+          value: {fileID: 0}
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: 
+          value: {fileID: 2800000, guid: eaf27f79ee6079c4ebff7a6b62547de7, type: 3}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -9422,7 +9452,13 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
-        fsmIntParams: []
+        fsmIntParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmBoolParams:
         - useVariable: 0
           name: 
@@ -9442,14 +9478,19 @@ MonoBehaviour:
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 130000000f0000001100000017000000
+        paramDataType: 130000000f00000011000000140000001000000020000000120000002100000017000000
         paramName:
         - gameObject
         - delay
         - detachChildren
+        - gameObject
+        - materialIndex
+        - material
+        - namedTexture
+        - texture
         - sendEvent
-        paramDataPos: 00000000000000000000000000000000
-        paramByteDataSize: 00000000000000000000000000000000
+        paramDataPos: 000000000000000000000000000000000000000000000000000000000100000000000000
+        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000000000000000000
     - name: DisableTriggerHandler
       description: 
       colorIndex: 0
@@ -11073,6 +11114,12 @@ PrefabInstance:
 --- !u!4 &1591164374978648701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0ecd093327256d64e963351394b67a9f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1269534526387174806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2116449095046103239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0ecd093327256d64e963351394b67a9f,
     type: 3}
   m_PrefabInstance: {fileID: 1269534526387174806}
   m_PrefabAsset: {fileID: 0}
