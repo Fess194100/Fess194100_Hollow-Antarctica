@@ -28,7 +28,7 @@ Material:
   - _EMISSION
   - _SPECGLOSSMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: ddaadfa79abaf1c4e8681d59ca93460e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 042b6d2f7a9fb27468b7aed13161f19d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -121,7 +121,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shininess: 0
-    - _Smoothness: 0.1
+    - _Smoothness: 0.093
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
@@ -132,8 +132,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.9774669, b: 0.5235849, a: 1}
-    - _Color: {r: 1, g: 0.9774669, b: 0.52358484, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 7.0173783, g: 5.267095, b: 1.4233361, a: 1}
-    - _SpecColor: {r: 3.375481, g: 2.6451995, b: 1.5125974, a: 0.1}
+    - _SpecColor: {r: 3.3754811, g: 2.6451998, b: 1.5125974, a: 0.093}
   m_BuildTextureStacks: []
