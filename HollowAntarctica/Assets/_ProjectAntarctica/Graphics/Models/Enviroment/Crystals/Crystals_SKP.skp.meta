@@ -7,7 +7,17 @@ SketchUpImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Atlas_Level_1
+    second: {fileID: 2100000, guid: 0e3796be37d49ba4bb138684c0d4eee3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Crsy_Dec_My
+    second: {fileID: 2100000, guid: f12e1547ec992f446bb352e173c0694f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crystal_Atlas_
     second: {fileID: 2100000, guid: f12e1547ec992f446bb352e173c0694f, type: 2}
   materials:
     materialImportMode: 2
@@ -114,8 +124,8 @@ SketchUpImporter:
   assetBundleVariant: 
   generateBackFace: 0
   mergeCoplanarFaces: 0
-  selectedNodes: 00000000010000000200000003000000
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000150000001600000017000000180000003d0000003e0000003f00000040000000
   assetHash:
     serializedVersion: 2
-    Hash: 4efff0fd865f9688d85e92105ab2f234
+    Hash: 0cd75abfa37484fbb0f8f15dd1167367
   fileUnit: 0

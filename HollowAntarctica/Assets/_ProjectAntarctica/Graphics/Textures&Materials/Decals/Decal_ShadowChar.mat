@@ -91,6 +91,7 @@ Material:
     m_Ints: []
     m_Floats:
     - Normal_Blend: 0
+    - _AO: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
