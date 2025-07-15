@@ -426,7 +426,7 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           typeName: UnityEngine.AudioClip
-          value: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
+          value: {fileID: 8300000, guid: 91d3aec1720360146825776c4368f052, type: 3}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -451,7 +451,7 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - Audio_PlaySound
+        - Audio_PlayUI
         - NextState
         byteData: 000000
         arrayParamSizes: 
@@ -621,7 +621,7 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - Audio_PlaySound
+        - Audio_PlayUI
         - NextState
         byteData: 000000
         arrayParamSizes: 
@@ -647,12 +647,12 @@ MonoBehaviour:
     - name: NextState
       isSystemEvent: 0
       isGlobal: 0
-    - name: Audio_PlaySound
-      isSystemEvent: 0
-      isGlobal: 1
     - name: 1
       isSystemEvent: 0
       isGlobal: 0
+    - name: Audio_PlayUI
+      isSystemEvent: 0
+      isGlobal: 1
     globalTransitions: []
     variables:
       floatVariables: []
