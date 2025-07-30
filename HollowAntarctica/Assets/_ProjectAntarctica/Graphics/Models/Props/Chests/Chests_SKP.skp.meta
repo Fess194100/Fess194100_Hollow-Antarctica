@@ -3,7 +3,12 @@ guid: ea4053c68d42d3e479683dcb85c3f964
 SketchUpImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Atlas_Level_1
+    second: {fileID: 2100000, guid: 0e3796be37d49ba4bb138684c0d4eee3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 2
@@ -109,8 +114,8 @@ SketchUpImporter:
   assetBundleVariant: 
   generateBackFace: 1
   mergeCoplanarFaces: 0
-  selectedNodes: 000000000700000008000000090000000a000000
+  selectedNodes: 000000000700000008000000090000000a0000000b0000000c0000000d0000000e0000003d0000003e0000003f00000040000000
   assetHash:
     serializedVersion: 2
-    Hash: d6bf303bf97291d01239afdb3290b058
+    Hash: 26d04d67a6efed957e40df9c10865450
   fileUnit: 0

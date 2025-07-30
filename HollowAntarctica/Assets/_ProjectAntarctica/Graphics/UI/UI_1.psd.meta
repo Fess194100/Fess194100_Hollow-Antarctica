@@ -39,7 +39,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -50,7 +50,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -727,7 +727,7 @@ TextureImporter:
         width: 104
         height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -748,7 +748,7 @@ TextureImporter:
         width: 104
         height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -769,7 +769,7 @@ TextureImporter:
         width: 104
         height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -790,7 +790,7 @@ TextureImporter:
         width: 104
         height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -811,7 +811,7 @@ TextureImporter:
         width: 104
         height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -832,7 +832,7 @@ TextureImporter:
         width: 104
         height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -840,6 +840,153 @@ TextureImporter:
       bones: []
       spriteID: a348d088a0a4643479390c31389f1a55
       internalID: -1270970688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_BG
+      rect:
+        serializedVersion: 2
+        x: 957
+        y: 1008
+        width: 514
+        height: 286
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 087eed4c26615684b9f4cd4aebe80f79
+      internalID: 263873619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Line_Up
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1043
+        width: 662
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca0c82b509b8b134485e45d1a9f9a93b
+      internalID: -1010098494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Line_Down
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1007
+        width: 662
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb446d3d4901194489d65c1b19d647e1
+      internalID: 810465403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Corner_01
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 1019
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0fd0ca2e3145d6438114ad51dafb8de
+      internalID: 845169881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Corner_02
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 1019
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a7956b6707bb147903401016f5accb
+      internalID: -453482094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Corner_03
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 1018
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9eb23d4ad0c5194e88990cd36ed74dd
+      internalID: -1734727335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_MG_Corner_04
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 1018
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35b0f8a53540887408b86a1d939f6ff9
+      internalID: 1552820029
       vertices: []
       indices: 
       edges: []
@@ -866,6 +1013,7 @@ TextureImporter:
       UI_Light_Broken: -50249097
       UI_LineHorizont: 1462435155
       UI_Lock: -1564056008
+      UI_MG_BG: 263873619
       UI_MG_Chest_BoxTarget_1: -344047256
       UI_MG_Chest_BoxTarget_2: 1017875337
       UI_MG_Chest_BoxTarget_3: 231706918
@@ -878,12 +1026,18 @@ TextureImporter:
       UI_MG_Chest_Target_2: 1811330291
       UI_MG_Chest_Target_3: -947646141
       UI_MG_Chest_Wall_1: 2115430514
+      UI_MG_Corner_01: 845169881
+      UI_MG_Corner_02: -453482094
+      UI_MG_Corner_03: -1734727335
+      UI_MG_Corner_04: 1552820029
       UI_MG_Line_CornerFilling: 1089334758
       UI_MG_Line_CornerUnFill: 1217563329
       UI_MG_Line_CrossTFilling: -1270970688
       UI_MG_Line_CrossTUnFill: -2063426657
+      UI_MG_Line_Down: 810465403
       UI_MG_Line_LineFilling: -1324889471
       UI_MG_Line_LineUnFill: 101142631
+      UI_MG_Line_Up: -1010098494
       UI_Mask_Slider: -1453028924
       UI_PopUp: 1103040026
       UI_Prew_1: 1831888356

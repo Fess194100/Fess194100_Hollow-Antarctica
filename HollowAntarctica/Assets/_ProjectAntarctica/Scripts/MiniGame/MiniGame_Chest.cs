@@ -47,7 +47,7 @@ public class MiniGame_Chest : MonoBehaviour
     private Vector2Int playerPosition;
     private TileType[,] grid;
     private List<Vector2Int> targetPositions = new List<Vector2Int>();
-    private bool win = false;
+    private bool win = false, winer = false;
 
     void Start()
     {
@@ -582,7 +582,8 @@ public class MiniGame_Chest : MonoBehaviour
 
         if (win)
         {
-            OnWin.Invoke();
+            if(!winer) OnWin.Invoke();
+            winer = true;
             return true;
         }
         return false;
@@ -591,6 +592,7 @@ public class MiniGame_Chest : MonoBehaviour
     public void RestartLevel()
     {
         win = false;
+        winer = false;
         GenerateLevel();
     }
 }
