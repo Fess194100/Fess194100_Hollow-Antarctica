@@ -14,6 +14,9 @@ public class CinemachineShoulderOffset : CinemachineExtension
     [Tooltip("Which shoulder to view from (1=right, -1=left)")]
     public float m_CameraSide = 1f;
 
+    [Tooltip("Camera radius for obstacles")]
+    public float m_CameraRadius = 0.268f;
+
     [Tooltip("When to apply the offset")]
     public CinemachineCore.Stage m_ApplyAfter = CinemachineCore.Stage.Body;
 
@@ -42,30 +45,27 @@ public class CinemachineShoulderOffset : CinemachineExtension
         {
             m_3rdPersonFollow.ShoulderOffset.x = m_ShoulderOffset;
             m_3rdPersonFollow.CameraSide = m_CameraSide;
+            m_3rdPersonFollow.CameraRadius = m_CameraRadius;
         }
     }
 
-    /// <summary>
-    /// Set camera side (1 for right, -1 for left)
-    /// </summary>
     public void SetCameraSide(float side)
     {
-        m_CameraSide = Mathf.Sign(side); // Ensure it's either 1 or -1
+        m_CameraSide = Mathf.Sign(side);
     }
 
-    /// <summary>
-    /// Toggle between left and right camera sides
-    /// </summary>
     public void ToggleCameraSide()
     {
         m_CameraSide *= -1f;
     }
 
-    /// <summary>
-    /// Set shoulder offset value
-    /// </summary>
     public void SetShoulderOffset(float offset)
     {
         m_ShoulderOffset = offset;
+    }
+
+    public void SetCameraRadius(float radius)
+    {
+        m_CameraRadius = radius;
     }
 }

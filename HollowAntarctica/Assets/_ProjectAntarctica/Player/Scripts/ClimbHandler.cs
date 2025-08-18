@@ -11,6 +11,14 @@ public class ClimbHandler : MonoBehaviour
 
     private CharController controller;
 
+    private void Start()
+    {
+        //if (targetClimbObject == null) targetClimbObject = transform;
+        //if (offClimbObject == null) offClimbObject = transform;
+
+        targetClimbObject ??= transform;
+        offClimbObject ??= transform;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -47,7 +55,11 @@ public class ClimbHandler : MonoBehaviour
             {
                 controller.offTargetClimb = offClimbObject;
 
-                if (Vector3.Distance(controller.transform.position, offClimbObject.position) < 2f && !controller.isJumping) controller.isOffClimb = true;
+                if (Vector3.Distance(controller.transform.position, offClimbObject.position) < 2f && !controller.isJumping)
+                {
+                    controller.isOffClimb = true;
+                    StartCoroutine(controller.ClimbIsOff());
+                } 
                 else
                 {
                     controller.isOffClimb = false;
@@ -61,7 +73,10 @@ public class ClimbHandler : MonoBehaviour
         {
             if (controller != null)
             {
-                if (!controller.isJumping) controller.ExitModeClimb();
+                if (!controller.isJumping)
+                {
+                    controller.ExitModeClimb();
+                }
             }
             else Debug.Log("offClimbObject = null");
         }

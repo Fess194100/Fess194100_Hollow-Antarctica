@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Events;
 
 namespace SimpleCharController
 {
@@ -64,6 +65,7 @@ namespace SimpleCharController
         public bool debugClimbing = true;
         public float climbCooldownTime = 0.3f;
         public float climbingSpeed = 1.5f;
+        public float timeIsOffClimb = 0.3f;
 
         [HideInInspector]
         public float boostClimbSpeed = 1.0f;
@@ -97,6 +99,11 @@ namespace SimpleCharController
         public bool isFalling = false;
         public bool isClimbing = false;
         public bool isOffClimb = false;
+
+        /*[Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
+        [Header("Events State Player")]
+        public UnityEvent OnClimb;
+        public UnityEvent OffClimb;*/
 
         #region Private Variable
 
@@ -168,7 +175,7 @@ namespace SimpleCharController
                 {
                     Move();
                 }
-                isOffClimb = false;
+                //isOffClimb = false;
             } 
             else
             {
@@ -196,6 +203,11 @@ namespace SimpleCharController
                     ExitModeClimb();
                 }
             }
+
+            /*if (!isClimbing && isOffClimb)
+            {
+                ClimbIsOff();
+            }*/
         }
         private void JumpAndGravity()
         {
@@ -563,13 +575,20 @@ namespace SimpleCharController
             canClimbAgain = false;
             charInTargetPosition = false;
             charInTargetRotation = false;
-            StartCoroutine(ClimbCooldown()); // Запускаем корутину для задержки
+            StartCoroutine(ClimbCooldown());
         }
 
         private IEnumerator ClimbCooldown()
         {
             yield return new WaitForSeconds(climbCooldownTime);
             canClimbAgain = true; // Позволяем повторое карабканье
+        }
+
+        public IEnumerator ClimbIsOff()
+        {
+            ExitModeClimb();
+            yield return new WaitForSeconds(timeIsOffClimb);
+            isOffClimb = false;
         }
 
         #endregion
