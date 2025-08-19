@@ -8779,7 +8779,7 @@ MonoBehaviour:
   debugClimbing: 1
   climbCooldownTime: 0.1
   climbingSpeed: 1.5
-  timeIsOffClimb: 0.3
+  timeIsOffClimb: 0.9
   boostClimbSpeed: 1
   climbingType: 0
   currentTargetClimb: {fileID: 0}
