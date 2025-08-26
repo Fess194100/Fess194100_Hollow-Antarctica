@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6993a0f48654d4390c72cb7530dd17, type: 3}
+  m_Name: Data_Projectile_Green
+  m_EditorClassIdentifier: 
+  Type: 0
+  StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
+    type: 3}
+  typeShootingStandard: 0
+  StandardAmmoCost: 1
+  StandardProjectileSpeed: 30
+  StandardFireRate: 5
+  baseDamageStandard: 0
+  ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
+    type: 3}
+  typeShootingLvl0: 2
+  ChargedLvl0AmmoCost: 2
+  ChargedLvl0ProjectileSpeed: 30
+  baseDamageLvl0: 0
+  ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 518be6f33c43de7479f650b8d9f47ff7,
+    type: 3}
+  typeMovementLvl1: 0
+  ChargedLvl1AmmoCost: 2
+  ChargedLvl1ProjectileSpeed: 25
+  baseDamageLvl1: 0
+  ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
+    type: 3}
+  typeMovementLvl2: 1
+  ChargedLvl2AmmoCost: 4
+  ChargedLvl2ProjectileSpeed: 20
+  baseDamageLvl2: 0
+  ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 85905a7d6ae03444b8dc82e10ef82097,
+    type: 3}
+  typeMovementLvl3: 1
+  ChargedLvl3AmmoCost: 8
+  ChargedLvl3ProjectileSpeed: 15
+  baseDamageLvl3: 0
+  OverheatDamageToPlayer: 10
+  OverheatDuration: 0.5

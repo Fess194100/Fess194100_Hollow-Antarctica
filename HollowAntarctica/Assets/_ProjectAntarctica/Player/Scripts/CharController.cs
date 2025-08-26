@@ -100,11 +100,6 @@ namespace SimpleCharController
         public bool isClimbing = false;
         public bool isOffClimb = false;
 
-        /*[Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
-        [Header("Events State Player")]
-        public UnityEvent OnClimb;
-        public UnityEvent OffClimb;*/
-
         #region Private Variable
 
         // Move
