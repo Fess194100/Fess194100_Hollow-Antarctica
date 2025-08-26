@@ -26,28 +26,22 @@ namespace SimpleCharController
         [SerializeField] private float overloadTimer = 0f;
 
         [Header("Events")]
-        public UnityEvent<WeaponState> OnWeaponStateChanged;
-        public UnityEvent<float> OnChargeProgressChanged;
-        public UnityEvent<float> OnOverheatProgressChanged;
-        public UnityEvent<ProjectileType> OnWeaponTypeChanged;
+        public ProgressChargeWeaponEvents progressChargeWeapon;
 
-        // Новые события для этапов зарядки
-        public UnityEvent OnChargingStarted;
-        public UnityEvent OnChargeLevel1Reached;
-        public UnityEvent OnChargeLevel2Reached;
-        public UnityEvent OnChargeLevel3Reached;
-        public UnityEvent OnOverheatingStarted;
-        public UnityEvent OnOverloadStarted;
-        public UnityEvent OnOverloadFinished;
+        [Space(10)]
+        public StateWeaponEvents stateWeapon;
 
-        // Приватные переменные
-        private Coroutine chargingCoroutine;
-        private Coroutine overheatCoroutine;
-        private Coroutine overloadCoroutine;
-        private bool isAltFireHeld = false;
+        #region Private variables
         private Camera _mainCamera;
+        private bool isAltFireHeld = false;        
         private int _lastChargeLevel = -1;
+        private float _chargePercent;
+        private float _overheatPercent;
 
+        #endregion
+
+
+        #region Inicialization
         private void Awake()
         {
             ValidateReferences();
@@ -60,53 +54,48 @@ namespace SimpleCharController
             UnsubscribeFromEvents();
         }
 
-        private void Update()
-        {
-            HandleWeaponState();
-        }
-
         private void ValidateReferences()
         {
-            if (inputActions == null)
-                inputActions = FindObjectOfType<SimpleInputActions>();
+            if (inputActions == null) Debug.LogError("inputActions == null");
 
-            if (ammoInventory == null)
-                ammoInventory = GetComponent<AmmoInventory>();
+            if (ammoInventory == null) Debug.LogError("ammoInventory == null");
 
-            if (playerHealth == null)
-                playerHealth = GetComponent<PlayerHealth>();
+            if (playerHealth == null) Debug.LogError("playerHealth == null");
 
-            if (firePoint == null)
-            {
-                GameObject firePointObj = new GameObject("FirePoint");
-                firePointObj.transform.SetParent(transform);
-                firePointObj.transform.localPosition = Vector3.forward * 1.5f;
-                firePoint = firePointObj.transform;
-            }
+            if (firePoint == null) Debug.LogError("firePoint == null");
         }
 
         private void SubscribeToEvents()
         {
-            if (inputActions != null && inputActions.battleEvents != null)
+            if (inputActions != null && inputActions.imputBattleEvents != null)
             {
-                inputActions.battleEvents.OnFire.AddListener(HandleFire);
-                inputActions.battleEvents.OnAltFire.AddListener(StartCharging);
-                inputActions.battleEvents.OffAltFire.AddListener(ReleaseChargedShot);
-                inputActions.battleEvents.CancelAltFire.AddListener(CancelCharging);
-                inputActions.battleEvents.OnWeaponSwitch.AddListener(HandleWeaponSwitch);
+                inputActions.imputBattleEvents.OnFire.AddListener(HandleFire);
+                inputActions.imputBattleEvents.OnAltFire.AddListener(StartCharging);
+                inputActions.imputBattleEvents.OffAltFire.AddListener(ReleaseChargedShot);
+                inputActions.imputBattleEvents.CancelAltFire.AddListener(CancelCharging);
+                inputActions.imputBattleEvents.OnWeaponSwitch.AddListener(HandleWeaponSwitch);
             }
         }
 
         private void UnsubscribeFromEvents()
         {
-            if (inputActions != null && inputActions.battleEvents != null)
+            if (inputActions != null && inputActions.imputBattleEvents != null)
             {
-                inputActions.battleEvents.OnFire.RemoveListener(HandleFire);
-                inputActions.battleEvents.OnAltFire.RemoveListener(StartCharging);
-                inputActions.battleEvents.OffAltFire.RemoveListener(ReleaseChargedShot);
-                inputActions.battleEvents.CancelAltFire.RemoveListener(CancelCharging);
-                inputActions.battleEvents.OnWeaponSwitch.RemoveListener(HandleWeaponSwitch);
+                inputActions.imputBattleEvents.OnFire.RemoveListener(HandleFire);
+                inputActions.imputBattleEvents.OnAltFire.RemoveListener(StartCharging);
+                inputActions.imputBattleEvents.OffAltFire.RemoveListener(ReleaseChargedShot);
+                inputActions.imputBattleEvents.CancelAltFire.RemoveListener(CancelCharging);
+                inputActions.imputBattleEvents.OnWeaponSwitch.RemoveListener(HandleWeaponSwitch);
             }
+        }
+
+        #endregion
+
+
+        #region Handlers & Update
+        private void Update()
+        {
+            HandleWeaponState();
         }
 
         private void HandleWeaponState()
@@ -114,15 +103,15 @@ namespace SimpleCharController
             switch (currentWeaponState)
             {
                 case WeaponState.Charging:
-                    UpdateCharging();
+                    if (!isAltFireHeld) ReleaseChargedShot();
                     break;
 
                 case WeaponState.Overheating:
-                    UpdateOverheating();
+                    if (!isAltFireHeld) ReleaseChargedShot();
                     break;
 
                 case WeaponState.Overloaded:
-                    UpdateOverloaded();
+                    //UpdateOverloaded();
                     break;
             }
         }
@@ -137,80 +126,50 @@ namespace SimpleCharController
             if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.StandardAmmoCost))
             {
                 SetWeaponState(WeaponState.Firing);
-                FireStandardShot();
-                StartCoroutine(ResetFiringState(data.StandardFireRate));
+                ReleaseStandardShot();
+                StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
             }
         }
 
+        private void HandleWeaponSwitch()
+        {
+            // Конвертируем selectedWeaponSlot в ProjectileType
+            ProjectileType newType = (ProjectileType)(inputActions.selectedWeaponSlot - 1);
+
+            if (newType != currentProjectileType && IsValidProjectileType(newType))
+            {
+                currentProjectileType = newType;
+                stateWeapon.OnWeaponTypeChanged?.Invoke(currentProjectileType);
+                CancelCharging(); // Отменяем зарядку при смене оружия
+            }
+        }
+
+        private void SetWeaponState(WeaponState newState)
+        {
+            if (currentWeaponState != newState)
+            {
+                currentWeaponState = newState;
+                //OnWeaponStateChanged?.Invoke(newState);
+            }
+        }
+
+        private bool IsValidProjectileType(ProjectileType type)
+        {
+            return type >= ProjectileType.Green && type <= ProjectileType.Orange;
+        }
+
+        #endregion
+
+
+        #region ChargingWeapon
         private void StartCharging()
         {
             if (currentWeaponState != WeaponState.Ready) return;
 
             isAltFireHeld = true;
             SetWeaponState(WeaponState.Charging);
-            currentChargeTime = 0f;
-            _lastChargeLevel = -1;
-            OnChargingStarted?.Invoke();
-            chargingCoroutine = StartCoroutine(ChargingRoutine());
-        }
-
-        private IEnumerator ChargingRoutine()
-        {
-            while (isAltFireHeld && (currentWeaponState == WeaponState.Charging || currentWeaponState == WeaponState.Overheating))
-            {
-                currentChargeTime += Time.deltaTime;
-                float chargePercent = Mathf.Clamp01(currentChargeTime / timeToMaxCharge);
-
-                OnChargeProgressChanged?.Invoke(chargePercent);
-
-                // Проверяем достижение уровней заряда
-                CheckChargeLevelEvents(chargePercent);
-
-                // Проверка на начало перегрева (используем currentChargeTime вместо chargePercent)
-                if (chargePercent >= 1 && overheatTimer <= overheatThresholdTime)
-                {
-                    // Если только начался перегрев
-                    if (overheatTimer < Time.deltaTime)
-                    {
-                        StartOverheating();
-                    }
-
-                    overheatTimer += Time.deltaTime;
-                    float overheatPercent = Mathf.Clamp01(overheatTimer / overheatThresholdTime);
-                    OnOverheatProgressChanged?.Invoke(overheatPercent);
-
-                    // Если превысили порог перегрева - перегрузка
-                    if (overheatTimer >= overheatThresholdTime)
-                    {
-                        TriggerOverload();
-                        yield break;
-                    }                    
-                }
-
-                yield return null;
-            }
-        }
-
-        private void CheckChargeLevelEvents(float chargePercent)
-        {
-            int currentLevel = CalculateChargeLevel(currentChargeTime);
-
-            if (currentLevel != _lastChargeLevel)
-            {
-                switch (currentLevel)
-                {
-                    case 1:
-                        OnChargeLevel1Reached?.Invoke();
-                        break;
-                    case 2:
-                        OnChargeLevel2Reached?.Invoke();
-                        break;
-                    case 3:
-                        OnChargeLevel3Reached?.Invoke();
-                        break;
-                }
-                _lastChargeLevel = currentLevel;
-            }
+            stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
+            StartCoroutine(ChargingRoutine());
         }
 
         private void StartOverheating()
@@ -218,54 +177,7 @@ namespace SimpleCharController
             if (currentWeaponState != WeaponState.Charging) return;
 
             SetWeaponState(WeaponState.Overheating);
-            OnOverheatingStarted?.Invoke();
-        }
-
-        private void UpdateCharging()
-        {
-            if (!isAltFireHeld)
-            {
-                ReleaseChargedShot();
-            }
-        }
-
-        private void UpdateOverheating()
-        {
-            if (!isAltFireHeld)
-            {
-                ReleaseChargedShot();
-            }
-        }
-
-        private void ReleaseChargedShot()
-        {
-            if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating)
-                return;
-
-            isAltFireHeld = false;
-            StopChargingCoroutine();
-
-            int chargeLevel = CalculateChargeLevel(currentChargeTime);
-            FireChargedShot(chargeLevel);
-        }
-
-        private void StopChargingCoroutine()
-        {
-            if (chargingCoroutine != null)
-            {
-                StopCoroutine(chargingCoroutine);
-                chargingCoroutine = null;
-            }
-        }
-
-        private void CancelCharging()
-        {
-            if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating)
-                return;
-
-            isAltFireHeld = false;
-            StopChargingCoroutine();
-            ResetChargedOverheat();
+            stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
         }
 
         private void TriggerOverload()
@@ -274,8 +186,8 @@ namespace SimpleCharController
             if (data == null) return;
 
             SetWeaponState(WeaponState.Overloaded);
-            StopChargingCoroutine();
-            OnOverloadStarted?.Invoke();
+            StopCoroutine(ChargingRoutine());
+            stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
             // Нанести урон игроку
             playerHealth.TakeDamage(data.OverheatDamageToPlayer);
@@ -284,7 +196,62 @@ namespace SimpleCharController
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
 
             // Запустить перегрузку
-            overloadCoroutine = StartCoroutine(OverloadRoutine(data.OverheatDuration));
+            StartCoroutine(OverloadRoutine(data.OverheatDuration));
+        }
+
+        private void CancelCharging()
+        {
+            if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating) return;
+
+            isAltFireHeld = false;
+            StopCoroutine(ChargingRoutine());
+            ResetCharged();
+        }
+
+        private void ResetCharged()
+        {
+            currentChargeTime = overheatTimer = _chargePercent = _overheatPercent = 0f;
+            _lastChargeLevel = -1;
+            progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
+            progressChargeWeapon.OnOverheatProgressChanged?.Invoke(0f);
+            SetWeaponState(WeaponState.Ready);
+        }
+
+        private IEnumerator ChargingRoutine()
+        {
+            while (isAltFireHeld && (currentWeaponState == WeaponState.Charging || currentWeaponState == WeaponState.Overheating))
+            {
+                currentChargeTime += Time.deltaTime;
+                _chargePercent = currentChargeTime / timeToMaxCharge;
+
+                progressChargeWeapon.OnChargeProgressChanged?.Invoke(Mathf.Clamp01(_chargePercent));
+
+                // Проверяем достижение уровней заряда
+                CheckChargeLevelEvents();
+
+                // Проверка на начало перегрева (используем currentChargeTime вместо chargePercent)
+                if (_chargePercent >= 1 && overheatTimer <= overheatThresholdTime)
+                {
+                    // Если только начался перегрев
+                    if (overheatTimer < Time.deltaTime)
+                    {
+                        StartOverheating();
+                    }
+
+                    overheatTimer += Time.deltaTime;
+                    _overheatPercent = Mathf.Clamp01(overheatTimer / overheatThresholdTime);
+                    progressChargeWeapon.OnOverheatProgressChanged?.Invoke(_overheatPercent);
+
+                    // Если превысили порог перегрева - перегрузка
+                    if (overheatTimer >= overheatThresholdTime)
+                    {
+                        TriggerOverload();
+                        yield break;
+                    }
+                }
+
+                yield return null;
+            }
         }
 
         private IEnumerator OverloadRoutine(float duration)
@@ -297,34 +264,55 @@ namespace SimpleCharController
                 yield return null;
             }
 
-            ResetChargedOverheat();
-            OnOverloadFinished?.Invoke();
-            overloadCoroutine = null;
+            ResetCharged();
+            stateWeapon.OnOverloadFinished?.Invoke();
         }
 
-        private void ResetChargedOverheat()
+        private IEnumerator ResetFiringState(float fireRate, int chargeLevel)
         {
-            currentChargeTime = overheatTimer = 0f;
-            OnChargeProgressChanged?.Invoke(0f);
-            OnOverheatProgressChanged?.Invoke(0f);
-            SetWeaponState(WeaponState.Ready);
+            yield return new WaitForSeconds(1f / fireRate);
+            if (currentWeaponState == WeaponState.Firing)
+            {
+                SetWeaponState(WeaponState.Ready);
+                if (chargeLevel == 0) ResetCharged();
+            }
         }
 
-        private void UpdateOverloaded()
+        private void CheckChargeLevelEvents()
         {
-            // Логика для состояния перегрузки
+            int currentLevel = CalculateChargeLevel();
+
+            if (currentLevel != _lastChargeLevel)
+            {
+                switch (currentLevel)
+                {
+                    case 1:
+                        stateWeapon.OnChargeLevel1Reached?.Invoke();
+                        break;
+                    case 2:
+                        stateWeapon.OnChargeLevel2Reached?.Invoke();
+                        break;
+                    case 3:
+                        stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
+                        break;
+                }
+                _lastChargeLevel = currentLevel;
+            }
         }
 
-        private int CalculateChargeLevel(float chargeTime)
+        private int CalculateChargeLevel()
         {
-            float percent = chargeTime / timeToMaxCharge;
-            if (percent <= 0.25f) return 0;
-            if (percent <= 0.5f) return 1;
-            if (percent <= 0.75f) return 2;
+            if (_chargePercent <= 0.33f) return 0;
+            if (_chargePercent <= 0.66f) return 1;
+            if (_chargePercent <= 0.99f) return 2;
             return 3;
         }
 
-        private void FireStandardShot()
+        #endregion
+
+
+        #region ReleaseShot
+        private void ReleaseStandardShot()
         {
             WeaponProjectileData data = GetCurrentProjectileData();
             if (data == null) return;
@@ -333,6 +321,15 @@ namespace SimpleCharController
             {
                 SpawnProjectile(data.StandardProjectilePrefab, data.StandardProjectileSpeed, 0);
             }
+        }
+
+        private void ReleaseChargedShot()
+        {
+            if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating) return;
+
+            isAltFireHeld = false;
+            StopCoroutine(ChargingRoutine());
+            FireChargedShot(CalculateChargeLevel());
         }
 
         private void FireChargedShot(int chargeLevel)
@@ -373,7 +370,12 @@ namespace SimpleCharController
                 SpawnProjectile(projectilePrefab, speed, chargeLevel);
             }
 
-            ResetChargedOverheat();
+            if (chargeLevel == 0)
+            {
+                currentWeaponState = WeaponState.Firing;
+                StartCoroutine(ResetFiringState(data.Lvl0FireRate, chargeLevel));
+            }
+            else ResetCharged();
         }
 
         private void SpawnProjectile(GameObject projectilePrefab, float speed, int chargeLevel)
@@ -409,33 +411,6 @@ namespace SimpleCharController
             }
         }
 
-        private IEnumerator ResetFiringState(float fireRate)
-        {
-            yield return new WaitForSeconds(1f / fireRate);
-            if (currentWeaponState == WeaponState.Firing)
-            {
-                SetWeaponState(WeaponState.Ready);
-            }
-        }
-
-        private void HandleWeaponSwitch()
-        {
-            // Конвертируем selectedWeaponSlot в ProjectileType
-            ProjectileType newType = (ProjectileType)(inputActions.selectedWeaponSlot - 1);
-
-            if (newType != currentProjectileType && IsValidProjectileType(newType))
-            {
-                currentProjectileType = newType;
-                OnWeaponTypeChanged?.Invoke(currentProjectileType);
-                CancelCharging(); // Отменяем зарядку при смене оружия
-            }
-        }
-
-        private bool IsValidProjectileType(ProjectileType type)
-        {
-            return type >= ProjectileType.Green && type <= ProjectileType.Orange;
-        }
-
         private WeaponProjectileData GetCurrentProjectileData()
         {
             int index = (int)currentProjectileType;
@@ -446,17 +421,11 @@ namespace SimpleCharController
             return null;
         }
 
-        private void SetWeaponState(WeaponState newState)
-        {
-            if (currentWeaponState != newState)
-            {
-                currentWeaponState = newState;
-                OnWeaponStateChanged?.Invoke(newState);
-            }
-        }
+        #endregion
+
 
         // Публичные методы для внешнего доступа
-        public bool CanShoot()
+        /*public bool CanShoot()
         {
             return currentWeaponState == WeaponState.Ready;
         }
@@ -478,18 +447,17 @@ namespace SimpleCharController
 
         public float GetChargeProgress()
         {
-            return Mathf.Clamp01(currentChargeTime / timeToMaxCharge);
+            return Mathf.Clamp01(_chargePercent);
         }
 
         public float GetOverheatProgress()
         {
-            if (currentChargeTime <= timeToMaxCharge) return 0f;
-            return Mathf.Clamp01((currentChargeTime - timeToMaxCharge) / overheatThresholdTime);
+            return Mathf.Clamp01(_overheatPercent);
         }
 
         public ProjectileType GetCurrentWeaponType()
         {
             return currentProjectileType;
-        }
+        }*/
     }
 }

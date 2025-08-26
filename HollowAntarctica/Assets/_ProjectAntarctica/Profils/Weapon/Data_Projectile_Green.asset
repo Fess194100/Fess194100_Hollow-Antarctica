@@ -25,6 +25,7 @@ MonoBehaviour:
   typeShootingLvl0: 2
   ChargedLvl0AmmoCost: 2
   ChargedLvl0ProjectileSpeed: 30
+  Lvl0FireRate: 2.5
   baseDamageLvl0: 0
   ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 518be6f33c43de7479f650b8d9f47ff7,
     type: 3}

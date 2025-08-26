@@ -19,6 +19,7 @@ public class WeaponProjectileData : ScriptableObject
     public TypeShooting typeShootingLvl0 = TypeShooting.Burst;
     public int ChargedLvl0AmmoCost = 2;
     public float ChargedLvl0ProjectileSpeed;
+    public float Lvl0FireRate = 2.5f;
     public float baseDamageLvl0;
 
     [Header("Charged Shot - Level 1")]

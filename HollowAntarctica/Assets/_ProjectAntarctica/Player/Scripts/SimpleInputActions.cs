@@ -1,15 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Events;
-using System;
 
 namespace SimpleCharController
 {
-    [Serializable]
-    public class BattleSystemEvents
-    {
-        public UnityEvent OnFire, OnAltFire, OffAltFire, CancelAltFire, OnWeaponSwitch;
-    }
     public class SimpleInputActions : MonoBehaviour
     {
         [Header("Permission")]
@@ -21,11 +14,8 @@ namespace SimpleCharController
         public bool moving;
         public bool jump;
         public bool sprint;
-        //public bool activate;
 
         [Header("Weapon Input Values")]
-        //public bool fire;
-        //public bool altFire;
         public int selectedWeaponSlot = 1;
         [SerializeField] private int _weaponSlotsCount = 3;
 
@@ -33,8 +23,7 @@ namespace SimpleCharController
         public bool cursorLocked = true;
         public bool cursorInputForLook = true;
 
-        [Header("Battle Events")]
-        [SerializeField] public BattleSystemEvents battleEvents;
+        [HideInInspector] public ImputBattleSystemEvents imputBattleEvents;
 
         #region ============ ÌÅÒÎÄÛ ÑÈÑÒÅÌÛ ÂÂÎÄÀ ============
 
@@ -191,13 +180,13 @@ namespace SimpleCharController
 
         public void FireInput(bool newFireState)
         {
-            if (newFireState) battleEvents.OnFire.Invoke();
+            if (newFireState) imputBattleEvents.OnFire.Invoke();
         }
 
         public void AltFireInput(bool newAltFireState)
         {
-            if (newAltFireState) battleEvents.OnAltFire?.Invoke();
-            else battleEvents.OffAltFire?.Invoke();
+            if (newAltFireState) imputBattleEvents.OnAltFire?.Invoke();
+            else imputBattleEvents.OffAltFire?.Invoke();
         }
 
         public void SelectedWeaponSlotInput(int newSlotIndex)
@@ -205,7 +194,7 @@ namespace SimpleCharController
             if (ValidateSelectSlot(newSlotIndex))
             {
                 selectedWeaponSlot = newSlotIndex;
-                battleEvents.OnWeaponSwitch.Invoke();
+                imputBattleEvents.OnWeaponSwitch.Invoke();
             }
         }
 
@@ -215,7 +204,7 @@ namespace SimpleCharController
         {
             look = Vector2.zero;
             jump = sprint = false;
-            battleEvents.CancelAltFire?.Invoke();
+            imputBattleEvents.CancelAltFire?.Invoke();
         }
 
         private bool ValidateSelectSlot(int selectSlot)
@@ -223,6 +212,7 @@ namespace SimpleCharController
             if(selectSlot > _weaponSlotsCount || selectSlot < 1) return false;
             else return true;
         }
+
         private void OnApplicationFocus(bool hasFocus)
         {
             SetCursorState(cursorLocked);
