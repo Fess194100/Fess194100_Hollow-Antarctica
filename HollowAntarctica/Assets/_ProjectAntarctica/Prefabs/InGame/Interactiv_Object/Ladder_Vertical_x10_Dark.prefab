@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8508393005306491904}
   - component: {fileID: 1304111792175202766}
   - component: {fileID: 1254364301774116278}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ladder_Vertical_x10_Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}

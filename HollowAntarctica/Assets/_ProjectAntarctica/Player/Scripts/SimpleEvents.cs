@@ -7,7 +7,7 @@ namespace SimpleCharController
     [Serializable]
     public class ImputBattleSystemEvents
     {
-        public UnityEvent OnFire, OnAltFire, OffAltFire, CancelAltFire, OnWeaponSwitch;
+        public UnityEvent OnFire, OffFire, OnAltFire, OffAltFire, CancelAltFire, OnWeaponSwitch;
     }
 
     [Serializable]

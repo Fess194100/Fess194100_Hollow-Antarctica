@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 1374285749797165357}
   - component: {fileID: 8204150076226204389}
   - component: {fileID: 7019662634925254408}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ladder_Root_x4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

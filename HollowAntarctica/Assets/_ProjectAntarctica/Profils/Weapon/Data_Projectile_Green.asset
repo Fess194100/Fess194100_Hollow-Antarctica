@@ -15,11 +15,18 @@ MonoBehaviour:
   Type: 0
   StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
     type: 3}
-  typeShootingStandard: 0
+  typeShootingStandard: 1
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
-  StandardFireRate: 5
+  StandardFireRate: 24.22
   baseDamageStandard: 0
+  standardBurstSettings:
+    projectilesCount: 10
+    spreadAngle: 5
+  standardSpreadSettings:
+    projectilesCount: 6
+    spreadAngle: 2
+    delayBetweenShots: 0
   ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
     type: 3}
   typeShootingLvl0: 2
@@ -27,6 +34,13 @@ MonoBehaviour:
   ChargedLvl0ProjectileSpeed: 30
   Lvl0FireRate: 2.5
   baseDamageLvl0: 0
+  lvl0BurstSettings:
+    projectilesCount: 6
+    spreadAngle: 2
+  lvl0SpreadSettings:
+    projectilesCount: 5
+    spreadAngle: 15
+    delayBetweenShots: 0.1
   ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 518be6f33c43de7479f650b8d9f47ff7,
     type: 3}
   typeMovementLvl1: 0

@@ -1,6 +1,21 @@
 using SimpleCharController;
 using UnityEngine;
 
+[System.Serializable]
+public class BurstSettings
+{
+    public int projectilesCount = 3;
+    public float spreadAngle = 5f; // Угол разброса в градусах
+}
+
+[System.Serializable]
+public class SpreadSettings
+{
+    public int projectilesCount = 5;
+    public float spreadAngle = 15f; // Угол разброса в градусах
+    public float delayBetweenShots = 0.1f; // Задержка между выстрелами
+}
+
 [CreateAssetMenu(fileName = "Data_Projectile", menuName = "Weapon/Projectile Data")]
 public class WeaponProjectileData : ScriptableObject
 {
@@ -13,6 +28,8 @@ public class WeaponProjectileData : ScriptableObject
     public float StandardProjectileSpeed;
     public float StandardFireRate = 5.0f;
     public float baseDamageStandard;
+    public BurstSettings standardBurstSettings; // Настройки для режима Burst
+    public SpreadSettings standardSpreadSettings; // Настройки для режима Spread
 
     [Header("Charged Shot - Level 0")]
     public GameObject ChargedLvl0ProjectilePrefab;
@@ -21,6 +38,8 @@ public class WeaponProjectileData : ScriptableObject
     public float ChargedLvl0ProjectileSpeed;
     public float Lvl0FireRate = 2.5f;
     public float baseDamageLvl0;
+    public BurstSettings lvl0BurstSettings; // Настройки для режима Burst
+    public SpreadSettings lvl0SpreadSettings; // Настройки для режима Spread
 
     [Header("Charged Shot - Level 1")]
     public GameObject ChargedLvl1ProjectilePrefab;

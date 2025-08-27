@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace SimpleCharController
 {
@@ -17,6 +17,7 @@ namespace SimpleCharController
         [SerializeField] private WeaponProjectileData[] projectileData;
         [SerializeField] private float timeToMaxCharge = 2f;
         [SerializeField] private float overheatThresholdTime = 0.5f;
+        [SerializeField] private float autoFireRateMultiplier = 1f;
 
         [Header("Weapon State")]
         [SerializeField] private ProjectileType currentProjectileType = ProjectileType.Green;
@@ -27,21 +28,16 @@ namespace SimpleCharController
 
         [Header("Events")]
         public ProgressChargeWeaponEvents progressChargeWeapon;
-
-        [Space(10)]
         public StateWeaponEvents stateWeapon;
 
-        #region Private variables
         private Camera _mainCamera;
-        private bool isAltFireHeld = false;        
+        private bool isAltFireHeld = false;
         private int _lastChargeLevel = -1;
         private float _chargePercent;
         private float _overheatPercent;
+        private Coroutine _autoFireCoroutine;
+        private Coroutine _spreadFireCoroutine;
 
-        #endregion
-
-
-        #region Inicialization
         private void Awake()
         {
             ValidateReferences();
@@ -57,11 +53,8 @@ namespace SimpleCharController
         private void ValidateReferences()
         {
             if (inputActions == null) Debug.LogError("inputActions == null");
-
             if (ammoInventory == null) Debug.LogError("ammoInventory == null");
-
             if (playerHealth == null) Debug.LogError("playerHealth == null");
-
             if (firePoint == null) Debug.LogError("firePoint == null");
         }
 
@@ -89,10 +82,6 @@ namespace SimpleCharController
             }
         }
 
-        #endregion
-
-
-        #region Handlers & Update
         private void Update()
         {
             HandleWeaponState();
@@ -111,7 +100,6 @@ namespace SimpleCharController
                     break;
 
                 case WeaponState.Overloaded:
-                    //UpdateOverloaded();
                     break;
             }
         }
@@ -126,21 +114,75 @@ namespace SimpleCharController
             if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.StandardAmmoCost))
             {
                 SetWeaponState(WeaponState.Firing);
-                ReleaseStandardShot();
-                StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
+
+                switch (data.typeShootingStandard)
+                {
+                    case TypeShooting.Single:
+                        ReleaseStandardShot();
+                        StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
+                        break;
+
+                    case TypeShooting.Auto:
+                        if (_autoFireCoroutine == null)
+                        {
+                            _autoFireCoroutine = StartCoroutine(AutoFireRoutine(data));
+                        }
+                        break;
+
+                    case TypeShooting.Burst:
+                        ReleaseBurstShot(data, data.standardBurstSettings, false);
+                        StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
+                        break;
+
+                    case TypeShooting.Spread:
+                        if (_spreadFireCoroutine == null)
+                        {
+                            _spreadFireCoroutine = StartCoroutine(SpreadFireRoutine(data, data.standardSpreadSettings, false));
+                        }
+                        break;
+                }
+            }
+        }
+
+        private IEnumerator AutoFireRoutine(WeaponProjectileData data)
+        {
+            while (inputActions.fire && currentWeaponState == WeaponState.Firing)
+            {
+                if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.StandardAmmoCost))
+                {
+                    ReleaseStandardShot();
+                    yield return new WaitForSeconds(1f / (data.StandardFireRate * autoFireRateMultiplier));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            _autoFireCoroutine = null;
+            SetWeaponState(WeaponState.Ready);
+        }
+
+        private void ReleaseStandardShot()
+        {
+            WeaponProjectileData data = GetCurrentProjectileData();
+            if (data == null) return;
+
+            if (ammoInventory.ConsumeAmmo(currentProjectileType, data.StandardAmmoCost))
+            {
+                SpawnProjectile(data.StandardProjectilePrefab, data.StandardProjectileSpeed, 0, Vector3.zero);
             }
         }
 
         private void HandleWeaponSwitch()
         {
-            // Конвертируем selectedWeaponSlot в ProjectileType
             ProjectileType newType = (ProjectileType)(inputActions.selectedWeaponSlot - 1);
 
             if (newType != currentProjectileType && IsValidProjectileType(newType))
             {
                 currentProjectileType = newType;
                 stateWeapon.OnWeaponTypeChanged?.Invoke(currentProjectileType);
-                CancelCharging(); // Отменяем зарядку при смене оружия
+                CancelCharging();
             }
         }
 
@@ -149,7 +191,6 @@ namespace SimpleCharController
             if (currentWeaponState != newState)
             {
                 currentWeaponState = newState;
-                //OnWeaponStateChanged?.Invoke(newState);
             }
         }
 
@@ -158,10 +199,6 @@ namespace SimpleCharController
             return type >= ProjectileType.Green && type <= ProjectileType.Orange;
         }
 
-        #endregion
-
-
-        #region ChargingWeapon
         private void StartCharging()
         {
             if (currentWeaponState != WeaponState.Ready) return;
@@ -186,16 +223,11 @@ namespace SimpleCharController
             if (data == null) return;
 
             SetWeaponState(WeaponState.Overloaded);
-            StopCoroutine(ChargingRoutine());
+            StopAllCoroutines();
             stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
-            // Нанести урон игроку
             playerHealth.TakeDamage(data.OverheatDamageToPlayer);
-
-            // Потратить патроны
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
-
-            // Запустить перегрузку
             StartCoroutine(OverloadRoutine(data.OverheatDuration));
         }
 
@@ -204,7 +236,7 @@ namespace SimpleCharController
             if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating) return;
 
             isAltFireHeld = false;
-            StopCoroutine(ChargingRoutine());
+            StopAllCoroutines();
             ResetCharged();
         }
 
@@ -225,14 +257,10 @@ namespace SimpleCharController
                 _chargePercent = currentChargeTime / timeToMaxCharge;
 
                 progressChargeWeapon.OnChargeProgressChanged?.Invoke(Mathf.Clamp01(_chargePercent));
-
-                // Проверяем достижение уровней заряда
                 CheckChargeLevelEvents();
 
-                // Проверка на начало перегрева (используем currentChargeTime вместо chargePercent)
                 if (_chargePercent >= 1 && overheatTimer <= overheatThresholdTime)
                 {
-                    // Если только начался перегрев
                     if (overheatTimer < Time.deltaTime)
                     {
                         StartOverheating();
@@ -242,7 +270,6 @@ namespace SimpleCharController
                     _overheatPercent = Mathf.Clamp01(overheatTimer / overheatThresholdTime);
                     progressChargeWeapon.OnOverheatProgressChanged?.Invoke(_overheatPercent);
 
-                    // Если превысили порог перегрева - перегрузка
                     if (overheatTimer >= overheatThresholdTime)
                     {
                         TriggerOverload();
@@ -308,27 +335,12 @@ namespace SimpleCharController
             return 3;
         }
 
-        #endregion
-
-
-        #region ReleaseShot
-        private void ReleaseStandardShot()
-        {
-            WeaponProjectileData data = GetCurrentProjectileData();
-            if (data == null) return;
-
-            if (ammoInventory.ConsumeAmmo(currentProjectileType, data.StandardAmmoCost))
-            {
-                SpawnProjectile(data.StandardProjectilePrefab, data.StandardProjectileSpeed, 0);
-            }
-        }
-
         private void ReleaseChargedShot()
         {
             if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating) return;
 
             isAltFireHeld = false;
-            StopCoroutine(ChargingRoutine());
+            StopAllCoroutines();
             FireChargedShot(CalculateChargeLevel());
         }
 
@@ -337,17 +349,82 @@ namespace SimpleCharController
             WeaponProjectileData data = GetCurrentProjectileData();
             if (data == null) return;
 
+            if (chargeLevel == 0)
+            {
+                HandleChargedLevel0Shot(data);
+            }
+            else
+            {
+                HandleHigherChargeLevels(data, chargeLevel);
+            }
+        }
+
+        private void HandleChargedLevel0Shot(WeaponProjectileData data)
+        {
+            switch (data.typeShootingLvl0)
+            {
+                case TypeShooting.Single:
+                    ReleaseChargedLevel0Single(data);
+                    break;
+
+                case TypeShooting.Auto:
+                    if (_autoFireCoroutine == null)
+                    {
+                        _autoFireCoroutine = StartCoroutine(AutoChargedFireRoutine(data));
+                    }
+                    break;
+
+                case TypeShooting.Burst:
+                    ReleaseBurstShot(data, data.lvl0BurstSettings, true);
+                    break;
+
+                case TypeShooting.Spread:
+                    if (_spreadFireCoroutine == null)
+                    {
+                        _spreadFireCoroutine = StartCoroutine(SpreadFireRoutine(data, data.lvl0SpreadSettings, true));
+                    }
+                    break;
+            }
+
+            currentWeaponState = WeaponState.Firing;
+            StartCoroutine(ResetFiringState(data.Lvl0FireRate, 0));
+        }
+
+        private IEnumerator AutoChargedFireRoutine(WeaponProjectileData data)
+        {
+            while (isAltFireHeld && currentWeaponState == WeaponState.Firing)
+            {
+                if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.ChargedLvl0AmmoCost))
+                {
+                    ReleaseChargedLevel0Single(data);
+                    yield return new WaitForSeconds(1f / (data.Lvl0FireRate * autoFireRateMultiplier));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            _autoFireCoroutine = null;
+            ResetCharged();
+        }
+
+        private void ReleaseChargedLevel0Single(WeaponProjectileData data)
+        {
+            if (ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl0AmmoCost))
+            {
+                SpawnProjectile(data.ChargedLvl0ProjectilePrefab, data.ChargedLvl0ProjectileSpeed, 0, Vector3.zero);
+            }
+        }
+
+        private void HandleHigherChargeLevels(WeaponProjectileData data, int chargeLevel)
+        {
             GameObject projectilePrefab = null;
             float speed = 0f;
             int ammoCost = 0;
 
             switch (chargeLevel)
             {
-                case 0:
-                    projectilePrefab = data.ChargedLvl0ProjectilePrefab;
-                    speed = data.ChargedLvl0ProjectileSpeed;
-                    ammoCost = data.ChargedLvl0AmmoCost;
-                    break;
                 case 1:
                     projectilePrefab = data.ChargedLvl1ProjectilePrefab;
                     speed = data.ChargedLvl1ProjectileSpeed;
@@ -367,21 +444,161 @@ namespace SimpleCharController
 
             if (projectilePrefab != null && ammoInventory.ConsumeAmmo(currentProjectileType, ammoCost))
             {
-                SpawnProjectile(projectilePrefab, speed, chargeLevel);
+                SpawnProjectile(projectilePrefab, speed, chargeLevel, Vector3.zero);
             }
 
-            if (chargeLevel == 0)
-            {
-                currentWeaponState = WeaponState.Firing;
-                StartCoroutine(ResetFiringState(data.Lvl0FireRate, chargeLevel));
-            }
-            else ResetCharged();
+            ResetCharged();
         }
 
-        private void SpawnProjectile(GameObject projectilePrefab, float speed, int chargeLevel)
+        private void ReleaseBurstShot(WeaponProjectileData data, BurstSettings burstSettings, bool isCharged)
+        {
+            GameObject projectilePrefab = isCharged ? data.ChargedLvl0ProjectilePrefab : data.StandardProjectilePrefab;
+            float speed = isCharged ? data.ChargedLvl0ProjectileSpeed : data.StandardProjectileSpeed;
+            int ammoCost = isCharged ? data.ChargedLvl0AmmoCost : data.StandardAmmoCost;
+
+            if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost * burstSettings.projectilesCount))
+                return;
+
+            List<Vector2> spreadAngles = GenerateSpreadAngles(burstSettings.spreadAngle, burstSettings.projectilesCount);
+            Vector3 baseDirection = (GetTargetPoint() - firePoint.position).normalized;
+
+            for (int i = 0; i < burstSettings.projectilesCount; i++)
+            {
+                Vector3 spreadDirection = CalculateSpreadDirection(baseDirection, spreadAngles[i]);
+                Quaternion projectileRotation = Quaternion.LookRotation(spreadDirection);
+
+                if (ammoInventory.ConsumeAmmo(currentProjectileType, ammoCost))
+                {
+                    GameObject projectile = Instantiate(projectilePrefab, firePoint.position, projectileRotation);
+                    Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+                    if (projectileScript != null)
+                    {
+                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1);
+                    }
+                }
+            }
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        private IEnumerator SpreadFireRoutine(WeaponProjectileData data, SpreadSettings spreadSettings, bool isCharged)
+        {
+            GameObject projectilePrefab = isCharged ? data.ChargedLvl0ProjectilePrefab : data.StandardProjectilePrefab;
+            float speed = isCharged ? data.ChargedLvl0ProjectileSpeed : data.StandardProjectileSpeed;
+            int ammoCost = isCharged ? data.ChargedLvl0AmmoCost : data.StandardAmmoCost;
+
+            if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost * spreadSettings.projectilesCount))
+                yield break;
+
+            List<Vector2> spreadAngles = GenerateSpreadAngles(spreadSettings.spreadAngle, spreadSettings.projectilesCount);
+
+            for (int i = 0; i < spreadSettings.projectilesCount; i++)
+            {
+                if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost))
+                    yield break;
+
+                Vector3 currentBaseDirection = (GetTargetPoint() - firePoint.position).normalized;
+                Vector3 spreadDirection = CalculateSpreadDirection(currentBaseDirection, spreadAngles[i]);
+                Quaternion projectileRotation = Quaternion.LookRotation(spreadDirection);
+
+                if (ammoInventory.ConsumeAmmo(currentProjectileType, ammoCost))
+                {
+                    GameObject projectile = Instantiate(projectilePrefab, firePoint.position, projectileRotation);
+                    Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+                    if (projectileScript != null)
+                    {
+                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1);
+                    }
+                }
+
+                yield return new WaitForSeconds(spreadSettings.delayBetweenShots);
+            }
+
+            _spreadFireCoroutine = null;
+            if (isCharged)
+            {
+                ResetCharged();
+            }
+            else
+            {
+                yield return new WaitForSeconds(1 / data.StandardFireRate);
+                SetWeaponState(WeaponState.Ready);
+            }
+        }
+
+        private List<Vector2> GenerateSpreadAngles(float maxSpreadAngle, int count)
+        {
+            List<Vector2> angles = new List<Vector2>();
+
+            if (count == 1)
+            {
+                angles.Add(Vector2.zero);
+                return angles;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                float randomDirectionAngle = Random.Range(0f, 360f);
+                float randomSpreadDistance = Random.Range(0f, maxSpreadAngle);
+
+                float x = randomSpreadDistance * Mathf.Cos(randomDirectionAngle * Mathf.Deg2Rad);
+                float y = randomSpreadDistance * Mathf.Sin(randomDirectionAngle * Mathf.Deg2Rad);
+
+                angles.Add(new Vector2(x, y));
+            }
+
+            return angles;
+        }
+
+        private Vector3 CalculateSpreadDirection(Vector3 baseDirection, Vector2 spreadAngleDegrees)
+        {
+            Vector3 right, up;
+            CreateBaseCoordinateSystem(baseDirection, out right, out up);
+            Vector3 spreadOffset = baseDirection;
+
+            if (spreadAngleDegrees.x != 0f)
+            {
+                spreadOffset = Quaternion.AngleAxis(spreadAngleDegrees.x, up) * spreadOffset;
+            }
+
+            if (spreadAngleDegrees.y != 0f)
+            {
+                spreadOffset = Quaternion.AngleAxis(spreadAngleDegrees.y, right) * spreadOffset;
+            }
+
+            return spreadOffset.normalized;
+        }        
+
+        private void CreateBaseCoordinateSystem(Vector3 direction, out Vector3 right, out Vector3 up)
+        {
+            Vector3 forward = direction.normalized;
+
+            if (Mathf.Abs(Vector3.Dot(forward, Vector3.up)) > 0.999f)
+            {
+                right = Vector3.right;
+                up = Vector3.Cross(right, forward).normalized;
+            }
+            else
+            {
+                right = Vector3.Cross(forward, Vector3.up).normalized;
+                up = Vector3.Cross(right, forward).normalized;
+            }
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        private void SpawnProjectile(GameObject projectilePrefab, float speed, int chargeLevel, Vector3 directionOffset)
         {
             Vector3 targetPoint = GetTargetPoint();
             Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
+
+            if (directionOffset != Vector3.zero)
+            {
+                shootDirection = Quaternion.LookRotation(shootDirection) * directionOffset;
+            }
+
             Quaternion projectileRotation = Quaternion.LookRotation(shootDirection);
 
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, projectileRotation);
@@ -420,9 +637,6 @@ namespace SimpleCharController
             }
             return null;
         }
-
-        #endregion
-
 
         // Публичные методы для внешнего доступа
         /*public bool CanShoot()

@@ -14,6 +14,7 @@ namespace SimpleCharController
         public bool moving;
         public bool jump;
         public bool sprint;
+        public bool fire;
 
         [Header("Weapon Input Values")]
         public int selectedWeaponSlot = 1;
@@ -180,7 +181,9 @@ namespace SimpleCharController
 
         public void FireInput(bool newFireState)
         {
+            fire = newFireState;
             if (newFireState) imputBattleEvents.OnFire.Invoke();
+            else imputBattleEvents.OffFire.Invoke();
         }
 
         public void AltFireInput(bool newAltFireState)
@@ -203,7 +206,7 @@ namespace SimpleCharController
         public void ResetValueInput()
         {
             look = Vector2.zero;
-            jump = sprint = false;
+            jump = sprint = fire = false;
             imputBattleEvents.CancelAltFire?.Invoke();
         }
 

@@ -8925,12 +8925,16 @@ MonoBehaviour:
   moving: 0
   jump: 0
   sprint: 0
+  fire: 0
   selectedWeaponSlot: 1
   _weaponSlotsCount: 3
   cursorLocked: 1
   cursorInputForLook: 1
-  battleEvents:
+  imputBattleEvents:
     OnFire:
+      m_PersistentCalls:
+        m_Calls: []
+    OffFire:
       m_PersistentCalls:
         m_Calls: []
     OnAltFire:
@@ -10207,27 +10211,40 @@ MonoBehaviour:
   playerHealth: {fileID: 6200174266677484524}
   targetingMask:
     serializedVersion: 2
-    m_Bits: 951
+    m_Bits: 823
   projectileData:
   - {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
   timeToMaxCharge: 2
   overheatThresholdTime: 0.5
+  autoFireRateMultiplier: 1
   currentProjectileType: 0
   currentWeaponState: 0
   currentChargeTime: 0
   overheatTimer: 0
-  OnWeaponStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnChargeProgressChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnOverheatProgressChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnWeaponTypeChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  overloadTimer: 0
+  progressChargeWeapon:
+    OnChargeProgressChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    OnOverheatProgressChanged:
+      m_PersistentCalls:
+        m_Calls: []
+  stateWeapon:
+    OnWeaponTypeChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    OnWeaponStateChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    OnChargeLevel1Reached:
+      m_PersistentCalls:
+        m_Calls: []
+    OnChargeLevel2Reached:
+      m_PersistentCalls:
+        m_Calls: []
+    OnOverloadFinished:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &6200174266677484524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22351,6 +22368,7 @@ GameObject:
   - component: {fileID: 6788303027165064684}
   - component: {fileID: 7205150746922040770}
   - component: {fileID: 7480406977896553660}
+  - component: {fileID: 6816977119207822645}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -22445,6 +22463,280 @@ MonoBehaviour:
   m_CameraSide: 1
   m_CameraRadius: 0.195
   m_ApplyAfter: 2
+--- !u!114 &6816977119207822645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7183716664237078960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fsm:
+    dataVersion: 2
+    usedInTemplate: {fileID: 0}
+    name: DefautRadiusCam
+    startState: State 1
+    states:
+    - name: State 1
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.GetProperty
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 5ac85204
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams:
+        - TargetObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: UnityEngine.Object
+            value: {fileID: 7480406977896553660}
+          TargetTypeName: CinemachineShoulderOffset
+          PropertyName: m_CameraRadius
+          BoolParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          FloatParameter:
+            useVariable: 1
+            name: Player/State/RadiusCam_Max
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0.268
+          IntParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          GameObjectParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+          StringParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 
+          Vector2Parameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {x: 0, y: 0}
+          Vector3Parameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {x: 0, y: 0, z: 0}
+          RectParamater:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value:
+              serializedVersion: 2
+              x: 0
+              y: 0
+              width: 0
+              height: 0
+          QuaternionParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {x: 0, y: 0, z: 0, w: 0}
+          ObjectParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: System.Single
+            value: {fileID: 0}
+          MaterialParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: 
+            value: {fileID: 0}
+          TextureParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: 
+            value: {fileID: 0}
+          ColorParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {r: 0, g: 0, b: 0, a: 1}
+          EnumParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            enumName: 
+            intValue: 0
+          ArrayParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+          setProperty: 0
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 2400000001000000
+        paramName:
+        - targetProperty
+        - everyFrame
+        paramDataPos: 0000000000000000
+        paramByteDataSize: 0000000001000000
+    events: []
+    globalTransitions: []
+    variables:
+      floatVariables: []
+      intVariables: []
+      boolVariables: []
+      stringVariables: []
+      vector2Variables: []
+      vector3Variables: []
+      colorVariables: []
+      rectVariables: []
+      quaternionVariables: []
+      gameObjectVariables: []
+      objectVariables: []
+      materialVariables: []
+      textureVariables: []
+      arrayVariables: []
+      enumVariables: []
+      categories:
+      - 
+      variableCategoryIDs: 
+    description: 
+    docUrl: 
+    showStateLabel: 0
+    maxLoopCount: 0
+    watermark: 
+    password: 
+    locked: 0
+    manualUpdate: 0
+    outVariableIndices: 
+    keepDelayedEventsOnStateExit: 0
+    preprocessed: 0
+    ExposedEvents: []
+    OutputEvents: []
+    RestartOnEnable: 1
+    ResetVariablesOnEnable: 0
+    EnableDebugFlow: 0
+    EnableBreakpoints: 1
+    editorFlags: 225
+    activeStateName: 
+    mouseEvents: 0
+    handleLevelLoaded: 0
+    handleTriggerEnter2D: 0
+    handleTriggerExit2D: 0
+    handleTriggerStay2D: 0
+    handleCollisionEnter2D: 0
+    handleCollisionExit2D: 0
+    handleCollisionStay2D: 0
+    handleTriggerEnter: 0
+    handleTriggerExit: 0
+    handleTriggerStay: 0
+    handleCollisionEnter: 0
+    handleCollisionExit: 0
+    handleCollisionStay: 0
+    handleParticleCollision: 0
+    handleControllerColliderHit: 0
+    handleJointBreak: 0
+    handleJointBreak2D: 0
+    handleOnGUI: 0
+    handleFixedUpdate: 0
+    handleLateUpdate: 0
+    handleApplicationEvents: 0
+    handleUiEvents: 0
+    handleLegacyNetworking: 0
+    handleAnimatorMove: 0
+    handleAnimatorIK: 0
+  fsmTemplate: {fileID: 0}
+  eventHandlerComponentsAdded: 0
 --- !u!1 &7300374341743545790
 GameObject:
   m_ObjectHideFlags: 0

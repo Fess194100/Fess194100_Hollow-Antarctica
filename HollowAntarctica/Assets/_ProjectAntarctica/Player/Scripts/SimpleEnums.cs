@@ -29,8 +29,8 @@ namespace SimpleCharController
     {
         Single,
         Auto,
-        Burst, // Стрельба очередями
-        Spread // одновременный выстрел несколькими снарядами
+        Burst, // одновременный выстрел несколькими снарядами
+        Spread // Стрельба очередями
     }
 
     public enum ProjectileType
