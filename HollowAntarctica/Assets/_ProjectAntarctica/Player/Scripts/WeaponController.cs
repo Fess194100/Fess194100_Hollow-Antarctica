@@ -130,7 +130,7 @@ namespace SimpleCharController
                         break;
 
                     case TypeShooting.Burst:
-                        ReleaseBurstShot(data, data.standardBurstSettings, false);
+                        ReleaseBurstShot(data, data.standardSpreadSettings, false);
                         StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
                         break;
 
@@ -170,7 +170,7 @@ namespace SimpleCharController
 
             if (ammoInventory.ConsumeAmmo(currentProjectileType, data.StandardAmmoCost))
             {
-                SpawnProjectile(data.StandardProjectilePrefab, data.StandardProjectileSpeed, 0, Vector3.zero);
+                SpawnProjectile(data.StandardProjectilePrefab, data.StandardProjectileSpeed, data.baseDamageStandard, 0, Vector3.zero, TypeMovement.Linear);
             }
         }
 
@@ -226,9 +226,9 @@ namespace SimpleCharController
             StopAllCoroutines();
             stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
-            playerHealth.TakeDamage(data.OverheatDamageToPlayer);
+            playerHealth.TakeDamage(data.OverloadDamageToPlayer);
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
-            StartCoroutine(OverloadRoutine(data.OverheatDuration));
+            StartCoroutine(OverloadRoutine(data.OverloadDuration));
         }
 
         private void CancelCharging()
@@ -375,7 +375,7 @@ namespace SimpleCharController
                     break;
 
                 case TypeShooting.Burst:
-                    ReleaseBurstShot(data, data.lvl0BurstSettings, true);
+                    ReleaseBurstShot(data, data.lvl0SpreadSettings, true);
                     break;
 
                 case TypeShooting.Spread:
@@ -413,7 +413,7 @@ namespace SimpleCharController
         {
             if (ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl0AmmoCost))
             {
-                SpawnProjectile(data.ChargedLvl0ProjectilePrefab, data.ChargedLvl0ProjectileSpeed, 0, Vector3.zero);
+                SpawnProjectile(data.ChargedLvl0ProjectilePrefab, data.ChargedLvl0ProjectileSpeed, data.baseDamageLvl0, 0, Vector3.zero, TypeMovement.Linear);
             }
         }
 
@@ -421,40 +421,49 @@ namespace SimpleCharController
         {
             GameObject projectilePrefab = null;
             float speed = 0f;
+            float damage = 0f;
             int ammoCost = 0;
+            TypeMovement typeMovement = TypeMovement.Linear;
 
             switch (chargeLevel)
             {
                 case 1:
                     projectilePrefab = data.ChargedLvl1ProjectilePrefab;
                     speed = data.ChargedLvl1ProjectileSpeed;
+                    damage = data.baseDamageLvl1;
                     ammoCost = data.ChargedLvl1AmmoCost;
+                    typeMovement = data.typeMovementLvl1;
                     break;
                 case 2:
                     projectilePrefab = data.ChargedLvl2ProjectilePrefab;
                     speed = data.ChargedLvl2ProjectileSpeed;
+                    damage = data.baseDamageLvl2;
                     ammoCost = data.ChargedLvl2AmmoCost;
+                    typeMovement = data.typeMovementLvl2;
                     break;
                 case 3:
                     projectilePrefab = data.ChargedLvl3ProjectilePrefab;
                     speed = data.ChargedLvl3ProjectileSpeed;
+                    damage = data.baseDamageLvl3;
                     ammoCost = data.ChargedLvl3AmmoCost;
+                    typeMovement = data.typeMovementLvl3;
                     break;
             }
 
             if (projectilePrefab != null && ammoInventory.ConsumeAmmo(currentProjectileType, ammoCost))
             {
-                SpawnProjectile(projectilePrefab, speed, chargeLevel, Vector3.zero);
+                SpawnProjectile(projectilePrefab, speed, damage, chargeLevel, Vector3.zero, typeMovement);
             }
 
             ResetCharged();
         }
 
-        private void ReleaseBurstShot(WeaponProjectileData data, BurstSettings burstSettings, bool isCharged)
+        private void ReleaseBurstShot(WeaponProjectileData data, SpreadWeaponSettings burstSettings, bool isCharged)
         {
             GameObject projectilePrefab = isCharged ? data.ChargedLvl0ProjectilePrefab : data.StandardProjectilePrefab;
             float speed = isCharged ? data.ChargedLvl0ProjectileSpeed : data.StandardProjectileSpeed;
             int ammoCost = isCharged ? data.ChargedLvl0AmmoCost : data.StandardAmmoCost;
+            float damage = isCharged ? data.baseDamageLvl0 : data.baseDamageStandard;
 
             if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost * burstSettings.projectilesCount))
                 return;
@@ -474,7 +483,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1);
+                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
                 }
             }
@@ -482,11 +491,12 @@ namespace SimpleCharController
 
         //-----------------------------------------------------------------------------------
 
-        private IEnumerator SpreadFireRoutine(WeaponProjectileData data, SpreadSettings spreadSettings, bool isCharged)
+        private IEnumerator SpreadFireRoutine(WeaponProjectileData data, SpreadWeaponSettings spreadSettings, bool isCharged)
         {
             GameObject projectilePrefab = isCharged ? data.ChargedLvl0ProjectilePrefab : data.StandardProjectilePrefab;
             float speed = isCharged ? data.ChargedLvl0ProjectileSpeed : data.StandardProjectileSpeed;
             int ammoCost = isCharged ? data.ChargedLvl0AmmoCost : data.StandardAmmoCost;
+            float damage = isCharged ? data.baseDamageLvl0 : data.baseDamageStandard;
 
             if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost * spreadSettings.projectilesCount))
                 yield break;
@@ -509,7 +519,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1);
+                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
                 }
 
@@ -589,10 +599,12 @@ namespace SimpleCharController
 
         //-----------------------------------------------------------------------------------
 
-        private void SpawnProjectile(GameObject projectilePrefab, float speed, int chargeLevel, Vector3 directionOffset)
+        private void SpawnProjectile(GameObject projectilePrefab, float speed, float damage, int chargeLevel, Vector3 directionOffset, TypeMovement typeMovement)
         {
             Vector3 targetPoint = GetTargetPoint();
             Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
+
+            
 
             if (directionOffset != Vector3.zero)
             {
@@ -606,7 +618,7 @@ namespace SimpleCharController
 
             if (projectileScript != null)
             {
-                projectileScript.Initialize(speed, gameObject, currentProjectileType, chargeLevel);
+                projectileScript.Initialize(speed, gameObject, currentProjectileType, chargeLevel, damage, typeMovement);
             }
         }
 

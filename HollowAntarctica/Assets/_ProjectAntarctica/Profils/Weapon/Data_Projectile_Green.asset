@@ -15,37 +15,31 @@ MonoBehaviour:
   Type: 0
   StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
     type: 3}
-  typeShootingStandard: 1
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
-  StandardFireRate: 24.22
+  StandardFireRate: 5
   baseDamageStandard: 0
-  standardBurstSettings:
-    projectilesCount: 10
-    spreadAngle: 5
+  typeShootingStandard: 0
   standardSpreadSettings:
-    projectilesCount: 6
-    spreadAngle: 2
-    delayBetweenShots: 0
+    projectilesCount: 3
+    spreadAngle: 0.5
+    delayBetweenShots: 0.1
   ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
     type: 3}
-  typeShootingLvl0: 2
   ChargedLvl0AmmoCost: 2
   ChargedLvl0ProjectileSpeed: 30
-  Lvl0FireRate: 2.5
+  Lvl0FireRate: 1
   baseDamageLvl0: 0
-  lvl0BurstSettings:
-    projectilesCount: 6
-    spreadAngle: 2
+  typeShootingLvl0: 2
   lvl0SpreadSettings:
     projectilesCount: 5
-    spreadAngle: 15
+    spreadAngle: 3
     delayBetweenShots: 0.1
   ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 518be6f33c43de7479f650b8d9f47ff7,
     type: 3}
-  typeMovementLvl1: 0
+  typeMovementLvl1: 1
   ChargedLvl1AmmoCost: 2
-  ChargedLvl1ProjectileSpeed: 25
+  ChargedLvl1ProjectileSpeed: 5
   baseDamageLvl1: 0
   ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
     type: 3}
@@ -59,5 +53,5 @@ MonoBehaviour:
   ChargedLvl3AmmoCost: 8
   ChargedLvl3ProjectileSpeed: 15
   baseDamageLvl3: 0
-  OverheatDamageToPlayer: 10
-  OverheatDuration: 0.5
+  OverloadDamageToPlayer: 10
+  OverloadDuration: 0.5

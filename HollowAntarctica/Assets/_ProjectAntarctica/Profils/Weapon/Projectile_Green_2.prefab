@@ -5012,9 +5012,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 276402845278748850}
-  Damage: 4
-  Type: 0
-  ChargeLevel: 0
+  curveSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.17665443
+      outSlope: -0.043842673
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.4860392
+    - serializedVersion: 3
+      time: 0.1
+      value: 0.1
+      inSlope: -0.011278503
+      outSlope: -0.25
+      tangentMode: 65
+      weightedMode: 2
+      inWeight: 0.3155753
+      outWeight: 0.029892236
+    - serializedVersion: 3
+      time: 0.5
+      value: 0
+      inSlope: -0.25
+      outSlope: -0.0066342056
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.09366446
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   freezeDuration: 0
   freezePower: 0
   healAmount: 4
