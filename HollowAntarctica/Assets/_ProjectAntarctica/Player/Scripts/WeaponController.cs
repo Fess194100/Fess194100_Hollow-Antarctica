@@ -10,7 +10,8 @@ namespace SimpleCharController
         [SerializeField] private SimpleInputActions inputActions;
         [SerializeField] private Transform firePoint;
         [SerializeField] private AmmoInventory ammoInventory;
-        [SerializeField] private PlayerHealth playerHealth;
+        [SerializeField] private EssenceHealth playerHealth;
+        [SerializeField] private RectTransform crosshairRectTransform;
 
         [Header("Weapon Settings")]
         [SerializeField] private LayerMask targetingMask = ~0;
@@ -18,6 +19,8 @@ namespace SimpleCharController
         [SerializeField] private float timeToMaxCharge = 2f;
         [SerializeField] private float overheatThresholdTime = 0.5f;
         [SerializeField] private float autoFireRateMultiplier = 1f;
+        [SerializeField] private Vector2 offsetAim;
+        [SerializeField] private AnimationCurve offsetAimYAtFOV;
 
         [Header("Weapon State")]
         [SerializeField] private ProjectileType currentProjectileType = ProjectileType.Green;
@@ -226,7 +229,7 @@ namespace SimpleCharController
             StopAllCoroutines();
             stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
-            playerHealth.TakeDamage(data.OverloadDamageToPlayer);
+            playerHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3);
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
             StartCoroutine(OverloadRoutine(data.OverloadDuration));
         }
@@ -626,8 +629,8 @@ namespace SimpleCharController
         {
             if (_mainCamera == null) return firePoint.position + firePoint.forward * 100f;
 
-            Vector3 screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-            Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
+            Vector3 uiWorldPosition = GetUIElementWorldPosition();
+            Ray ray = _mainCamera.ScreenPointToRay(uiWorldPosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 1000f, targetingMask))
@@ -638,6 +641,16 @@ namespace SimpleCharController
             {
                 return ray.origin + ray.direction * 1000f;
             }
+        }
+
+        private Vector3 GetUIElementWorldPosition()
+        {
+            Vector2 screenPoint;
+            if (crosshairRectTransform != null) screenPoint = RectTransformUtility.WorldToScreenPoint(_mainCamera, crosshairRectTransform.position) + offsetAim;
+            else screenPoint = new Vector2 (Screen.width * 0.5f, Screen.height * 0.5f) + offsetAim;
+
+            screenPoint.y += offsetAimYAtFOV.Evaluate(_mainCamera.fieldOfView);
+            return new Vector3(screenPoint.x, screenPoint.y, 0f);
         }
 
         private WeaponProjectileData GetCurrentProjectileData()

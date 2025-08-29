@@ -499,7 +499,7 @@ namespace SimpleCharController
 
         private void CameraRotation()
         {
-            if (_input.look.sqrMagnitude >= 0.01 && !LockCameraPosition)
+            if (_input.look.sqrMagnitude >= 0.002 && !LockCameraPosition)
             {
                 _cinemachineTargetYaw += _input.look.x * Time.fixedDeltaTime * sensativeCam;
                 _cinemachineTargetPitch += _input.look.y * Time.fixedDeltaTime * sensativeCam;
@@ -523,6 +523,7 @@ namespace SimpleCharController
             currentFOV = Mathf.SmoothDamp(currentFOV, _currentSpeed , ref velocityFOV, smoothTimeFOV);
             FOV = FOV_AtSpeed.Evaluate(currentFOV);
             cinemachineFollowZoom.m_MaxFOV = FOV;
+            cinemachineFollowZoom.m_MinFOV = FOV;
 
             if (currentFOV <= 0.01f) currentFOV = velocityFOV = 0;
         }

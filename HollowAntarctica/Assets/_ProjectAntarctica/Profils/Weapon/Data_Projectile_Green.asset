@@ -18,8 +18,8 @@ MonoBehaviour:
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
   StandardFireRate: 5
-  baseDamageStandard: 0
-  typeShootingStandard: 0
+  baseDamageStandard: 1
+  typeShootingStandard: 1
   standardSpreadSettings:
     projectilesCount: 3
     spreadAngle: 0.5
@@ -28,8 +28,8 @@ MonoBehaviour:
     type: 3}
   ChargedLvl0AmmoCost: 2
   ChargedLvl0ProjectileSpeed: 30
-  Lvl0FireRate: 1
-  baseDamageLvl0: 0
+  Lvl0FireRate: 3
+  baseDamageLvl0: 2
   typeShootingLvl0: 2
   lvl0SpreadSettings:
     projectilesCount: 5
@@ -39,19 +39,19 @@ MonoBehaviour:
     type: 3}
   typeMovementLvl1: 1
   ChargedLvl1AmmoCost: 2
-  ChargedLvl1ProjectileSpeed: 5
-  baseDamageLvl1: 0
+  ChargedLvl1ProjectileSpeed: 12.5
+  baseDamageLvl1: 10
   ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
     type: 3}
   typeMovementLvl2: 1
   ChargedLvl2AmmoCost: 4
-  ChargedLvl2ProjectileSpeed: 20
-  baseDamageLvl2: 0
+  ChargedLvl2ProjectileSpeed: 10
+  baseDamageLvl2: 20
   ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 85905a7d6ae03444b8dc82e10ef82097,
     type: 3}
-  typeMovementLvl3: 1
+  typeMovementLvl3: 0
   ChargedLvl3AmmoCost: 8
-  ChargedLvl3ProjectileSpeed: 15
-  baseDamageLvl3: 0
+  ChargedLvl3ProjectileSpeed: 12
+  baseDamageLvl3: 30
   OverloadDamageToPlayer: 10
   OverloadDuration: 0.5

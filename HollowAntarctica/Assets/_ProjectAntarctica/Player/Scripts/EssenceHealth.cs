@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace SimpleCharController
 {
-    public class PlayerHealth : MonoBehaviour
+    public class EssenceHealth : MonoBehaviour, IDamageable
     {
         [Header("Health Settings")]
         [SerializeField] private float maxHealth = 100f;
@@ -24,7 +24,7 @@ namespace SimpleCharController
         }
 
         // Нанесение урона игроку
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel)
         {
             if (_isDead) return;
 

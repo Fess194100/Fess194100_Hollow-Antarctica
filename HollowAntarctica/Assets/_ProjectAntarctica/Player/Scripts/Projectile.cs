@@ -75,7 +75,7 @@ namespace SimpleCharController
                     if (wasKilled)
                     {
                         // Восстанавливаем здоровье владельцу
-                        _owner.GetComponent<PlayerHealth>().RestoreHealth(healAmount);
+                        _owner.GetComponent<EssenceHealth>().RestoreHealth(healAmount);
                     }
                 }
             }
