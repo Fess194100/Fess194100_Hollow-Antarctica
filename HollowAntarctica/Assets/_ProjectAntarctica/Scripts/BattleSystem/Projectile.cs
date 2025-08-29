@@ -9,16 +9,19 @@ namespace SimpleCharController
 
         [Header("Setting Projectile")]
         public AnimationCurve curveSpeed = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
-        
-        public float freezeDuration;
-        public float freezePower;
-        public float healAmount;
+
+        [Header("Setting Effects")]
+        public bool useEffect;
+        public float effectDuration;
+        public float effectPower;
+        public float effectRadius;
 
         [Header("Visual Effects")]
         [SerializeField] private GameObject impactVFX;
 
         
         private GameObject _owner;
+        private EssenceHealth _ownerEssenceHealth;
         private TypeMovement _typeMovement;
         private ProjectileType _type;
         private float _speed;
@@ -27,10 +30,12 @@ namespace SimpleCharController
         private float _lifeTime;
         private float _dieTime;
         private float _speedMultiplier = 1f;
-        public void Initialize(float speed, GameObject owner, ProjectileType projectileType, int chargeLevel, float damage, TypeMovement typeMovement)
+
+        public void Initialize(float speed, GameObject owner, EssenceHealth essenceHealth, ProjectileType projectileType, int chargeLevel, float damage, TypeMovement typeMovement)
         {
             _speed = speed;
             _owner = owner;
+            _ownerEssenceHealth = essenceHealth;
             _chargeLevel = chargeLevel;
             _damage = damage;
             _typeMovement = typeMovement;
@@ -59,37 +64,37 @@ namespace SimpleCharController
         }
         private void OnCollisionEnter(Collision collision)
         {
-            // 1. Не взаимодействуем с владельцем
             if (collision.gameObject == _owner) return;
 
-            // 2. Наносим урон, если объект может его получить
             IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+
             if (damageable != null)
             {
                 damageable.TakeDamage(_damage, _type, _chargeLevel);
+                bool wasKilled = damageable.IsDead();
 
-                // 3. Применяем эффекты (например, вампиризм проверяем здесь)
-                if (_type == ProjectileType.Green && _chargeLevel >= 2)
+                //Применяем эффекты
+                if (useEffect && _chargeLevel >= 1)
                 {
-                    bool wasKilled = damageable.IsDead();
-                    if (wasKilled)
+                    switch (_type)
                     {
-                        // Восстанавливаем здоровье владельцу
-                        _owner.GetComponent<EssenceHealth>().RestoreHealth(healAmount);
+                        case ProjectileType.Green: EffectGreen(wasKilled); break;
+                        case ProjectileType.Blue: EffectBlue(); break;
+                        case ProjectileType.Orange: EffectOrange(); break;
                     }
                 }
             }
             else //Debug.LogWarning("IDamageable damageable = null" + collision.gameObject);
 
-            // 4. Для синего снаряда - заморозка (применим эффект к цели)
+            /*// 4. Для синего снаряда - заморозка (применим эффект к цели)
             if (_type == ProjectileType.Blue)
             {
                 IStatusEffectTarget effectTarget = collision.gameObject.GetComponent<IStatusEffectTarget>();
                 if (effectTarget != null)
                 {
-                    effectTarget.ApplyFreezeEffect(freezePower, freezeDuration);
+                    effectTarget.ApplyFreezeEffect(effectPower, effectDuration);
                 }
-            }
+            }*/
 
             // 5. Спавним VFX взрыва/попадания
             Instantiate(impactVFX, transform.position, transform.rotation);
@@ -99,6 +104,31 @@ namespace SimpleCharController
         private void DestroyProjectile()
         {
             Destroy(gameObject);
+        }
+
+        private void EffectGreen(bool wasKilled)
+        {
+            switch (_chargeLevel) // для добавления разных механик. Если не добавлять, то switch убрать .
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+
+            if (wasKilled) _ownerEssenceHealth.RestoreHealth(effectPower);
+        }
+
+        private void EffectBlue()
+        {
+
+        }
+
+        private void EffectOrange()
+        {
+
         }
     }
 }

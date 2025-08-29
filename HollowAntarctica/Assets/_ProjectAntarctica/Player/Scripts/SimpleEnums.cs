@@ -45,4 +45,13 @@ namespace SimpleCharController
         Linear,
         Parabular,
     }
+
+    public enum BodyPart
+    {
+        Head,
+        Body,
+        Arm,
+        Leg,
+        WeakSpot
+    }
 }

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,13 +6,16 @@ namespace SimpleCharController
 {
     public class EssenceHealth : MonoBehaviour, IDamageable
     {
+        public bool DeBug = false;
+
+        [Space(10)]
         [Header("Health Settings")]
         [SerializeField] private float maxHealth = 100f;
         [SerializeField] private float currentHealth = 100f;
 
         [Header("Events")]
         public UnityEvent<float> OnHealthChanged; // Текущее здоровье
-        public UnityEvent<float> OnDamageTaken;   // Количество полученного урона
+        public UnityEvent<float, BodyPart> OnDamageTaken;   // Количество полученного урона
         public UnityEvent<float> OnHealthRestored; // Количество восстановленного здоровья
         public UnityEvent OnDeath;
 
@@ -24,20 +28,29 @@ namespace SimpleCharController
         }
 
         // Нанесение урона игроку
-        public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel)
+        public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel, BodyPart bodyPart)
         {
-            if (_isDead) return;
-
-            currentHealth -= damage;
-            currentHealth = Mathf.Max(0, currentHealth);
-
-            OnHealthChanged?.Invoke(currentHealth);
-            OnDamageTaken?.Invoke(damage);
-
-            if (currentHealth <= 0f)
+            if (!_isDead)
             {
-                Die();
+                currentHealth -= damage;
+                currentHealth = Mathf.Max(0, currentHealth);
+
+                if (currentHealth <= 0.001f)
+                {
+                    Die();
+                }
+                else
+                {
+                    OnHealthChanged?.Invoke(currentHealth);
+                    OnDamageTaken?.Invoke(damage, bodyPart);
+                }
             }
+        }
+
+        public void TakeDamage(float damage, ProjectileType damageType, int chargeLevel)
+        {
+            // Перегрузка для обратной совместимости
+            TakeDamage(damage, damageType, chargeLevel, BodyPart.Body);
         }
 
         // Восстановление здоровья игроку

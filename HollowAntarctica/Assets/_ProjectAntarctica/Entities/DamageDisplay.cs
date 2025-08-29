@@ -1,8 +1,6 @@
 using UnityEngine;
 using TMPro;
 using SimpleCharController;
-using HutongGames.PlayMaker.Actions;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageDisplay : MonoBehaviour
 {
@@ -42,12 +40,12 @@ public class DamageDisplay : MonoBehaviour
     }
 
     // Метод для подписки на событие урона
-    public void OnDamageTakenHandler(float damageAmount)
+    public void OnDamageTakenHandler(float damageAmount, BodyPart bodyPart)
     {
-        DisplayDamage(damageAmount);
+        DisplayDamage(damageAmount, bodyPart);
     }
 
-    void DisplayDamage(float damageAmount)
+    void DisplayDamage(float damageAmount, BodyPart bodyPart)
     {
         _totalDamage += damageAmount;
         int damageIndex = Mathf.RoundToInt(_totalDamage);
@@ -59,7 +57,7 @@ public class DamageDisplay : MonoBehaviour
     public void ResetTotalDamage()
     {
         _totalDamage = 0;
-        DisplayDamage(_totalDamage);
+        DisplayDamage(_totalDamage, BodyPart.Body);
     }
     void OnDestroy()
     {

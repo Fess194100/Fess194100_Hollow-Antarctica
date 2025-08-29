@@ -486,7 +486,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
+                        projectileScript.Initialize(speed, gameObject, playerHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
                 }
             }
@@ -522,7 +522,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
+                        projectileScript.Initialize(speed, gameObject, playerHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
                 }
 
@@ -621,7 +621,7 @@ namespace SimpleCharController
 
             if (projectileScript != null)
             {
-                projectileScript.Initialize(speed, gameObject, currentProjectileType, chargeLevel, damage, typeMovement);
+                projectileScript.Initialize(speed, gameObject, playerHealth, currentProjectileType, chargeLevel, damage, typeMovement);
             }
         }
 
