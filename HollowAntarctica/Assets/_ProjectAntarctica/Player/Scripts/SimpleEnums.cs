@@ -54,4 +54,12 @@ namespace SimpleCharController
         Leg,
         WeakSpot
     }
+
+    public enum StatusEffectType
+    {
+        None,
+        Freeze,     // Заморозка (полная остановка)
+        Frostbite,  // Обморожение (замедление)
+        Stun        // Оглушение
+    }
 }

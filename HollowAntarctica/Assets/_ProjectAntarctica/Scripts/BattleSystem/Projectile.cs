@@ -22,6 +22,7 @@ namespace SimpleCharController
         
         private GameObject _owner;
         private EssenceHealth _ownerEssenceHealth;
+        private HandlerCombatEffects _handlerCombatEffects;
         private TypeMovement _typeMovement;
         private ProjectileType _type;
         private float _speed;
@@ -74,29 +75,22 @@ namespace SimpleCharController
                 bool wasKilled = damageable.IsDead();
 
                 //Применяем эффекты
-                if (useEffect && _chargeLevel >= 1)
+                if (useEffect && _chargeLevel >= 0)
                 {
+                    _handlerCombatEffects = damageable.GetCombatEffects();
                     switch (_type)
                     {
                         case ProjectileType.Green: EffectGreen(wasKilled); break;
-                        case ProjectileType.Blue: EffectBlue(); break;
-                        case ProjectileType.Orange: EffectOrange(); break;
+                        case ProjectileType.Blue: EffectBlue(wasKilled); break;
+                        case ProjectileType.Orange: EffectOrange(wasKilled); break;
                     }
                 }
             }
-            else //Debug.LogWarning("IDamageable damageable = null" + collision.gameObject);
-
-            /*// 4. Для синего снаряда - заморозка (применим эффект к цели)
-            if (_type == ProjectileType.Blue)
+            else
             {
-                IStatusEffectTarget effectTarget = collision.gameObject.GetComponent<IStatusEffectTarget>();
-                if (effectTarget != null)
-                {
-                    effectTarget.ApplyFreezeEffect(effectPower, effectDuration);
-                }
-            }*/
+                //Столкновение снаряда не с сущностью (Стена, колонна, пол, потолок...)
+            }
 
-            // 5. Спавним VFX взрыва/попадания
             Instantiate(impactVFX, transform.position, transform.rotation);
             DestroyProjectile();
         }
@@ -110,6 +104,8 @@ namespace SimpleCharController
         {
             switch (_chargeLevel) // для добавления разных механик. Если не добавлять, то switch убрать .
             {
+                case 0:
+                    break;
                 case 1:
                     break;
                 case 2:
@@ -121,14 +117,41 @@ namespace SimpleCharController
             if (wasKilled) _ownerEssenceHealth.RestoreHealth(effectPower);
         }
 
-        private void EffectBlue()
+        private void EffectBlue(bool wasKilled)
         {
+            if (_handlerCombatEffects == null) return;
 
+            switch (_chargeLevel)
+            {
+                case 0:
+                    _handlerCombatEffects.ApplyFrostbiteEffect(effectPower, effectDuration);
+                    break;
+
+                case 1:
+                    _handlerCombatEffects.ApplyFrostbiteEffect(effectPower, effectDuration);
+                    break;
+
+                case 2:
+                    _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration, effectRadius, wasKilled, transform.position);
+                    break;
+
+                case 3: // Заряженный 3 уровень - полная заморозка + взрыв при убийстве
+                    _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration, effectRadius, wasKilled, transform.position);
+                    break;
+            }
         }
 
-        private void EffectOrange()
+        private void EffectOrange(bool wasKilled)
         {
-
+            // Заглушка для оранжевых снарядов - будет реализовано позже
+            if (_handlerCombatEffects != null)
+            {
+                // Базовый эффект оглушения для оранжевых снарядов
+                if (_chargeLevel >= 2)
+                {
+                    _handlerCombatEffects.ApplyStunEffect(effectDuration);
+                }
+            }
         }
     }
 }

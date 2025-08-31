@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 8231616474466260450}
   - component: {fileID: 5029110698668422963}
   - component: {fileID: 2626202641052996304}
+  - component: {fileID: 2844184010569375799}
   - component: {fileID: 1267316530732537045}
   - component: {fileID: 1925928798177927837}
   - component: {fileID: 9216410292652281968}
@@ -239,6 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
+  handlerCombatEffects: {fileID: 0}
   maxHealth: 100
   currentHealth: 100
   OnHealthChanged:
@@ -289,6 +291,24 @@ MonoBehaviour:
           m_StringArgument: OnDead
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2844184010569375799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996572738830793022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d6ee0b65029db4593b983b956419dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeBug: 1
+  movementController: {fileID: 0}
+  characterController: {fileID: 0}
+  currentEffect: 0
+  effectPower: 0
+  effectDuration: 0
 --- !u!114 &1267316530732537045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4782,6 +4802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 1
   damageMultiplier: 1
 --- !u!1 &2167971030712250812 stripped
@@ -4824,6 +4845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 2
   damageMultiplier: 0.9
 --- !u!1 &2865587024667741946 stripped
@@ -4866,6 +4888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 1
   damageMultiplier: 2
 --- !u!1 &3791642297056470241 stripped
@@ -4908,6 +4931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 3
   damageMultiplier: 0.6
 --- !u!1 &3819684994166443453 stripped
@@ -4950,6 +4974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 2
   damageMultiplier: 0.7
 --- !u!1 &4294870818075079006 stripped
@@ -4992,6 +5017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 3
   damageMultiplier: 0.6
 --- !u!1 &5384047487796890200 stripped
@@ -5034,6 +5060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 3
   damageMultiplier: 0.8
 --- !u!1 &5540426186016231836 stripped
@@ -5076,6 +5103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 3
   damageMultiplier: 0.8
 --- !u!1 &5818851440918207439 stripped
@@ -5117,7 +5145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
+  parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 4
   damageMultiplier: 10
 --- !u!1 &6385320534889932918 stripped
@@ -5160,6 +5189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 2
   damageMultiplier: 0.9
 --- !u!1 &6428029289983105476 stripped
@@ -5202,5 +5232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentHealth: {fileID: 2626202641052996304}
+  parentHandlerEffects: {fileID: 2844184010569375799}
   bodyPart: 2
   damageMultiplier: 0.7

@@ -8,6 +8,9 @@ namespace SimpleCharController
     {
         public bool DeBug = false;
 
+        [Header("References")]
+        [SerializeField] private HandlerCombatEffects handlerCombatEffects;
+
         [Space(10)]
         [Header("Health Settings")]
         [SerializeField] private float maxHealth = 100f;
@@ -123,6 +126,11 @@ namespace SimpleCharController
         public float GetHealthPercentage()
         {
             return currentHealth / maxHealth;
+        }
+
+        public HandlerCombatEffects GetCombatEffects()
+        {
+            return handlerCombatEffects;
         }
     }
 }

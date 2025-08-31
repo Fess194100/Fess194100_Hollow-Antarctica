@@ -6,15 +6,20 @@ namespace SimpleCharController
     {
         [Header("Hit Box Settings")]
         [SerializeField] private EssenceHealth parentHealth;
+        [SerializeField] private HandlerCombatEffects parentHandlerEffects;
         [SerializeField] private BodyPart bodyPart = BodyPart.Body;
         [SerializeField] private float damageMultiplier = 1f;
 
         private void Awake()
         {
-            // Автоматически находим здоровье если не назначено
             if (parentHealth == null)
             {
                 parentHealth = GetComponentInParent<EssenceHealth>();
+            }
+
+            if (parentHandlerEffects == null)
+            {
+                parentHandlerEffects = GetComponentInParent<HandlerCombatEffects>();
             }
         }
 
@@ -30,6 +35,11 @@ namespace SimpleCharController
         public bool IsDead()
         {
             return parentHealth != null && parentHealth.IsDead();
+        }
+
+        public HandlerCombatEffects GetCombatEffects()
+        {
+            return parentHandlerEffects;
         }
 
         // Для быстрой настройки в инспекторе

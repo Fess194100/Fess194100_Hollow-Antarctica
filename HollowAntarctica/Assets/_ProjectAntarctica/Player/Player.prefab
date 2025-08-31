@@ -9156,7 +9156,7 @@ Transform:
   m_GameObject: {fileID: 3034349185888348970}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.33, y: 1.6, z: -2.4}
+  m_LocalPosition: {x: 0.33, y: 1.6, z: -2.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10290,6 +10290,7 @@ MonoBehaviour:
     m_Bits: 823
   projectileData:
   - {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
+  - {fileID: 11400000, guid: 653db812ef4376d4f818479e6ebb98c3, type: 2}
   timeToMaxCharge: 2
   overheatThresholdTime: 0.5
   autoFireRateMultiplier: 1
@@ -10358,6 +10359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e205fe4d967bed4688c172fffd22282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeBug: 0
+  handlerCombatEffects: {fileID: 0}
   maxHealth: 100
   currentHealth: 100
   OnHealthChanged:
@@ -22524,7 +22527,7 @@ Transform:
   m_GameObject: {fileID: 7183716664237078960}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33, y: 1.6, z: -2.4}
+  m_LocalPosition: {x: 0.33, y: 1.6, z: -2.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
