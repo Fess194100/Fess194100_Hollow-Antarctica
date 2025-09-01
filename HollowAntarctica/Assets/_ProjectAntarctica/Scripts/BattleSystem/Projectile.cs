@@ -14,12 +14,13 @@ namespace SimpleCharController
         public bool useEffect;
         public float effectDuration;
         public float effectPower;
-        public float effectRadius;
+        //public float effectRadius;
 
         [Header("Visual Effects")]
         [SerializeField] private GameObject impactVFX;
+        [SerializeField] private GameObject prefabCombatEffect;
 
-        
+
         private GameObject _owner;
         private EssenceHealth _ownerEssenceHealth;
         private HandlerCombatEffects _handlerCombatEffects;
@@ -132,11 +133,13 @@ namespace SimpleCharController
                     break;
 
                 case 2:
-                    _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration, effectRadius, wasKilled, transform.position);
+                    _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration);
+                    if (wasKilled) CreateAreaEffect();
                     break;
 
                 case 3: // Заряженный 3 уровень - полная заморозка + взрыв при убийстве
-                    _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration, effectRadius, wasKilled, transform.position);
+                    _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration);
+                    if (wasKilled) CreateAreaEffect();
                     break;
             }
         }
@@ -151,6 +154,16 @@ namespace SimpleCharController
                 {
                     _handlerCombatEffects.ApplyStunEffect(effectDuration);
                 }
+            }
+        }
+
+        private void CreateAreaEffect()
+        {
+            GameObject areaEffect = Instantiate(prefabCombatEffect, transform.position, Quaternion.identity);
+            AreaCombatEffect areaScript = areaEffect.GetComponent<AreaCombatEffect>();
+            if (areaScript != null)
+            {
+                areaScript.Initialize(_owner, _ownerEssenceHealth, _handlerCombatEffects);
             }
         }
     }

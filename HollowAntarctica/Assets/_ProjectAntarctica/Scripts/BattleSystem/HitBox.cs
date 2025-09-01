@@ -9,6 +9,7 @@ namespace SimpleCharController
         [SerializeField] private HandlerCombatEffects parentHandlerEffects;
         [SerializeField] private BodyPart bodyPart = BodyPart.Body;
         [SerializeField] private float damageMultiplier = 1f;
+        [SerializeField] public bool isAffectedByAreaEffects;
 
         private void Awake()
         {

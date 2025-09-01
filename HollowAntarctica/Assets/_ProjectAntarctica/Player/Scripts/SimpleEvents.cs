@@ -28,4 +28,15 @@ namespace SimpleCharController
         public UnityEvent OnChargeLevel2Reached;
         public UnityEvent OnOverloadFinished;
     }
+
+    [Serializable]
+    public class CombatEffectEvents
+    {
+        public UnityEvent OnFrostbite;
+        public UnityEvent OnFrostbiteComplete;
+
+        [Space(10)]
+        public UnityEvent OnFreeze;
+        public UnityEvent OnFreezeComplete;
+    }
 }

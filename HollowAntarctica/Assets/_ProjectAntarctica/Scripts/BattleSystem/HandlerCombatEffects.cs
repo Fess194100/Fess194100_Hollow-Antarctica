@@ -11,11 +11,11 @@ namespace SimpleCharController
         [SerializeField] private MonoBehaviour movementController; // Базовый контроллер движения
         [SerializeField] private MonoBehaviour characterController; // Контроллер персонажа
 
-        [Header("Current Effects")]
-        [SerializeField] private StatusEffectType currentEffect = StatusEffectType.None;
-        [SerializeField] private float effectPower = 0f;
-        [SerializeField] private float effectDuration = 0f;
+        [Space(10)]
+        [Header("CombatEvents")]
+        public CombatEffectEvents combatEffectEvents;
 
+        private StatusEffectType currentEffect = StatusEffectType.None;
         private Coroutine _effectCoroutine;
         private float _originalSpeed = 1f;
 
@@ -37,26 +37,31 @@ namespace SimpleCharController
                          $"Power: {freezePower:F2}" + $"║ Duration: {freezeDuration:F2}s");
             }
 
-            ApplyStatusEffect(StatusEffectType.Frostbite, freezePower, freezeDuration);
+            ApplyFrostbite(freezePower);
+            ApplyStatusEffect(StatusEffectType.Frostbite, freezeDuration);
+            combatEffectEvents.OnFrostbite.Invoke();
         }
 
-        public void ApplyFreezeEffect(float freezePower, float freezeDuration, float freezeRadius, bool wasKilled, Vector3 positionArea)
+        public void ApplyFreezeEffect(float freezePower, float freezeDuration)
         {
             if (DeBug)
             {
                 Debug.Log($"<color=#00a8ff>[FREEZE EFFECT]</color>\n" +
-                         $"Power: {freezePower:F2}" + $"║ Duration: {freezeDuration:F2}s" + $"║ Radius: {freezeRadius:F2}" + $"║ Target Died: {wasKilled}" + $"║ Position: {positionArea}");
+                         $"Power: {freezePower:F2}" + $"║ Duration: {freezeDuration:F2}s");
             }
 
-            ApplyStatusEffect(StatusEffectType.Freeze, freezePower, freezeDuration);
+            ApplyFreeze(freezePower);
+            ApplyStatusEffect(StatusEffectType.Freeze, freezeDuration);
+            combatEffectEvents.OnFreeze.Invoke();
         }
 
         public void ApplyStunEffect(float duration)
         {
-            ApplyStatusEffect(StatusEffectType.Stun, 1f, duration);
+            ApplyStun(duration);
+            ApplyStatusEffect(StatusEffectType.Stun, duration);
         }
 
-        private void ApplyStatusEffect(StatusEffectType effectType, float power, float duration)
+        private void ApplyStatusEffect(StatusEffectType effectType, float duration)
         {
             // Останавливаем предыдущий эффект
             if (_effectCoroutine != null)
@@ -66,44 +71,18 @@ namespace SimpleCharController
             }
 
             currentEffect = effectType;
-            effectPower = power;
-            effectDuration = duration;
-
-            _effectCoroutine = StartCoroutine(EffectCoroutine(effectType, power, duration));
+            _effectCoroutine = StartCoroutine(EffectCoroutine(duration));
         }
 
-        private IEnumerator EffectCoroutine(StatusEffectType effectType, float power, float duration)
+        private IEnumerator EffectCoroutine(float duration)
         {
-            ApplyEffect(effectType, power);
-
             if (DeBug) Debug.Log($"Effect started. Duration: {duration}");
 
             yield return new WaitForSeconds(duration);
 
-            RemoveEffect(effectType);
+            if (DeBug) Debug.Log($"Effect ended: {currentEffect}");
+            RemoveEffect(currentEffect);
             currentEffect = StatusEffectType.None;
-            effectPower = 0f;
-            effectDuration = 0f;
-
-            if (DeBug) Debug.Log($"Effect ended: {effectType}");
-        }
-
-        private void ApplyEffect(StatusEffectType effectType, float power)
-        {
-            switch (effectType)
-            {
-                case StatusEffectType.Freeze:
-                    ApplyFreeze(power);
-                    break;
-
-                case StatusEffectType.Frostbite:
-                    ApplyFrostbite(power);
-                    break;
-
-                case StatusEffectType.Stun:
-                    ApplyStun(power);
-                    break;
-            }
         }
 
         private void RemoveEffect(StatusEffectType effectType)
@@ -141,6 +120,7 @@ namespace SimpleCharController
 
         private void RemoveFreeze()
         {
+            combatEffectEvents.OnFreezeComplete.Invoke();
             // Восстановление движения
             if (movementController != null)
             {
@@ -167,6 +147,7 @@ namespace SimpleCharController
 
         private void RemoveFrostbite()
         {
+            combatEffectEvents.OnFrostbiteComplete.Invoke();
             // Восстановление скорости
             if (movementController != null)
             {
@@ -232,16 +213,20 @@ namespace SimpleCharController
         #endregion
 
         #region =========== Публичные методы ================
-        public bool IsFrozen()
+        public bool IsFreeze()
         {
             return currentEffect == StatusEffectType.Freeze;
         }
 
-        public bool IsSlowed()
+        public bool IsFrostbite()
         {
             return currentEffect == StatusEffectType.Frostbite;
         }
 
+        public bool IsStun()
+        {
+            return currentEffect == StatusEffectType.Stun;
+        }
         public void ClearAllEffects()
         {
             if (_effectCoroutine != null)

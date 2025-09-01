@@ -132,8 +132,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   useEffect: 1
-  effectDuration: 0
-  effectPower: 1
+  effectDuration: 0.4
+  effectPower: 0.9
   effectRadius: 0
   impactVFX: {fileID: 5058106848113976763, guid: 09e5065d03cc6c1449f6a02cf3392cb8,
     type: 3}
