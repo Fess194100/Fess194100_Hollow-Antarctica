@@ -9,14 +9,13 @@ namespace SimpleCharController
         public bool DeBug = false;
         public bool showGizmos = false;
 
-        //References
-        /*[SerializeField] private SphereCollider sphereCollider;*/
-
         [Header("Area Effect Settings")]
+        public ProjectileType projectileType;
         public StatusEffectType effectType = StatusEffectType.None;
-        public float _effectDuration = 0;
-        public float _effectPower = 0;
-        public float _effectRadius = 0;
+        public float effectDamage;
+        public float effectDuration;
+        public float effectPower;
+        public float effectRadius;
 
         [Header("VFX Settings")]
         public VFXCombatEffect VFXCombatEffect;
@@ -47,12 +46,12 @@ namespace SimpleCharController
             ApplyEffectToExistingTargets();
 
             // Запускаем VFX
-            VFXCombatEffect.PlayAreaEffectVFX(effectType, _effectRadius);
+            VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
         }
 
         private void ApplyEffectToExistingTargets()
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, _effectRadius);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, effectRadius);
             foreach (Collider collider in colliders)
             {
                 ApplyEffectToTarget(collider.gameObject);
@@ -67,34 +66,34 @@ namespace SimpleCharController
 
         private void ApplyEffectToTarget(GameObject target)
         {
-            // Не применяем эффект к владельцу
-            //if (target == _owner) return;
-
-            // Ищем обработчик эффектов у цели
             HitBox hitBox = target.GetComponent<HitBox>();
 
             if (hitBox == null || !hitBox.isAffectedByAreaEffects) return;
 
+            EssenceHealth targetEssenceHealth = hitBox.GetEssenceHealth();
+
+            if (targetEssenceHealth != null && targetEssenceHealth != _ownerHealth)
+            {
+                hitBox.TakeDamage(effectDamage, projectileType, -2);
+            }
+
             HandlerCombatEffects targetHandler = hitBox.GetCombatEffects();
 
-            if (targetHandler == null) return;
-
-            // Не применяем эффект к самому себе (на случай если владелец тоже имеет HandlerCombatEffects)
-            if (targetHandler == _ownerHandlerCombatEffects) return;
+            if (targetHandler == null || targetHandler == _ownerHandlerCombatEffects) return;
 
             // Применяем соответствующий эффект
             switch (effectType)
             {
                 case StatusEffectType.Freeze:
-                    targetHandler.ApplyFreezeEffect(_effectPower, _effectDuration);
+                    targetHandler.ApplyFreezeEffect(effectPower, effectDuration);
                     break;
 
                 case StatusEffectType.Frostbite:
-                    targetHandler.ApplyFrostbiteEffect(_effectPower, _effectDuration);
+                    targetHandler.ApplyFrostbiteEffect(effectPower, effectDuration);
                     break;
 
                 case StatusEffectType.Stun:
-                    targetHandler.ApplyStunEffect(_effectDuration);
+                    targetHandler.ApplyStunEffect(effectDuration);
                     break;
             }
         }
@@ -122,7 +121,7 @@ namespace SimpleCharController
             if (!showGizmos) return;
 
             Gizmos.color = GetEffectColor();
-            Gizmos.DrawWireSphere(transform.position, _effectRadius);
+            Gizmos.DrawWireSphere(transform.position, effectRadius);
         }
 
         private Color GetEffectColor()

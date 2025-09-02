@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167357535008086070}
   - component: {fileID: 3563102749424394986}
-  - component: {fileID: 2173448692651869561}
+  - component: {fileID: 2433138656142350177}
   - component: {fileID: 8000518875084526805}
   m_Layer: 10
   m_Name: Projectile_Blue_3
@@ -64,8 +64,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2173448692651869561
-SphereCollider:
+--- !u!136 &2433138656142350177
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -82,9 +82,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.025
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 0.2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.075}
 --- !u!114 &8000518875084526805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 3563102749424394986}
+  capsuleCollider: {fileID: 2433138656142350177}
   curveSpeed:
     serializedVersion: 2
     m_Curve:
@@ -125,7 +128,6 @@ MonoBehaviour:
   useEffect: 1
   effectDuration: 10
   effectPower: 0
-  effectRadius: 0
   impactVFX: {fileID: 5058106848113976763, guid: 09e5065d03cc6c1449f6a02cf3392cb8,
     type: 3}
   prefabCombatEffect: {fileID: 1459689672827613335, guid: 0de5696e297e71643b6cfa45275d44b7,

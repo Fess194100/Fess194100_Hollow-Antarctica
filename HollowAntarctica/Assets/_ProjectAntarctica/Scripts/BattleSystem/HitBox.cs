@@ -38,10 +38,9 @@ namespace SimpleCharController
             return parentHealth != null && parentHealth.IsDead();
         }
 
-        public HandlerCombatEffects GetCombatEffects()
-        {
-            return parentHandlerEffects;
-        }
+        public HandlerCombatEffects GetCombatEffects() { return parentHandlerEffects; }
+
+        public EssenceHealth GetEssenceHealth() { return parentHealth; }
 
         // Для быстрой настройки в инспекторе
         public void SetParentHealth(EssenceHealth health) => parentHealth = health;

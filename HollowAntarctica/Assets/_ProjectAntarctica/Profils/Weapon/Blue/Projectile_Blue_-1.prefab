@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1006962330258474339}
   - component: {fileID: 3684295865609095158}
-  - component: {fileID: 4883642300994624659}
+  - component: {fileID: -8660801979935831531}
   - component: {fileID: 4012345293818459011}
   m_Layer: 10
-  m_Name: Projectile_Blue_0
+  m_Name: Projectile_Blue_-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!136 &4883642300994624659
+--- !u!136 &-8660801979935831531
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 3684295865609095158}
-  capsuleCollider: {fileID: 4883642300994624659}
+  capsuleCollider: {fileID: -8660801979935831531}
   curveSpeed:
     serializedVersion: 2
     m_Curve:
@@ -124,9 +124,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useEffect: 1
-  effectDuration: 0.4
-  effectPower: 0.9
+  useEffect: 0
+  effectDuration: 0
+  effectPower: 0
   impactVFX: {fileID: 5058106848113976763, guid: 09e5065d03cc6c1449f6a02cf3392cb8,
     type: 3}
   prefabCombatEffect: {fileID: 0}

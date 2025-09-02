@@ -6,6 +6,7 @@ namespace SimpleCharController
     {
         [Header("Links Components")]
         public new Rigidbody rigidbody;
+        public CapsuleCollider capsuleCollider;
 
         [Header("Setting Projectile")]
         public AnimationCurve curveSpeed = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
@@ -43,6 +44,8 @@ namespace SimpleCharController
             _typeMovement = typeMovement;
             _type = projectileType;
             _dieTime = Mathf.Clamp(180f / _speed, 1f, 10f);
+
+            UpdateCollider();
         }
 
         private void FixedUpdate()
@@ -94,6 +97,17 @@ namespace SimpleCharController
 
             Instantiate(impactVFX, transform.position, transform.rotation);
             DestroyProjectile();
+        }
+
+        private void UpdateCollider()
+        {
+            if (capsuleCollider != null)
+            {
+                float heightCollider = _speed * Time.fixedDeltaTime;
+                float offsetZ = -((heightCollider / 2) - capsuleCollider.radius);
+                capsuleCollider.height = heightCollider;
+                capsuleCollider.center = new Vector3 (0, 0, offsetZ);
+            }
         }
 
         private void DestroyProjectile()

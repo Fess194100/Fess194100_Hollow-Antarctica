@@ -22,6 +22,7 @@ namespace SimpleCharController
         public float MoveSpeedForward = 3.0f;
         public float MoveSpeedBack = 2.0f;
         public float SprintSpeed = 5.0f;
+        public float speedEffect = 1f;
         public AnimationCurve curveMoveSpeedForward;
         public float speedChengedCurveMoveSpeed = 5.0f;
 
@@ -296,7 +297,7 @@ namespace SimpleCharController
             else targetSpeed = (_input.sprint && currentStamina > 0) ? SprintSpeed : MoveSpeedForward;
 
             //Get Current Speed
-            currentValueEvaluate = Mathf.Lerp(currentValueEvaluate, targetSpeed * inputMagnitude, Time.fixedDeltaTime * speedChengedCurveMoveSpeed);
+            currentValueEvaluate = Mathf.Lerp(currentValueEvaluate, targetSpeed * inputMagnitude * speedEffect, Time.fixedDeltaTime * speedChengedCurveMoveSpeed);
             _currentSpeed = curveMoveSpeedForward.Evaluate(currentValueEvaluate);
 
             // Rotation Character
@@ -344,7 +345,7 @@ namespace SimpleCharController
                 }
 
                 //Get Speed
-                _currentSpeed = _input.move.y * climbingSpeed * boostClimbSpeed;
+                _currentSpeed = _input.move.y * climbingSpeed * speedEffect * boostClimbSpeed;
 
                 //Movement
                 Vector3 Moved = transform.up * _currentSpeed * Time.fixedDeltaTime;

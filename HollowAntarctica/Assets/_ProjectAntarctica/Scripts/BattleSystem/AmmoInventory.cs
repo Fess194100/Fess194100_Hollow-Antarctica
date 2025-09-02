@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SimpleCharController
 {
@@ -8,6 +9,11 @@ namespace SimpleCharController
         [SerializeField] private int greenAmmo = 100;
         [SerializeField] private int blueAmmo = 100;
         [SerializeField] private int orangeAmmo = 100;
+
+        [Header("Events")]
+        public UnityEvent OnChengedAmmoGreen;
+        public UnityEvent OnChengedAmmoBlue;
+        public UnityEvent OnChengedAmmoOrange;
 
         // ѕровер€ет, достаточно ли патронов указанного типа
         public bool HasEnoughAmmo(ProjectileType type, int amount)
@@ -25,12 +31,15 @@ namespace SimpleCharController
             {
                 case ProjectileType.Green:
                     greenAmmo -= amount;
+                    OnChengedAmmoGreen.Invoke();
                     break;
                 case ProjectileType.Blue:
                     blueAmmo -= amount;
+                    OnChengedAmmoBlue.Invoke();
                     break;
                 case ProjectileType.Orange:
                     orangeAmmo -= amount;
+                    OnChengedAmmoOrange.Invoke();
                     break;
             }
 

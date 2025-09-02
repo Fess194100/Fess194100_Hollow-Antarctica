@@ -4889,9 +4889,10 @@ MonoBehaviour:
   DeBug: 1
   showGizmos: 1
   effectType: 2
-  _effectDuration: 0.4
-  _effectPower: 0.9
-  _effectRadius: 3
+  effectDamage: 3
+  effectDuration: 0.4
+  effectPower: 0.9
+  effectRadius: 3
   VFXCombatEffect:
     DeBug: 1
     durationVFX: 1.1

@@ -11,6 +11,7 @@ namespace SimpleCharController
         [SerializeField] private Transform firePoint;
         [SerializeField] private AmmoInventory ammoInventory;
         [SerializeField] private EssenceHealth playerHealth;
+        [SerializeField] private HandlerCombatEffects playerCombatEffects;
         [SerializeField] private RectTransform crosshairRectTransform;
 
         [Header("Weapon Settings")]
@@ -227,11 +228,30 @@ namespace SimpleCharController
 
             SetWeaponState(WeaponState.Overloaded);
             StopAllCoroutines();
+
             stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
-            playerHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3);
+            if(playerHealth != null && playerCombatEffects != null) ApplyOwerloarEffect(data);
+
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
             StartCoroutine(OverloadRoutine(data.OverloadDuration));
+        }
+
+        private void ApplyOwerloarEffect(WeaponProjectileData data)
+        {
+            playerHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3);
+
+            switch (currentProjectileType)
+            {
+                case ProjectileType.Green:
+                    break;
+                case ProjectileType.Blue:
+                    playerCombatEffects.ApplyFrostbiteEffect(0.5f, 1f);
+                    break;
+                case ProjectileType.Orange:
+                    playerCombatEffects.ApplyStunEffect(2f);
+                    break;
+            }
         }
 
         private void CancelCharging()

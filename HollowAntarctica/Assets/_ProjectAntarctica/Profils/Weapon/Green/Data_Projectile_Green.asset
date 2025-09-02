@@ -17,9 +17,9 @@ MonoBehaviour:
     type: 3}
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
-  StandardFireRate: 5
-  baseDamageStandard: 100
-  typeShootingStandard: 1
+  StandardFireRate: 10
+  baseDamageStandard: 1
+  typeShootingStandard: 0
   standardSpreadSettings:
     projectilesCount: 3
     spreadAngle: 0.5
