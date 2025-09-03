@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7396620032133617412}
   - component: {fileID: 8773833823813481654}
   m_Layer: 10
-  m_Name: Projectile_Blue_1
+  m_Name: Projectile_Orange_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,9 +135,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   useEffect: 1
-  effectDuration: 0.4
-  effectPower: 0.9
-  impactVFX: {fileID: 5058106848113976763, guid: 7e056de56003580478a278a1e3a99f00,
+  effectDuration: 0.7
+  effectPower: 0
+  impactVFX: {fileID: 5058106848113976763, guid: 57c3b95d8ffa7684ca23b17d80b031f4,
     type: 3}
   prefabCombatEffect: {fileID: 0}
 --- !u!1 &4879380201031818813
@@ -363,7 +363,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.27843142, g: 0.8778836, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.69115436, b: 0.27843142, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5032,7 +5032,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b3b4b997bdfcdc4b82d32de82d68790, type: 2}
+  - {fileID: 2100000, guid: f44449f1b0a23d0448ec5f7e37f164a5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

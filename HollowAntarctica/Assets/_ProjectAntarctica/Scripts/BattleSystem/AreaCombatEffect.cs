@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 namespace SimpleCharController
 {
@@ -12,6 +13,7 @@ namespace SimpleCharController
         [Header("Area Effect Settings")]
         public ProjectileType projectileType;
         public StatusEffectType effectType = StatusEffectType.None;
+        public int numberEffectTargets = 99;
         public float effectDamage;
         public float effectDuration;
         public float effectPower;
@@ -24,6 +26,7 @@ namespace SimpleCharController
         private GameObject _owner;
         private EssenceHealth _ownerHealth;
         private HandlerCombatEffects _ownerHandlerCombatEffects;
+        private int _currentNumberTarget;
         private float _lifeTime;
         #endregion
 
@@ -51,11 +54,15 @@ namespace SimpleCharController
 
         private void ApplyEffectToExistingTargets()
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, effectRadius);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, effectRadius); // Нужна маска слоев!!!
+
             foreach (Collider collider in colliders)
             {
                 ApplyEffectToTarget(collider.gameObject);
+                if (_currentNumberTarget >= numberEffectTargets) break;
             }
+
+            _currentNumberTarget = 0;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,6 +77,7 @@ namespace SimpleCharController
 
             if (hitBox == null || !hitBox.isAffectedByAreaEffects) return;
 
+            _currentNumberTarget += 1;
             EssenceHealth targetEssenceHealth = hitBox.GetEssenceHealth();
 
             if (targetEssenceHealth != null && targetEssenceHealth != _ownerHealth)
@@ -92,8 +100,8 @@ namespace SimpleCharController
                     targetHandler.ApplyFrostbiteEffect(effectPower, effectDuration);
                     break;
 
-                case StatusEffectType.Stun:
-                    targetHandler.ApplyStunEffect(effectDuration);
+                case StatusEffectType.ElectroShort:
+                    targetHandler.ApplyElectroShortEffect(effectDuration);
                     break;
             }
         }
@@ -130,7 +138,7 @@ namespace SimpleCharController
             {
                 StatusEffectType.Freeze => Color.blue,
                 StatusEffectType.Frostbite => Color.cyan,
-                StatusEffectType.Stun => Color.yellow,
+                StatusEffectType.ElectroShort => Color.yellow,
                 _ => Color.white
             };
         }

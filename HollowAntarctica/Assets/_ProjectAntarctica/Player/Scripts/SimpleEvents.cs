@@ -38,5 +38,9 @@ namespace SimpleCharController
         [Space(10)]
         public UnityEvent OnFreeze;
         public UnityEvent OnFreezeComplete;
+
+        [Space(10)]
+        public UnityEvent OnElectroShort;
+        public UnityEvent OnElectroShortComplete;
     }
 }

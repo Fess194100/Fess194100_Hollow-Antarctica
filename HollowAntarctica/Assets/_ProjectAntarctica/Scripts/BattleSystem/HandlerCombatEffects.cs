@@ -55,10 +55,16 @@ namespace SimpleCharController
             combatEffectEvents.OnFreeze.Invoke();
         }
 
-        public void ApplyStunEffect(float duration)
+        public void ApplyElectroShortEffect(float duration)
         {
-            ApplyStun(duration);
-            ApplyStatusEffect(StatusEffectType.Stun, duration);
+            if (DeBug)
+            {
+                Debug.Log($"<color=#feac20>[ELECTROSHORT EFFECT]</color>\n" +
+                         $"║ Duration: {duration:F2}s");
+            }
+
+            ApplyElectroShort(duration);
+            ApplyStatusEffect(StatusEffectType.ElectroShort, duration);
         }
 
         private void ApplyStatusEffect(StatusEffectType effectType, float duration)
@@ -97,8 +103,8 @@ namespace SimpleCharController
                     RemoveFrostbite();
                     break;
 
-                case StatusEffectType.Stun:
-                    RemoveStun();
+                case StatusEffectType.ElectroShort:
+                    RemoveElectroShort();
                     break;
             }
         }
@@ -158,9 +164,10 @@ namespace SimpleCharController
             //VFXCombatEffect.Instance.RemoveFrostbiteVFX(transform);
         }
 
-        private void ApplyStun(float power)
+        private void ApplyElectroShort(float power)
         {
-            // Оглушение - временная потеря контроля
+            combatEffectEvents.OnElectroShort.Invoke();
+            // Временная потеря контроля
             if (movementController != null)
             {
                 // movementController.SetMovementEnabled(false);
@@ -170,8 +177,9 @@ namespace SimpleCharController
             //VFXCombatEffect.Instance.ApplyStunVFX(transform, power);
         }
 
-        private void RemoveStun()
+        private void RemoveElectroShort()
         {
+            combatEffectEvents.OnElectroShortComplete.Invoke();
             // Восстановление контроля
             if (movementController != null)
             {
@@ -182,16 +190,16 @@ namespace SimpleCharController
             //VFXCombatEffect.Instance.RemoveStunVFX(transform);
         }
 
-        // Методы для Area of Effect (AoE) эффектов
+        /*// Методы для Area of Effect (AoE) эффектов
         public void CreateFreezeArea(Vector3 position, float radius, float power, float duration)
         {
             if (DeBug) Debug.Log($"Creating freeze area at {position}, radius: {radius}");
 
             // Здесь будет логика создания области заморозки VFX
             //VFXCombatEffect.Instance.CreateFreezeAreaVFX(position, radius, duration);
-        }
+        }*/
 
-        public void CreateFreezeExplosion(Vector3 position, float radius, float power)
+        /*public void CreateFreezeExplosion(Vector3 position, float radius, float power)
         {
             if (DeBug) Debug.Log($"Freeze explosion at {position}, radius: {radius}");
 
@@ -199,7 +207,7 @@ namespace SimpleCharController
             //VFXCombatEffect.Instance.CreateFreezeExplosionVFX(position, radius, power);
 
             // Поиск целей в радиусе и применение эффекта
-            /*Collider[] colliders = Physics.OverlapSphere(position, radius);
+            Collider[] colliders = Physics.OverlapSphere(position, radius);
             foreach (Collider collider in colliders)
             {
                 IStatusEffectTarget target = collider.GetComponent<IStatusEffectTarget>();
@@ -207,8 +215,8 @@ namespace SimpleCharController
                 {
                     target.ApplyFreezeEffect(power * 0.5f, 3f); // Ослабленный эффект
                 }
-            }*/
-        }
+            }
+        }*/
 
         #endregion
 
@@ -225,7 +233,7 @@ namespace SimpleCharController
 
         public bool IsStun()
         {
-            return currentEffect == StatusEffectType.Stun;
+            return currentEffect == StatusEffectType.ElectroShort;
         }
         public void ClearAllEffects()
         {

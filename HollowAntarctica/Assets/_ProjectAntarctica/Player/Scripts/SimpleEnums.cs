@@ -58,8 +58,8 @@ namespace SimpleCharController
     public enum StatusEffectType
     {
         None,
-        Freeze,     // Заморозка (полная остановка)
-        Frostbite,  // Обморожение (замедление)
-        Stun        // Оглушение
+        Freeze,         // Заморозка (полная остановка)
+        Frostbite,      // Обморожение (замедление)
+        ElectroShort    // Короткое замыкание (остановка всех действий)
     }
 }

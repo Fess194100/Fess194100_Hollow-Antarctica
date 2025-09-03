@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8660801979935831531}
   - component: {fileID: 4012345293818459011}
   m_Layer: 10
-  m_Name: Projectile_Blue_-1
+  m_Name: Projectile_Orange_-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   useEffect: 0
   effectDuration: 0
   effectPower: 0
-  impactVFX: {fileID: 5058106848113976763, guid: 7e056de56003580478a278a1e3a99f00,
+  impactVFX: {fileID: 5058106848113976763, guid: 57c3b95d8ffa7684ca23b17d80b031f4,
     type: 3}
   prefabCombatEffect: {fileID: 0}
 --- !u!1 &8921878962624935355
@@ -191,7 +191,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da10386238fcae34bb5636fe59a06be6, type: 2}
+  - {fileID: 2100000, guid: 15fbcf3ae122431468d5de03a1394994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

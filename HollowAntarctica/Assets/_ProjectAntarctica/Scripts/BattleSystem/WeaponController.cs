@@ -249,7 +249,7 @@ namespace SimpleCharController
                     playerCombatEffects.ApplyFrostbiteEffect(0.5f, 1f);
                     break;
                 case ProjectileType.Orange:
-                    playerCombatEffects.ApplyStunEffect(2f);
+                    playerCombatEffects.ApplyElectroShortEffect(2f);
                     break;
             }
         }

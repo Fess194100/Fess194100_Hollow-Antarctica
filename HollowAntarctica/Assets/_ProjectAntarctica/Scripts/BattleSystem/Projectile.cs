@@ -77,11 +77,11 @@ namespace SimpleCharController
             {
                 damageable.TakeDamage(_damage, _type, _chargeLevel);
                 bool wasKilled = damageable.IsDead();
+                _handlerCombatEffects = damageable.GetCombatEffects();
 
                 //Применяем эффекты
-                if (useEffect && _chargeLevel >= 0)
+                if (_handlerCombatEffects != null && useEffect && _chargeLevel >= 0)
                 {
-                    _handlerCombatEffects = damageable.GetCombatEffects();
                     switch (_type)
                     {
                         case ProjectileType.Green: EffectGreen(wasKilled); break;
@@ -134,8 +134,6 @@ namespace SimpleCharController
 
         private void EffectBlue(bool wasKilled)
         {
-            if (_handlerCombatEffects == null) return;
-
             switch (_chargeLevel)
             {
                 case 0:
@@ -151,7 +149,7 @@ namespace SimpleCharController
                     if (wasKilled) CreateAreaEffect();
                     break;
 
-                case 3: // Заряженный 3 уровень - полная заморозка + взрыв при убийстве
+                case 3:
                     _handlerCombatEffects.ApplyFreezeEffect(effectPower, effectDuration);
                     if (wasKilled) CreateAreaEffect();
                     break;
@@ -160,25 +158,41 @@ namespace SimpleCharController
 
         private void EffectOrange(bool wasKilled)
         {
-            // Заглушка для оранжевых снарядов - будет реализовано позже
-            if (_handlerCombatEffects != null)
+            switch (_chargeLevel)
             {
-                // Базовый эффект оглушения для оранжевых снарядов
-                if (_chargeLevel >= 2)
-                {
-                    _handlerCombatEffects.ApplyStunEffect(effectDuration);
-                }
+                case 0:
+                    _handlerCombatEffects.ApplyElectroShortEffect(effectDuration);
+                    break;
+
+                case 1:
+                    _handlerCombatEffects.ApplyElectroShortEffect(effectDuration);
+                    break;
+
+                case 2:
+                    if (!wasKilled) _handlerCombatEffects.ApplyElectroShortEffect(effectDuration);
+                    else CreateAreaEffect();
+                    break;
+
+                case 3:
+                    if (!wasKilled) _handlerCombatEffects.ApplyElectroShortEffect(effectDuration);
+                    else CreateAreaEffect();
+                    break;
             }
         }
 
         private void CreateAreaEffect()
         {
-            GameObject areaEffect = Instantiate(prefabCombatEffect, transform.position, Quaternion.identity);
-            AreaCombatEffect areaScript = areaEffect.GetComponent<AreaCombatEffect>();
-            if (areaScript != null)
+            if (prefabCombatEffect != null)
             {
-                areaScript.Initialize(_owner, _ownerEssenceHealth, _handlerCombatEffects);
+                GameObject areaEffect = Instantiate(prefabCombatEffect, transform.position, Quaternion.identity);
+                AreaCombatEffect areaScript = areaEffect.GetComponent<AreaCombatEffect>();
+
+                if (areaScript != null)
+                {
+                    areaScript.Initialize(_owner, _ownerEssenceHealth, _handlerCombatEffects);
+                }
             }
+            else Debug.LogWarning("Missing prefabAreaCombatEffect");
         }
     }
 }

@@ -11760,6 +11760,7 @@ MonoBehaviour:
   projectileData:
   - {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
   - {fileID: 11400000, guid: 653db812ef4376d4f818479e6ebb98c3, type: 2}
+  - {fileID: 11400000, guid: 7254033aa610b8844994465a78ce736d, type: 2}
   timeToMaxCharge: 2
   overheatThresholdTime: 0.5
   autoFireRateMultiplier: 1
@@ -11841,7 +11842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
-  handlerCombatEffects: {fileID: 0}
+  handlerCombatEffects: {fileID: 2401443997797990867}
   maxHealth: 100
   currentHealth: 100
   OnHealthChanged:
@@ -11908,6 +11909,12 @@ MonoBehaviour:
     OnFreezeComplete:
       m_PersistentCalls:
         m_Calls: []
+    OnElectroShort:
+      m_PersistentCalls:
+        m_Calls: []
+    OnElectroShortComplete:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1505103834183799912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11920,9 +11927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd27aee857e49654f8f6ffde7ecd0979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenAmmo: 10000
-  blueAmmo: 10000
-  orangeAmmo: 10000
+  greenAmmo: 10
+  blueAmmo: 10
+  orangeAmmo: 10
   OnChengedAmmoGreen:
     m_PersistentCalls:
       m_Calls:

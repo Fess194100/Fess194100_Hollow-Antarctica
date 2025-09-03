@@ -10,48 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af6993a0f48654d4390c72cb7530dd17, type: 3}
-  m_Name: Data_Projectile_Green
+  m_Name: Data_Projectile_Orange
   m_EditorClassIdentifier: 
-  Type: 0
-  StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
+  Type: 2
+  StandardProjectilePrefab: {fileID: 2158188021835919910, guid: ea599fec21669194ea435df28721d792,
     type: 3}
   StandardAmmoCost: 1
-  StandardProjectileSpeed: 30
-  StandardFireRate: 6
+  StandardProjectileSpeed: 50
+  StandardFireRate: 10
   baseDamageStandard: 1
-  typeShootingStandard: 0
+  typeShootingStandard: 1
   standardSpreadSettings:
     projectilesCount: 0
     spreadAngle: 0
     delayBetweenShots: 0
-  ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
+  ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 60ca6948f879d594d947b22c4f342e87,
     type: 3}
   ChargedLvl0AmmoCost: 2
-  ChargedLvl0ProjectileSpeed: 20
-  Lvl0FireRate: 1.4
-  baseDamageLvl0: 2
+  ChargedLvl0ProjectileSpeed: 25
+  Lvl0FireRate: 4
+  baseDamageLvl0: 6
   typeShootingLvl0: 2
   lvl0SpreadSettings:
-    projectilesCount: 6
-    spreadAngle: 4
+    projectilesCount: 3
+    spreadAngle: 2
     delayBetweenShots: 0
-  ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 518be6f33c43de7479f650b8d9f47ff7,
+  ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 97f4fff605bf175468ab7681df1df9cb,
     type: 3}
   typeMovementLvl1: 1
-  ChargedLvl1AmmoCost: 4
+  ChargedLvl1AmmoCost: 2
   ChargedLvl1ProjectileSpeed: 12.5
   baseDamageLvl1: 200
-  ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
+  ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: b9b38047f0553a843be1a55dfefc9757,
     type: 3}
   typeMovementLvl2: 1
-  ChargedLvl2AmmoCost: 9
+  ChargedLvl2AmmoCost: 4
   ChargedLvl2ProjectileSpeed: 10
   baseDamageLvl2: 200
-  ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 85905a7d6ae03444b8dc82e10ef82097,
+  ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 06217afe2a7d8694db804808e248b8fd,
     type: 3}
   typeMovementLvl3: 0
-  ChargedLvl3AmmoCost: 16
+  ChargedLvl3AmmoCost: 8
   ChargedLvl3ProjectileSpeed: 12
   baseDamageLvl3: 1000
-  OverloadDamageToPlayer: 10
-  OverloadDuration: 0.5
+  OverloadDamageToPlayer: 20
+  OverloadDuration: 1

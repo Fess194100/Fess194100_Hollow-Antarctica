@@ -128,7 +128,7 @@ MonoBehaviour:
   useEffect: 1
   effectDuration: 10
   effectPower: 0
-  impactVFX: {fileID: 5058106848113976763, guid: 09e5065d03cc6c1449f6a02cf3392cb8,
+  impactVFX: {fileID: 5058106848113976763, guid: 7e056de56003580478a278a1e3a99f00,
     type: 3}
   prefabCombatEffect: {fileID: 1459689672827613335, guid: 0de5696e297e71643b6cfa45275d44b7,
     type: 3}
