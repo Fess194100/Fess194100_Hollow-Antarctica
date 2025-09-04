@@ -10,8 +10,8 @@ namespace SimpleCharController
         [SerializeField] private SimpleInputActions inputActions;
         [SerializeField] private Transform firePoint;
         [SerializeField] private AmmoInventory ammoInventory;
-        [SerializeField] private EssenceHealth playerHealth;
-        [SerializeField] private HandlerCombatEffects playerCombatEffects;
+        [SerializeField] private EssenceHealth essenceHealth;
+        [SerializeField] private HandlerCombatEffects essenceCombatEffects;
         [SerializeField] private RectTransform crosshairRectTransform;
 
         [Header("Weapon Settings")]
@@ -23,17 +23,15 @@ namespace SimpleCharController
         [SerializeField] private Vector2 offsetAim;
         [SerializeField] private AnimationCurve offsetAimYAtFOV;
 
-        [Header("Weapon State")]
-        [SerializeField] private ProjectileType currentProjectileType = ProjectileType.Green;
-        [SerializeField] private WeaponState currentWeaponState = WeaponState.Ready;
-        [SerializeField] private float currentChargeTime = 0f;
-        [SerializeField] private float overheatTimer = 0f;
-        [SerializeField] private float overloadTimer = 0f;
-
         [Header("Events")]
         public ProgressChargeWeaponEvents progressChargeWeapon;
         public StateWeaponEvents stateWeapon;
 
+        private ProjectileType currentProjectileType = ProjectileType.Green;
+        private WeaponState currentWeaponState = WeaponState.Ready;
+        private float currentChargeTime = 0f;
+        private float overheatTimer = 0f;
+        private float overloadTimer = 0f;
         private Camera _mainCamera;
         private bool isAltFireHeld = false;
         private int _lastChargeLevel = -1;
@@ -58,7 +56,7 @@ namespace SimpleCharController
         {
             if (inputActions == null) Debug.LogError("inputActions == null");
             if (ammoInventory == null) Debug.LogError("ammoInventory == null");
-            if (playerHealth == null) Debug.LogError("playerHealth == null");
+            if (essenceHealth == null) Debug.LogError("playerHealth == null");
             if (firePoint == null) Debug.LogError("firePoint == null");
         }
 
@@ -231,7 +229,7 @@ namespace SimpleCharController
 
             stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
-            if(playerHealth != null && playerCombatEffects != null) ApplyOwerloarEffect(data);
+            if(essenceHealth != null && essenceCombatEffects != null) ApplyOwerloarEffect(data);
 
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
             StartCoroutine(OverloadRoutine(data.OverloadDuration));
@@ -239,17 +237,17 @@ namespace SimpleCharController
 
         private void ApplyOwerloarEffect(WeaponProjectileData data)
         {
-            playerHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3);
+            essenceHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3);
 
             switch (currentProjectileType)
             {
                 case ProjectileType.Green:
                     break;
                 case ProjectileType.Blue:
-                    playerCombatEffects.ApplyFrostbiteEffect(0.5f, 1f);
+                    essenceCombatEffects.ApplyFrostbiteEffect(0.5f, 1f);
                     break;
                 case ProjectileType.Orange:
-                    playerCombatEffects.ApplyElectroShortEffect(2f);
+                    essenceCombatEffects.ApplyElectroShortEffect(0.5f);
                     break;
             }
         }
@@ -506,7 +504,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, playerHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
+                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
                 }
             }
@@ -542,7 +540,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, playerHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
+                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
                 }
 
@@ -560,6 +558,8 @@ namespace SimpleCharController
                 SetWeaponState(WeaponState.Ready);
             }
         }
+
+        //-----------------------------------------------------------------------------------
 
         private List<Vector2> GenerateSpreadAngles(float maxSpreadAngle, int count)
         {
@@ -641,7 +641,7 @@ namespace SimpleCharController
 
             if (projectileScript != null)
             {
-                projectileScript.Initialize(speed, gameObject, playerHealth, currentProjectileType, chargeLevel, damage, typeMovement);
+                projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, chargeLevel, damage, typeMovement);
             }
         }
 

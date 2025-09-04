@@ -11751,12 +11751,12 @@ MonoBehaviour:
   inputActions: {fileID: 4571770688186773690}
   firePoint: {fileID: 7127134483683298959}
   ammoInventory: {fileID: 1505103834183799912}
-  playerHealth: {fileID: 6200174266677484524}
-  playerCombatEffects: {fileID: 2401443997797990867}
+  essenceHealth: {fileID: 6200174266677484524}
+  essenceCombatEffects: {fileID: 2401443997797990867}
   crosshairRectTransform: {fileID: 1999775775033365851}
   targetingMask:
     serializedVersion: 2
-    m_Bits: 823
+    m_Bits: 279
   projectileData:
   - {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
   - {fileID: 11400000, guid: 653db812ef4376d4f818479e6ebb98c3, type: 2}
@@ -11789,11 +11789,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  currentProjectileType: 0
-  currentWeaponState: 0
-  currentChargeTime: 0
-  overheatTimer: 0
-  overloadTimer: 0
   progressChargeWeapon:
     OnChargeProgressChanged:
       m_PersistentCalls:
@@ -11913,6 +11908,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     OnElectroShortComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    OnChainLightning:
+      m_PersistentCalls:
+        m_Calls: []
+    OnChainLightningComplete:
       m_PersistentCalls:
         m_Calls: []
 --- !u!114 &1505103834183799912
