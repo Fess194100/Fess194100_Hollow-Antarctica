@@ -63,8 +63,20 @@ namespace SimpleCharController
                          $"║ Duration: {duration:F2}s");
             }
 
-            ApplyElectroShort(duration);
+            ApplyElectroShort();
             ApplyStatusEffect(StatusEffectType.ElectroShort, duration);
+        }
+
+        public void ApplyChainLightningEffect(float power)
+        {
+            if (DeBug)
+            {
+                Debug.Log($"<color=#feac20>[ChainLightning EFFECT]</color>\n" +
+                         $"║ Power: {power:F2}s");
+            }
+
+            ApplyChainLightning(power);
+            ApplyStatusEffect(StatusEffectType.ChainLightning, 0.04f);
         }
 
         private void ApplyStatusEffect(StatusEffectType effectType, float duration)
@@ -164,7 +176,7 @@ namespace SimpleCharController
             //VFXCombatEffect.Instance.RemoveFrostbiteVFX(transform);
         }
 
-        private void ApplyElectroShort(float power)
+        private void ApplyElectroShort()
         {
             combatEffectEvents.OnElectroShort.Invoke();
             // Временная потеря контроля
@@ -190,33 +202,31 @@ namespace SimpleCharController
             //VFXCombatEffect.Instance.RemoveStunVFX(transform);
         }
 
-        /*// Методы для Area of Effect (AoE) эффектов
-        public void CreateFreezeArea(Vector3 position, float radius, float power, float duration)
+        private void ApplyChainLightning(float power)
         {
-            if (DeBug) Debug.Log($"Creating freeze area at {position}, radius: {radius}");
-
-            // Здесь будет логика создания области заморозки VFX
-            //VFXCombatEffect.Instance.CreateFreezeAreaVFX(position, radius, duration);
-        }*/
-
-        /*public void CreateFreezeExplosion(Vector3 position, float radius, float power)
-        {
-            if (DeBug) Debug.Log($"Freeze explosion at {position}, radius: {radius}");
-
-            // Здесь будет логика создания области КриоВзрыва VFX
-            //VFXCombatEffect.Instance.CreateFreezeExplosionVFX(position, radius, power);
-
-            // Поиск целей в радиусе и применение эффекта
-            Collider[] colliders = Physics.OverlapSphere(position, radius);
-            foreach (Collider collider in colliders)
+            combatEffectEvents.OnChainLightning.Invoke();
+            // Временная потеря контроля
+            if (movementController != null)
             {
-                IStatusEffectTarget target = collider.GetComponent<IStatusEffectTarget>();
-                if (target != null)
-                {
-                    target.ApplyFreezeEffect(power * 0.5f, 3f); // Ослабленный эффект
-                }
+                // movementController.SetMovementEnabled(false);
             }
-        }*/
+
+            // Визуальные эффекты оглушения
+            //VFXCombatEffect.Instance.ApplyStunVFX(transform, power);
+        }
+
+        private void RemoveChainLightning()
+        {
+            combatEffectEvents.OnChainLightningComplete.Invoke();
+            // Восстановление контроля
+            if (movementController != null)
+            {
+                // movementController.SetMovementEnabled(true);
+            }
+
+            // Удаление визуальных эффектов
+            //VFXCombatEffect.Instance.RemoveStunVFX(transform);
+        }
 
         #endregion
 

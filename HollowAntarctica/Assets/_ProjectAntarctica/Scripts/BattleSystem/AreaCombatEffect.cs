@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 namespace SimpleCharController
 {
@@ -24,11 +25,17 @@ namespace SimpleCharController
 
         #region ========== PRIVATE VALUE ==================
         private GameObject _owner;
+        private List<GameObject> _targets;
         private EssenceHealth _ownerHealth;
         private HandlerCombatEffects _ownerHandlerCombatEffects;
         private int _currentNumberTarget;
         private float _lifeTime;
         #endregion
+
+        private void Awake()
+        {
+            _targets = new List<GameObject>();
+        }
 
         public void Initialize(GameObject owner, EssenceHealth ownerHealth, HandlerCombatEffects ownerHandlerCombatEffects)
         {
@@ -49,7 +56,7 @@ namespace SimpleCharController
             ApplyEffectToExistingTargets();
 
             // Запускаем VFX
-            VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
+            //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
         }
 
         private void ApplyEffectToExistingTargets()
@@ -62,7 +69,11 @@ namespace SimpleCharController
                 if (_currentNumberTarget >= numberEffectTargets) break;
             }
 
+            // Запускаем VFX
+            if (effectType == StatusEffectType.ChainLightning) VFXCombatEffect.PlayAreaEffectVFX(effectType, _targets);
+
             _currentNumberTarget = 0;
+            _targets.Clear();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -78,6 +89,7 @@ namespace SimpleCharController
             if (hitBox == null || !hitBox.isAffectedByAreaEffects) return;
 
             _currentNumberTarget += 1;
+            _targets.Add(target);
             EssenceHealth targetEssenceHealth = hitBox.GetEssenceHealth();
 
             if (targetEssenceHealth != null && targetEssenceHealth != _ownerHealth)
@@ -94,13 +106,19 @@ namespace SimpleCharController
             {
                 case StatusEffectType.Freeze:
                     targetHandler.ApplyFreezeEffect(effectPower, effectDuration);
+                    //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
                     break;
 
                 case StatusEffectType.Frostbite:
                     targetHandler.ApplyFrostbiteEffect(effectPower, effectDuration);
+                    //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
                     break;
 
                 case StatusEffectType.ElectroShort:
+                    targetHandler.ApplyElectroShortEffect(effectDuration);
+                    //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
+                    break;
+                case StatusEffectType.ChainLightning:
                     targetHandler.ApplyElectroShortEffect(effectDuration);
                     break;
             }

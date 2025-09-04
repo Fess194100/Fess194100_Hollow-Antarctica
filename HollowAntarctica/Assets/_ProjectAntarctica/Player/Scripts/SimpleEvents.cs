@@ -42,5 +42,9 @@ namespace SimpleCharController
         [Space(10)]
         public UnityEvent OnElectroShort;
         public UnityEvent OnElectroShortComplete;
+
+        [Space(10)]
+        public UnityEvent OnChainLightning;
+        public UnityEvent OnChainLightningComplete;
     }
 }

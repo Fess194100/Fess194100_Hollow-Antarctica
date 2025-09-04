@@ -60,6 +60,7 @@ namespace SimpleCharController
         None,
         Freeze,         // Заморозка (полная остановка)
         Frostbite,      // Обморожение (замедление)
-        ElectroShort    // Короткое замыкание (остановка всех действий)
+        ElectroShort,    // Короткое замыкание (остановка всех действий)
+        ChainLightning,
     }
 }
