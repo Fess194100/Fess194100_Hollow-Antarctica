@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1006962330258474339}
   - component: {fileID: 5718410075258056621}
-  - component: {fileID: 5942314738432032332}
+  - component: {fileID: 5317300290956885726}
   - component: {fileID: 8773833823813481654}
   m_Layer: 10
   m_Name: Projectile_Green_1
@@ -64,8 +64,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &5942314738432032332
-SphereCollider:
+--- !u!136 &5317300290956885726
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -82,9 +82,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.02
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 0.2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.08}
 --- !u!114 &8773833823813481654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 5718410075258056621}
+  capsuleCollider: {fileID: 5317300290956885726}
   curveSpeed:
     serializedVersion: 2
     m_Curve:
@@ -134,9 +137,9 @@ MonoBehaviour:
   useEffect: 1
   effectDuration: 0
   effectPower: 1
-  effectRadius: 0
   impactVFX: {fileID: 5058106848113976763, guid: 09e5065d03cc6c1449f6a02cf3392cb8,
     type: 3}
+  prefabCombatEffect: {fileID: 0}
 --- !u!1 &4879380201031818813
 GameObject:
   m_ObjectHideFlags: 0

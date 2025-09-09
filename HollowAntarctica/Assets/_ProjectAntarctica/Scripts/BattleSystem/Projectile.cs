@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace SimpleCharController
@@ -45,7 +46,7 @@ namespace SimpleCharController
             _type = projectileType;
             _dieTime = Mathf.Clamp(180f / _speed, 1f, 10f);
 
-            UpdateCollider();
+            StartCoroutine(UpdateCollider());
         }
 
         private void FixedUpdate()
@@ -99,8 +100,14 @@ namespace SimpleCharController
             DestroyProjectile();
         }
 
-        private void UpdateCollider()
+        private IEnumerator UpdateCollider()
         {
+            capsuleCollider.height = 0f;
+            capsuleCollider.center = Vector3.zero;
+
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
+
             if (capsuleCollider != null)
             {
                 float heightCollider = _speed * Time.fixedDeltaTime;

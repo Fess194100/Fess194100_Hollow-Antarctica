@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Data_Projectile_Blue
   m_EditorClassIdentifier: 
   Type: 1
-  StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 2b50e0e77ed481241a305aa3c4a3349a,
+  StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 4f6a5c8bfb2ce4e478ac66503c4a0cda,
     type: 3}
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
@@ -24,7 +24,7 @@ MonoBehaviour:
     projectilesCount: 3
     spreadAngle: 0.5
     delayBetweenShots: 0.08
-  ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 2b50e0e77ed481241a305aa3c4a3349a,
+  ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 31de33fa4278068458181f395c4e745d,
     type: 3}
   ChargedLvl0AmmoCost: 2
   ChargedLvl0ProjectileSpeed: 25

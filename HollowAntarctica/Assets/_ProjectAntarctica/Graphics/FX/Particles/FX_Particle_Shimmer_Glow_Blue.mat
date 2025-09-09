@@ -96,8 +96,8 @@ Material:
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 1
-    - _CameraFarFadeDistance: 3
-    - _CameraNearFadeDistance: 1
+    - _CameraFarFadeDistance: 3.5
+    - _CameraNearFadeDistance: 0.2
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorMode: 3
@@ -137,7 +137,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _CameraFadeParams: {r: 1, g: 0.5, b: 0, a: 0}
+    - _CameraFadeParams: {r: 0.2, g: 0.3030303, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 3.5510554, g: 19.75998, b: 107.546196, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
