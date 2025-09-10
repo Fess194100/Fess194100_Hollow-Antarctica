@@ -198,6 +198,7 @@ namespace SimpleCharController
             {
                 selectedWeaponSlot = newSlotIndex;
                 imputBattleEvents.OnWeaponSwitch.Invoke();
+                FireInput(false);
             }
         }
 
