@@ -32,7 +32,7 @@ MonoBehaviour:
   baseDamageLvl0: 6
   typeShootingLvl0: 2
   lvl0SpreadSettings:
-    projectilesCount: 3
+    projectilesCount: 4
     spreadAngle: 2
     delayBetweenShots: 0
   ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 97f4fff605bf175468ab7681df1df9cb,
