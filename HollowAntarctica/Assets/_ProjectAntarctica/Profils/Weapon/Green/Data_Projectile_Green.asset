@@ -39,8 +39,8 @@ MonoBehaviour:
     type: 3}
   typeMovementLvl1: 1
   ChargedLvl1AmmoCost: 4
-  ChargedLvl1ProjectileSpeed: 12.5
-  baseDamageLvl1: 200
+  ChargedLvl1ProjectileSpeed: 20
+  baseDamageLvl1: 8
   ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
     type: 3}
   typeMovementLvl2: 1

@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 using System.Collections.Generic;
 
 namespace SimpleCharController
