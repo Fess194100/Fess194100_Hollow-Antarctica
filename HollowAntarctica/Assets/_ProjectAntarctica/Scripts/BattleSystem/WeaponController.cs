@@ -193,6 +193,7 @@ namespace SimpleCharController
             if (currentWeaponState != newState)
             {
                 currentWeaponState = newState;
+                stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
             }
         }
 
@@ -207,7 +208,6 @@ namespace SimpleCharController
 
             isAltFireHeld = true;
             SetWeaponState(WeaponState.Charging);
-            stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
             StartCoroutine(ChargingRoutine());
         }
 
@@ -216,7 +216,6 @@ namespace SimpleCharController
             if (currentWeaponState != WeaponState.Charging) return;
 
             SetWeaponState(WeaponState.Overheating);
-            stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
         }
 
         private void TriggerOverload()
@@ -226,8 +225,6 @@ namespace SimpleCharController
 
             SetWeaponState(WeaponState.Overloaded);
             StopAllCoroutines();
-
-            stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
 
             if(essenceHealth != null && essenceCombatEffects != null) ApplyOwerloarEffect(data);
 

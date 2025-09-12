@@ -37,9 +37,17 @@ namespace SimpleCharController
             uiColorBattles[0].filling.fillAmount = levelCharge * uiColorBattles[0].maxFilling;
         }
 
+        public void SetValueOverheadLevel(float levelCharge)
+        {
+            uiColorBattles[3].filling.fillAmount = levelCharge * uiColorBattles[3].maxFilling;
+        }
+
         private void Start()
         {
             SetColorSlider(ProjectileType.Green);
+            SetColorSlider(WeaponState.Ready);
+            SetValueChargeLevel(0);
+            SetValueOverheadLevel(0);
         }
 
         public void SetColorSlider(ProjectileType projectileType)
@@ -48,18 +56,25 @@ namespace SimpleCharController
             {
                 case ProjectileType.Green:
                     uiColorBattles[0].SwitchColorSlider();
-                    //uiColorBattles[0].background.color = uiColorBattles[0].colorBG;
-                    //uiColorBattles[0].filling.color = uiColorBattles[0].colorFilling;
                     break;
                 case ProjectileType.Blue:
                     uiColorBattles[1].SwitchColorSlider();
-                    //uiColorBattles[1].background.color = uiColorBattles[1].colorBG;
-                    //uiColorBattles[1].filling.color = uiColorBattles[1].colorFilling;
                     break;
                 case ProjectileType.Orange:
                     uiColorBattles[2].SwitchColorSlider();
-                    //uiColorBattles[2].background.color = uiColorBattles[2].colorBG;
-                    //uiColorBattles[2].filling.color = uiColorBattles[2].colorFilling;
+                    break;
+            }
+        }
+
+        public void SetColorSlider(WeaponState weaponState)
+        {
+            switch (weaponState)
+            {
+                case WeaponState.Ready:
+                    uiColorBattles[3].SwitchColorSlider();
+                    break;
+                case WeaponState.Overloaded:
+                    uiColorBattles[4].SwitchColorSlider();
                     break;
             }
         }
