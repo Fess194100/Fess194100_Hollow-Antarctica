@@ -264,6 +264,7 @@ namespace SimpleCharController
             _lastChargeLevel = -1;
             progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
             progressChargeWeapon.OnOverheatProgressChanged?.Invoke(0f);
+            stateWeapon.OnChargeFinished?.Invoke();
             SetWeaponState(WeaponState.Ready);
         }
 
@@ -331,6 +332,9 @@ namespace SimpleCharController
             {
                 switch (currentLevel)
                 {
+                    case 0:
+                        stateWeapon.OnChargeLevel0Reached?.Invoke();
+                        break;
                     case 1:
                         stateWeapon.OnChargeLevel1Reached?.Invoke();
                         break;
@@ -338,6 +342,7 @@ namespace SimpleCharController
                         stateWeapon.OnChargeLevel2Reached?.Invoke();
                         break;
                     case 3:
+                        stateWeapon.OnChargeLevel3Reached?.Invoke();
                         stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
                         break;
                 }

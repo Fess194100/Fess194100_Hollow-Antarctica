@@ -394,3 +394,9 @@ MonoBehaviour:
   - Audio_PlayUI
   - Manager_ScenaIsLoad
   - Manager_ScenaFailureLoad
+  - Weapon_Charge_0
+  - Weapon_Charge_1
+  - Weapon_Charge_2
+  - Weapon_Charge_3
+  - Weapon_Charge_Finished
+  - Weapon_Charge_OverloadFinished

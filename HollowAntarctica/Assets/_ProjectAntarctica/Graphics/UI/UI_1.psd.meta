@@ -1000,7 +1000,7 @@ TextureImporter:
         width: 74
         height: 153
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1021,7 +1021,7 @@ TextureImporter:
         width: 124
         height: 31
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1029,6 +1029,27 @@ TextureImporter:
       bones: []
       spriteID: 96c172e6fe247db4988dead0cb982b6c
       internalID: 2095762947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Charge_Marker
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 1402
+        width: 68
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dbbbea326c86be40a9373e183800ad6
+      internalID: 1532262643
       vertices: []
       indices: 
       edges: []
@@ -1049,6 +1070,7 @@ TextureImporter:
       UI_ButtonMenu: -233617680
       UI_CharShadow: -174700771
       UI_Charge_BG: 364169509
+      UI_Charge_Marker: 1532262643
       UI_Charge_Slider: 2095762947
       UI_Frame_Item: 1973118725
       UI_Handler: -1225120248

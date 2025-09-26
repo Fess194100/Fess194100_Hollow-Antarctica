@@ -24,8 +24,11 @@ namespace SimpleCharController
         public UnityEvent<WeaponState> OnWeaponStateChanged;
 
         [Space(10)]
+        public UnityEvent OnChargeLevel0Reached;
         public UnityEvent OnChargeLevel1Reached;
         public UnityEvent OnChargeLevel2Reached;
+        public UnityEvent OnChargeLevel3Reached;
+        public UnityEvent OnChargeFinished;
         public UnityEvent OnOverloadFinished;
     }
 

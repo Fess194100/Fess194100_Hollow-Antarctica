@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,12 +7,14 @@ using UnityEngine.UI;
 public class UIColorBattleSystem
 {
     public string Name;
-    [ColorUsage(true, true)]public UnityEngine.Color colorBG;
-    [ColorUsage(true, true)] public UnityEngine.Color colorFilling;
+    [ColorUsage(true, true)]public Color colorBG;
+    [ColorUsage(true, true)] public Color colorFilling;
+    [ColorUsage(true, true)] public List<Color> colors—hargingMarkers;
 
     [Space(5)]
     public Image background;
     public Image filling;
+    public List<Image> markers;
 
     [Space(5)]
     public float maxFilling; // For normalization
@@ -22,6 +23,12 @@ public class UIColorBattleSystem
     {
         background.color = colorBG;
         filling.color = colorFilling;
+
+        for (int i = 0; i < markers.Count && i < colors—hargingMarkers.Count; i++)
+        {
+            if (markers[i] != null)
+                markers[i].color = colors—hargingMarkers[i];
+        }
     }
 }
 
@@ -77,12 +84,6 @@ namespace SimpleCharController
                     uiColorBattles[4].SwitchColorSlider();
                     break;
             }
-        }
-
-        private void SwitchColorSlider(int id)
-        {
-            uiColorBattles[id].background.color = uiColorBattles[id].colorBG;
-            uiColorBattles[id].filling.color = uiColorBattles[id].colorFilling;
         }
     }
 }

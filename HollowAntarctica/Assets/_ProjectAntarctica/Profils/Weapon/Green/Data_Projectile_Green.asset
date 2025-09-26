@@ -39,19 +39,19 @@ MonoBehaviour:
     type: 3}
   typeMovementLvl1: 1
   ChargedLvl1AmmoCost: 4
-  ChargedLvl1ProjectileSpeed: 20
-  baseDamageLvl1: 8
+  ChargedLvl1ProjectileSpeed: 15
+  baseDamageLvl1: 10
   ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
     type: 3}
   typeMovementLvl2: 1
   ChargedLvl2AmmoCost: 9
-  ChargedLvl2ProjectileSpeed: 10
-  baseDamageLvl2: 200
-  ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 85905a7d6ae03444b8dc82e10ef82097,
+  ChargedLvl2ProjectileSpeed: 15
+  baseDamageLvl2: 20
+  ChargedLvl3ProjectilePrefab: {fileID: 7959489882650240316, guid: f71858d0f43b0764aae3de6b89f80e25,
     type: 3}
   typeMovementLvl3: 0
-  ChargedLvl3AmmoCost: 16
+  ChargedLvl3AmmoCost: 15
   ChargedLvl3ProjectileSpeed: 12
-  baseDamageLvl3: 1000
+  baseDamageLvl3: 40
   OverloadDamageToPlayer: 10
   OverloadDuration: 0.5

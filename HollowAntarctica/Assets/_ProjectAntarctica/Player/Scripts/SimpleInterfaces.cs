@@ -6,11 +6,4 @@ namespace SimpleCharController
         bool IsDead();
         HandlerCombatEffects GetCombatEffects();
     }
-
-    /*public interface IStatusEffectTarget
-    {
-        void ApplyFreezeEffect(float freezePower, float freezeDuration, float freezeRadius, bool wasKilled, Vector3 positionArea);
-        void ApplyStunEffect(float duration);
-        // ... другие эффекты
-    }*/
 }

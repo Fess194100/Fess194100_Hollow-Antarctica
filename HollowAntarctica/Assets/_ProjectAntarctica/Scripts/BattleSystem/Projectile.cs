@@ -11,12 +11,12 @@ namespace SimpleCharController
 
         [Header("Setting Projectile")]
         public AnimationCurve curveSpeed = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
+        public AnimationCurve curveGravity = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
 
         [Header("Setting Effects")]
         public bool useEffect;
         public float effectDuration;
         public float effectPower;
-        //public float effectRadius;
 
         [Header("Visual Effects")]
         [SerializeField] private GameObject impactVFX;
@@ -34,7 +34,9 @@ namespace SimpleCharController
         private float _lifeTime;
         private float _dieTime;
         private float _speedMultiplier = 1f;
-
+        private Vector3 previsionPosition;
+        private Vector3 _gravity;
+        private Quaternion previsionRotation;
         public void Initialize(float speed, GameObject owner, EssenceHealth essenceHealth, ProjectileType projectileType, int chargeLevel, float damage, TypeMovement typeMovement)
         {
             _speed = speed;
@@ -45,14 +47,16 @@ namespace SimpleCharController
             _typeMovement = typeMovement;
             _type = projectileType;
             _dieTime = Mathf.Clamp(180f / _speed, 1f, 10f);
-
-            StartCoroutine(UpdateCollider());
+            _gravity = Vector3.down * rigidbody.mass;
+            if (_typeMovement != TypeMovement.Parabular) StartCoroutine(UpdateCollider(1f));
+            else StartCoroutine(UpdateCollider(2.75f));
         }
 
         private void FixedUpdate()
         {
             _lifeTime += Time.fixedDeltaTime;
             _speedMultiplier = curveSpeed.Evaluate(_lifeTime);
+            float gravityMyltiplie = curveGravity.Evaluate(_lifeTime);
 
             if (_lifeTime > _dieTime)
             {
@@ -61,12 +65,15 @@ namespace SimpleCharController
             switch (_typeMovement)
             {
                 case TypeMovement.Linear:
-                    rigidbody.velocity = transform.forward * (_speed * _speedMultiplier);
+                    rigidbody.velocity = transform.forward * (_speed * _speedMultiplier) + _gravity * gravityMyltiplie;
                     break;
                 case TypeMovement.Parabular:
                     rigidbody.AddForce(transform.forward * (_speed * _speedMultiplier), ForceMode.Impulse);
                     break;
             }
+
+            previsionPosition = transform.position;
+            previsionRotation = transform.rotation;
         }
         private void OnCollisionEnter(Collision collision)
         {
@@ -96,11 +103,11 @@ namespace SimpleCharController
                 //Столкновение снаряда не с сущностью (Стена, колонна, пол, потолок...)
             }
 
-            Instantiate(impactVFX, transform.position, transform.rotation);
+            if (impactVFX != null) Instantiate(impactVFX, previsionPosition, previsionRotation);
             DestroyProjectile();
         }
 
-        private IEnumerator UpdateCollider()
+        private IEnumerator UpdateCollider(float miltiplier)
         {
             capsuleCollider.height = 0f;
             capsuleCollider.center = Vector3.zero;
@@ -110,7 +117,7 @@ namespace SimpleCharController
 
             if (capsuleCollider != null)
             {
-                float heightCollider = _speed * Time.fixedDeltaTime;
+                float heightCollider = _speed * miltiplier * Time.fixedDeltaTime;
                 float offsetZ = -((heightCollider / 2) - capsuleCollider.radius);
                 capsuleCollider.height = heightCollider;
                 capsuleCollider.center = new Vector3 (0, 0, offsetZ);
