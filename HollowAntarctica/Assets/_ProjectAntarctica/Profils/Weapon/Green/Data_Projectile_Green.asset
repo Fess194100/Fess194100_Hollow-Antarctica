@@ -15,10 +15,12 @@ MonoBehaviour:
   Type: 0
   StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
     type: 3}
+  soundShot_Standart: {fileID: 8300000, guid: ace3f06cbfac9274696be3f160eb92dd, type: 3}
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
   StandardFireRate: 6
   baseDamageStandard: 1
+  pitchSound_Standart: {x: 0.58, y: 0.72}
   typeShootingStandard: 0
   standardSpreadSettings:
     projectilesCount: 0
@@ -26,10 +28,12 @@ MonoBehaviour:
     delayBetweenShots: 0
   ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 185e5f8b8fcc4994bbd2810c9ad93f5f,
     type: 3}
+  soundShot_0: {fileID: 8300000, guid: b2b2b1317c7d0e14da4770b498b07fcf, type: 3}
   ChargedLvl0AmmoCost: 2
   ChargedLvl0ProjectileSpeed: 20
   Lvl0FireRate: 1.4
   baseDamageLvl0: 2
+  pitchSound_0: {x: 0.47, y: 0.63}
   typeShootingLvl0: 2
   lvl0SpreadSettings:
     projectilesCount: 6
@@ -37,21 +41,28 @@ MonoBehaviour:
     delayBetweenShots: 0
   ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: 518be6f33c43de7479f650b8d9f47ff7,
     type: 3}
+  soundShot_1: {fileID: 8300000, guid: a56a9dda55445e549b110858be8f1db1, type: 3}
   typeMovementLvl1: 1
   ChargedLvl1AmmoCost: 4
   ChargedLvl1ProjectileSpeed: 15
   baseDamageLvl1: 10
+  pitchSound_1: {x: 0.9, y: 1.05}
   ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 737a07b4ddd23194ab43745a8a35e41e,
     type: 3}
+  soundShot_2: {fileID: 8300000, guid: a56a9dda55445e549b110858be8f1db1, type: 3}
   typeMovementLvl2: 1
   ChargedLvl2AmmoCost: 9
   ChargedLvl2ProjectileSpeed: 15
   baseDamageLvl2: 20
+  pitchSound_2: {x: 0.5, y: 0.58}
   ChargedLvl3ProjectilePrefab: {fileID: 7959489882650240316, guid: f71858d0f43b0764aae3de6b89f80e25,
     type: 3}
+  soundShot_3: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
   typeMovementLvl3: 0
   ChargedLvl3AmmoCost: 15
   ChargedLvl3ProjectileSpeed: 12
   baseDamageLvl3: 40
+  pitchSound_3: {x: 1, y: 1}
+  soundOverload: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
   OverloadDamageToPlayer: 10
   OverloadDuration: 0.5

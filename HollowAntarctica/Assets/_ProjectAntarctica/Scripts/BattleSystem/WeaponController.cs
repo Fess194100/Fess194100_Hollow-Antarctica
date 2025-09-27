@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace SimpleCharController
 {
@@ -26,6 +27,7 @@ namespace SimpleCharController
         [Header("Events")]
         public ProgressChargeWeaponEvents progressChargeWeapon;
         public StateWeaponEvents stateWeapon;
+        public UnityEvent<AudioClip, Vector2> playSound;
 
         private ProjectileType currentProjectileType = ProjectileType.Green;
         private WeaponState currentWeaponState = WeaponState.Ready;
@@ -122,6 +124,7 @@ namespace SimpleCharController
                     case TypeShooting.Single:
                         ReleaseStandardShot();
                         StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
+                        playSound?.Invoke(data.soundShot_Standart, data.pitchSound_Standart);
                         break;
 
                     case TypeShooting.Auto:
@@ -153,6 +156,7 @@ namespace SimpleCharController
                 if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.StandardAmmoCost))
                 {
                     ReleaseStandardShot();
+                    playSound?.Invoke(data.soundShot_Standart, data.pitchSound_Standart);
                     yield return new WaitForSeconds(1f / (data.StandardFireRate * autoFireRateMultiplier));
                 }
                 else
@@ -229,6 +233,7 @@ namespace SimpleCharController
             if(essenceHealth != null && essenceCombatEffects != null) ApplyOwerloarEffect(data);
 
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
+            playSound?.Invoke(data.soundOverload, Vector2.one);
             StartCoroutine(OverloadRoutine(data.OverloadDuration));
         }
 
@@ -409,7 +414,8 @@ namespace SimpleCharController
                     break;
             }
 
-            currentWeaponState = WeaponState.Firing;
+            //currentWeaponState = WeaponState.Firing;
+            SetWeaponState(WeaponState.Firing);
             StartCoroutine(ResetFiringState(data.Lvl0FireRate, 0));
         }
 
@@ -437,12 +443,15 @@ namespace SimpleCharController
             if (ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl0AmmoCost))
             {
                 SpawnProjectile(data.ChargedLvl0ProjectilePrefab, data.ChargedLvl0ProjectileSpeed, data.baseDamageLvl0, 0, Vector3.zero, TypeMovement.Linear);
+                playSound?.Invoke(data.soundShot_0, data.pitchSound_0);
             }
         }
 
         private void HandleHigherChargeLevels(WeaponProjectileData data, int chargeLevel)
         {
             GameObject projectilePrefab = null;
+            AudioClip soundShot = null;
+            Vector2 pitch = Vector2.one;
             float speed = 0f;
             float damage = 0f;
             int ammoCost = 0;
@@ -452,6 +461,8 @@ namespace SimpleCharController
             {
                 case 1:
                     projectilePrefab = data.ChargedLvl1ProjectilePrefab;
+                    soundShot = data.soundShot_1;
+                    pitch = data.pitchSound_1;
                     speed = data.ChargedLvl1ProjectileSpeed;
                     damage = data.baseDamageLvl1;
                     ammoCost = data.ChargedLvl1AmmoCost;
@@ -459,6 +470,8 @@ namespace SimpleCharController
                     break;
                 case 2:
                     projectilePrefab = data.ChargedLvl2ProjectilePrefab;
+                    soundShot = data.soundShot_2;
+                    pitch = data.pitchSound_2;
                     speed = data.ChargedLvl2ProjectileSpeed;
                     damage = data.baseDamageLvl2;
                     ammoCost = data.ChargedLvl2AmmoCost;
@@ -466,6 +479,8 @@ namespace SimpleCharController
                     break;
                 case 3:
                     projectilePrefab = data.ChargedLvl3ProjectilePrefab;
+                    soundShot = data.soundShot_3;
+                    pitch = data.pitchSound_3;
                     speed = data.ChargedLvl3ProjectileSpeed;
                     damage = data.baseDamageLvl3;
                     ammoCost = data.ChargedLvl3AmmoCost;
@@ -476,6 +491,7 @@ namespace SimpleCharController
             if (projectilePrefab != null && ammoInventory.ConsumeAmmo(currentProjectileType, ammoCost))
             {
                 SpawnProjectile(projectilePrefab, speed, damage, chargeLevel, Vector3.zero, typeMovement);
+                playSound?.Invoke(soundShot, pitch);
             }
 
             ResetCharged();
@@ -484,6 +500,8 @@ namespace SimpleCharController
         private void ReleaseBurstShot(WeaponProjectileData data, SpreadWeaponSettings burstSettings, bool isCharged)
         {
             GameObject projectilePrefab = isCharged ? data.ChargedLvl0ProjectilePrefab : data.StandardProjectilePrefab;
+            AudioClip soundShot = isCharged ? data.soundShot_0 : data.soundShot_Standart;
+            Vector2 pitch = isCharged ? data.pitchSound_0 : data.pitchSound_Standart;
             float speed = isCharged ? data.ChargedLvl0ProjectileSpeed : data.StandardProjectileSpeed;
             int ammoCost = isCharged ? data.ChargedLvl0AmmoCost : data.StandardAmmoCost;
             float damage = isCharged ? data.baseDamageLvl0 : data.baseDamageStandard;
@@ -493,6 +511,7 @@ namespace SimpleCharController
 
             List<Vector2> spreadAngles = GenerateSpreadAngles(burstSettings.spreadAngle, burstSettings.projectilesCount);
             Vector3 baseDirection = (GetTargetPoint() - firePoint.position).normalized;
+            playSound?.Invoke(soundShot, pitch);
 
             for (int i = 0; i < burstSettings.projectilesCount; i++)
             {
@@ -517,6 +536,8 @@ namespace SimpleCharController
         private IEnumerator SpreadFireRoutine(WeaponProjectileData data, SpreadWeaponSettings spreadSettings, bool isCharged)
         {
             GameObject projectilePrefab = isCharged ? data.ChargedLvl0ProjectilePrefab : data.StandardProjectilePrefab;
+            AudioClip soundShot = isCharged ? data.soundShot_0 : data.soundShot_Standart;
+            Vector2 pitch = isCharged ? data.pitchSound_0 : data.pitchSound_Standart;
             float speed = isCharged ? data.ChargedLvl0ProjectileSpeed : data.StandardProjectileSpeed;
             int ammoCost = isCharged ? data.ChargedLvl0AmmoCost : data.StandardAmmoCost;
             float damage = isCharged ? data.baseDamageLvl0 : data.baseDamageStandard;
@@ -544,6 +565,8 @@ namespace SimpleCharController
                     {
                         projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
                     }
+
+                    playSound?.Invoke(soundShot, pitch);
                 }
 
                 yield return new WaitForSeconds(spreadSettings.delayBetweenShots);
@@ -686,39 +709,10 @@ namespace SimpleCharController
         }
 
         // Публичные методы для внешнего доступа
-        /*public bool CanShoot()
+        
+        public float TimeToMaxCharge()
         {
-            return currentWeaponState == WeaponState.Ready;
+            return timeToMaxCharge;
         }
-
-        public bool IsCharging()
-        {
-            return currentWeaponState == WeaponState.Charging;
-        }
-
-        public bool IsOverheating()
-        {
-            return currentWeaponState == WeaponState.Overheating;
-        }
-
-        public bool IsOverloaded()
-        {
-            return currentWeaponState == WeaponState.Overloaded;
-        }
-
-        public float GetChargeProgress()
-        {
-            return Mathf.Clamp01(_chargePercent);
-        }
-
-        public float GetOverheatProgress()
-        {
-            return Mathf.Clamp01(_overheatPercent);
-        }
-
-        public ProjectileType GetCurrentWeaponType()
-        {
-            return currentProjectileType;
-        }*/
     }
 }

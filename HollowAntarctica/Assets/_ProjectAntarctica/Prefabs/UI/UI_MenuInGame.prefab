@@ -7852,7 +7852,7 @@ MonoBehaviour:
         customNames:
         - 
         actionEnabled: 01
-        actionIsOpen: 00
+        actionIsOpen: 01
         actionStartIndex: 00000000
         actionHashCodes: d864fa04
         unityObjectParams: []
@@ -7966,7 +7966,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 01010101
-        actionIsOpen: 00000101
+        actionIsOpen: 00000000
         actionStartIndex: 0000000004000000080000000e000000
         actionHashCodes: 5e69bb04d864fa04223de202a4c8bf00
         unityObjectParams: []
@@ -8569,8 +8569,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 394.0078
-        y: 252
+        x: 400.0078
+        y: 248
         width: 159
         height: 32
       isBreakpoint: 0

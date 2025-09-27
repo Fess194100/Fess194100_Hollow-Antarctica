@@ -211,6 +211,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "HideShowInterface",
+                    "type": "Button",
+                    "id": "7a3498b4-d12f-4e3d-a19d-bff1962400e1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -552,6 +561,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "WeaponSwitchScroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0610f5df-35f0-42e5-972d-1285afe76b1c",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideShowInterface",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
