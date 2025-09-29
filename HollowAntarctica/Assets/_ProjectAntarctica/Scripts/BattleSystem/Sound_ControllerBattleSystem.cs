@@ -5,9 +5,10 @@ using UnityEngine.Events;
 public class Sound_ControllerBattleSystem : MonoBehaviour
 {
     public AudioSource audioSourceShot;
-    public AudioSource audioSourceCharging;
     public UnityEvent startCharging;
     public UnityEvent stopCharging;
+    public UnityEvent Overload;
+
     public void PlaySound(AudioClip audioClip, Vector2 pitch)
     {
         audioSourceShot.pitch = Random.Range(pitch.x, pitch.y);
@@ -28,7 +29,7 @@ public class Sound_ControllerBattleSystem : MonoBehaviour
                 stopCharging.Invoke();
                 break;
             case WeaponState.Overloaded:
-                stopCharging.Invoke();
+                Overload.Invoke();
                 break;
         }
     }

@@ -67,7 +67,6 @@ public class WeaponProjectileData : ScriptableObject
     // Ёффект дл€ уровн€ 3
 
     [Header("Overload")]
-    public AudioClip soundOverload;
     public float OverloadDamageToPlayer = 10f;
     public float OverloadDuration = 0.5f;
 }

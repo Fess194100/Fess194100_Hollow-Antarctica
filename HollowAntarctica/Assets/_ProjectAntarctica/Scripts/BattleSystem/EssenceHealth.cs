@@ -46,6 +46,8 @@ namespace SimpleCharController
                     OnHealthChanged?.Invoke(currentHealth);
                     OnDamageTaken?.Invoke(damage, bodyPart);
                 }
+
+                if (DeBug) Debug.Log("Take damage = " + damage + " | Body part - " + bodyPart);
             }
         }
 

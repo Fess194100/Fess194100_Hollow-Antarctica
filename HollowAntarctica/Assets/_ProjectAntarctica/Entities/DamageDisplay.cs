@@ -51,7 +51,7 @@ public class DamageDisplay : MonoBehaviour
         int damageIndex = Mathf.RoundToInt(_totalDamage);
 
         // Устанавливаем текст с знаком минус
-        damageText.text = $"- {damageIndex:F1}";
+        damageText.text = $"- {damageIndex}";
     }
 
     public void ResetTotalDamage()

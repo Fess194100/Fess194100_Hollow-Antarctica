@@ -368,6 +368,18 @@ MonoBehaviour:
             m_StringArgument: OnFreezeComplitle
             m_BoolArgument: 0
           m_CallState: 2
+    OnElectroShort:
+      m_PersistentCalls:
+        m_Calls: []
+    OnElectroShortComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    OnChainLightning:
+      m_PersistentCalls:
+        m_Calls: []
+    OnChainLightningComplete:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1267316530732537045
 MonoBehaviour:
   m_ObjectHideFlags: 0

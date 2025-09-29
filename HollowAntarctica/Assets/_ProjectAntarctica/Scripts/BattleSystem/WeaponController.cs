@@ -233,7 +233,6 @@ namespace SimpleCharController
             if(essenceHealth != null && essenceCombatEffects != null) ApplyOwerloarEffect(data);
 
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
-            playSound?.Invoke(data.soundOverload, Vector2.one);
             StartCoroutine(OverloadRoutine(data.OverloadDuration));
         }
 
@@ -713,6 +712,11 @@ namespace SimpleCharController
         public float TimeToMaxCharge()
         {
             return timeToMaxCharge;
+        }
+
+        public float TimeToOverload()
+        {
+            return overheatThresholdTime;
         }
     }
 }

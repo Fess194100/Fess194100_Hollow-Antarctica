@@ -22,14 +22,16 @@ namespace SimpleCharController
         [SerializeField] private GameObject impactVFX;
         [SerializeField] private GameObject prefabCombatEffect;
 
-
+        #region private Value
+        
         private GameObject _owner;
         private EssenceHealth _ownerEssenceHealth;
         private HandlerCombatEffects _handlerCombatEffects;
         private TypeMovement _typeMovement;
         private ProjectileType _type;
-        private float _speed;
+        private bool _collisionProcessed = false;
         private int _chargeLevel;
+        private float _speed;
         private float _damage;
         private float _lifeTime;
         private float _dieTime;
@@ -37,8 +39,10 @@ namespace SimpleCharController
         private Vector3 previsionPosition;
         private Vector3 _gravity;
         private Quaternion previsionRotation;
+        #endregion
         public void Initialize(float speed, GameObject owner, EssenceHealth essenceHealth, ProjectileType projectileType, int chargeLevel, float damage, TypeMovement typeMovement)
         {
+            _collisionProcessed = false;
             _speed = speed;
             _owner = owner;
             _ownerEssenceHealth = essenceHealth;
@@ -77,7 +81,7 @@ namespace SimpleCharController
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject == _owner) return;
+            if (collision.gameObject == _owner || _collisionProcessed) return;
 
             IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
 
@@ -104,6 +108,7 @@ namespace SimpleCharController
             }
 
             if (impactVFX != null) Instantiate(impactVFX, previsionPosition, previsionRotation);
+            _collisionProcessed = true;
             DestroyProjectile();
         }
 
