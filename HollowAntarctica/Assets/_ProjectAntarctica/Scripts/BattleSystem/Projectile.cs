@@ -12,6 +12,8 @@ namespace SimpleCharController
         [Header("Setting Projectile")]
         public AnimationCurve curveSpeed = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
         public AnimationCurve curveGravity = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+        [SerializeField] private float colliderUpdateDelay = 0.04f;
+
 
         [Header("Setting Effects")]
         public bool useEffect;
@@ -117,8 +119,7 @@ namespace SimpleCharController
             capsuleCollider.height = 0f;
             capsuleCollider.center = Vector3.zero;
 
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(colliderUpdateDelay);
 
             if (capsuleCollider != null)
             {

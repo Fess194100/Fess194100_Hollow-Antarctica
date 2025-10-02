@@ -15,11 +15,12 @@ MonoBehaviour:
   Type: 1
   StandardProjectilePrefab: {fileID: 2158188021835919910, guid: 4f6a5c8bfb2ce4e478ac66503c4a0cda,
     type: 3}
-  soundShot_Standart: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
+  soundShot_Standart: {fileID: 8300000, guid: 8ad3f1eeea78d4641bacd053ba9b91c7, type: 3}
   StandardAmmoCost: 1
   StandardProjectileSpeed: 30
   StandardFireRate: 6
   baseDamageStandard: 1
+  pitchSound_Standart: {x: 0.96, y: 1.04}
   typeShootingStandard: 3
   standardSpreadSettings:
     projectilesCount: 3
@@ -27,11 +28,12 @@ MonoBehaviour:
     delayBetweenShots: 0.08
   ChargedLvl0ProjectilePrefab: {fileID: 2158188021835919910, guid: 31de33fa4278068458181f395c4e745d,
     type: 3}
-  soundShot_0: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
+  soundShot_0: {fileID: 8300000, guid: f18ff9cfb354dca4296c018b0349c18d, type: 3}
   ChargedLvl0AmmoCost: 2
   ChargedLvl0ProjectileSpeed: 25
   Lvl0FireRate: 2
   baseDamageLvl0: 2
+  pitchSound_0: {x: 0.98, y: 1.02}
   typeShootingLvl0: 2
   lvl0SpreadSettings:
     projectilesCount: 8
@@ -39,18 +41,20 @@ MonoBehaviour:
     delayBetweenShots: 0
   ChargedLvl1ProjectilePrefab: {fileID: 2158188021835919910, guid: ed41a2ea670d7c04cab3af11fd77fa9f,
     type: 3}
-  soundShot_1: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
-  typeMovementLvl1: 1
+  soundShot_1: {fileID: 8300000, guid: 26c9e1cec2fc2154686b02791d2bc6ea, type: 3}
+  typeMovementLvl1: 0
   ChargedLvl1AmmoCost: 2
-  ChargedLvl1ProjectileSpeed: 12.5
+  ChargedLvl1ProjectileSpeed: 20
   baseDamageLvl1: 200
-  ChargedLvl2ProjectilePrefab: {fileID: 7959489882650240316, guid: 1b387175dee152046b8b8ce231e7fe9c,
+  pitchSound_1: {x: 0.98, y: 1.02}
+  ChargedLvl2ProjectilePrefab: {fileID: 2158188021835919910, guid: 13013d0b737a5cb4ea9353998d6ef7b5,
     type: 3}
-  soundShot_2: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
-  typeMovementLvl2: 1
+  soundShot_2: {fileID: 8300000, guid: a748f323696d32846ba098a9768590b8, type: 3}
+  typeMovementLvl2: 0
   ChargedLvl2AmmoCost: 4
-  ChargedLvl2ProjectileSpeed: 10
+  ChargedLvl2ProjectileSpeed: 30
   baseDamageLvl2: 200
+  pitchSound_2: {x: 1, y: 1}
   ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 55e073e2bda34a041bc2991089ab388f,
     type: 3}
   soundShot_3: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
@@ -58,6 +62,6 @@ MonoBehaviour:
   ChargedLvl3AmmoCost: 8
   ChargedLvl3ProjectileSpeed: 12
   baseDamageLvl3: 1000
-  soundOverload: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
+  pitchSound_3: {x: 1, y: 1}
   OverloadDamageToPlayer: 10
   OverloadDuration: 0.5

@@ -20,7 +20,7 @@ MonoBehaviour:
   StandardProjectileSpeed: 30
   StandardFireRate: 6
   baseDamageStandard: 1
-  pitchSound_Standart: {x: 1, y: 1}
+  pitchSound_Standart: {x: 0.96, y: 1.04}
   typeShootingStandard: 0
   standardSpreadSettings:
     projectilesCount: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   ChargedLvl0ProjectileSpeed: 20
   Lvl0FireRate: 1.4
   baseDamageLvl0: 2
-  pitchSound_0: {x: 1, y: 1}
+  pitchSound_0: {x: 0.98, y: 1.02}
   typeShootingLvl0: 2
   lvl0SpreadSettings:
     projectilesCount: 6

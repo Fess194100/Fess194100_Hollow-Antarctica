@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb9c12a8c6c949f7af83a3d238359d0, type: 3}
+  m_Name: vFolders Data
+  m_EditorClassIdentifier: 
+  folderDatas_byGuid:
+    keys:
+    - dd2b9e231b0ec4a9f97e258072ae2b33
+    - 109ccfb08b9fd4bf5a9d8deee2ace2ed
+    - 0220aab0833d04faeb927d84ca6cc40c
+    - e194d14a340dc4af9865d1e789913326
+    - 7f5e24278d22f4776963ecede2e14913
+    - fca0015d37fa246bd892a2edead41949
+    - cd10b8dd0766b41629963ebf44761336
+    - 0990846847d6b4364a952dc8dbae4da9
+    - 19333e02bcd7f4038b0f1f471a8897d4
+    - d6bcb4896ce704f658cfbf94817b68ea
+    - 63a7294ca669041438aa5f836fe640ef
+    - f4a3b22d48bf54fd095a1a2e563fde73
+    - b53ce8af7e67b4f55a32060802aa753a
+    - b78acab8594e34122bbf9e07a2ca48ea
+    - 8bbff36b491ae4429b2d374e0ce7f80d
+    - f8155518b59824f81b7e652b5d9139eb
+    - 5244ab2a055ad429a9280c8ab1fc4bd0
+    - 206f368ba54ec4d798e18ea4014dd68a
+    - 77d0c9dec46f947eb80fa6cc291e3b79
+    - d8ec3545c29fd47569cb76540d08adb6
+    - 394d9467ce523ed4fa2324134926b601
+    - 9a47ff644bb05a948a1931f42adc1db6
+    - 2a3a5c1d73a90fc43b01235c459b3b8f
+    - 70db08305d31ed045bb4b42f2f87bcb6
+    - e28a96c90c7245b44967ddd83fec6c21
+    values:
+    - iconNameOrGuid: AssemblyDefinitionAsset Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AssemblyDefinitionAsset Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Settings Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: SceneAsset Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AudioSource Icon
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Material Icon
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: PrefabModel Icon
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AudioSource Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AudioSource Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: SceneAsset Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: SceneAsset Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: SceneAsset Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: cs Script Icon
+      colorIndex: 5
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: TextAsset Icon
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AnimatorController Icon
+      colorIndex: 8
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 2
+      isIconRecursive: 0
+      isColorRecursive: 0
+  bookmarks:
+  - guid: d0ccc125bd294f543a1bb66b6d60dcda
+  - guid: 8249b47fc92d1954d9847cd4cb482eb4
+  - guid: 79a17517dc055794e8ef419b63cb7a67
+  - guid: 1caa215e1fb66d24db10e552b05f5c36
