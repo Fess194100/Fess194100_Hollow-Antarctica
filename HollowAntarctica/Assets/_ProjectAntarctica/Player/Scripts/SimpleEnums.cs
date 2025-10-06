@@ -44,6 +44,7 @@ namespace SimpleCharController
     {
         Linear,
         Parabular,
+        Force
     }
 
     public enum BodyPart

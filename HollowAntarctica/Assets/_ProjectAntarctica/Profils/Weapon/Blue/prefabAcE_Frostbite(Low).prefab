@@ -4890,13 +4890,16 @@ MonoBehaviour:
   showGizmos: 1
   projectileType: 1
   effectType: 2
-  effectDamage: 3
-  effectDuration: 0.4
-  effectPower: 0.9
+  numberEffectTargets: 99
+  effectDamage: 6
+  effectDuration: 1.2
+  effectPower: 0.8
   effectRadius: 3
   VFXCombatEffect:
     DeBug: 1
+    targets: []
     durationVFX: 1.1
+    vFXChainLightningController: {fileID: 0}
 --- !u!1 &8987493599698276175
 GameObject:
   m_ObjectHideFlags: 0

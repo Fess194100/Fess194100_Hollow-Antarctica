@@ -15675,6 +15675,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  colliderUpdateDelay: 0.04
+  destroyAfterCollision: 1
+  maxLifeTime: 6
   useEffect: 1
   effectDuration: 0
   effectPower: 20

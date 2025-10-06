@@ -255,6 +255,11 @@ namespace SimpleCharController
             }
         }
 
+        public GameObject GetGameObject()
+        {
+            return gameObject;
+        }
+
         #endregion
     }
 }

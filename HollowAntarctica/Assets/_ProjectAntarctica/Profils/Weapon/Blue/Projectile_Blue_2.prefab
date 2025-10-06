@@ -9828,6 +9828,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliderUpdateDelay: 0.4
+  destroyAfterCollision: 1
+  maxLifeTime: 6
   useEffect: 1
   effectDuration: 0.4
   effectPower: 0.9

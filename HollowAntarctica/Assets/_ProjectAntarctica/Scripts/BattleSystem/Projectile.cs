@@ -13,6 +13,8 @@ namespace SimpleCharController
         public AnimationCurve curveSpeed = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
         public AnimationCurve curveGravity = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
         [SerializeField] private float colliderUpdateDelay = 0.04f;
+        public bool destroyAfterCollision = true;
+        public float maxLifeTime = 6;
 
 
         [Header("Setting Effects")]
@@ -35,8 +37,7 @@ namespace SimpleCharController
         private int _chargeLevel;
         private float _speed;
         private float _damage;
-        private float _lifeTime;
-        private float _dieTime;
+        private float _currentLifeTime;
         private float _speedMultiplier = 1f;
         private Vector3 previsionPosition;
         private Vector3 _gravity;
@@ -52,22 +53,30 @@ namespace SimpleCharController
             _damage = damage;
             _typeMovement = typeMovement;
             _type = projectileType;
-            _dieTime = Mathf.Clamp(180f / _speed, 1f, 10f);
             _gravity = Vector3.down * rigidbody.mass;
-            if (_typeMovement != TypeMovement.Parabular) StartCoroutine(UpdateCollider(1f));
-            else StartCoroutine(UpdateCollider(2.75f));
+
+            if (destroyAfterCollision)
+            {
+                if (_typeMovement != TypeMovement.Parabular) StartCoroutine(UpdateCollider(1f));
+                else StartCoroutine(UpdateCollider(2.75f));
+            }
+
         }
 
         private void FixedUpdate()
         {
-            _lifeTime += Time.fixedDeltaTime;
-            _speedMultiplier = curveSpeed.Evaluate(_lifeTime);
-            float gravityMyltiplie = curveGravity.Evaluate(_lifeTime);
+            _currentLifeTime += Time.fixedDeltaTime;
+            _speedMultiplier = curveSpeed.Evaluate(_currentLifeTime);
+            float gravityMyltiplie = curveGravity.Evaluate(_currentLifeTime);
 
-            if (_lifeTime > _dieTime)
+            if (_currentLifeTime > maxLifeTime)
             {
+                if (!destroyAfterCollision) CreateAreaEffect();
+                else if (impactVFX != null) Instantiate(impactVFX, previsionPosition, previsionRotation);
+
                 DestroyProjectile();
             }
+
             switch (_typeMovement)
             {
                 case TypeMovement.Linear:
@@ -75,6 +84,9 @@ namespace SimpleCharController
                     break;
                 case TypeMovement.Parabular:
                     rigidbody.AddForce(transform.forward * (_speed * _speedMultiplier), ForceMode.Impulse);
+                    break;
+                case TypeMovement.Force:
+                    rigidbody.AddForce(transform.forward * (_speed * _speedMultiplier), ForceMode.Force);
                     break;
             }
 
@@ -103,15 +115,20 @@ namespace SimpleCharController
                         case ProjectileType.Orange: EffectOrange(wasKilled); break;
                     }
                 }
+
+                if (impactVFX != null) Instantiate(impactVFX, previsionPosition, previsionRotation);
+                _collisionProcessed = true;
+                DestroyProjectile();
             }
             else
             {
-                //Столкновение снаряда не с сущностью (Стена, колонна, пол, потолок...)
+                if (destroyAfterCollision)
+                {
+                    if (impactVFX != null) Instantiate(impactVFX, previsionPosition, previsionRotation);
+                    _collisionProcessed = true;
+                    DestroyProjectile();
+                }
             }
-
-            if (impactVFX != null) Instantiate(impactVFX, previsionPosition, previsionRotation);
-            _collisionProcessed = true;
-            DestroyProjectile();
         }
 
         private IEnumerator UpdateCollider(float miltiplier)

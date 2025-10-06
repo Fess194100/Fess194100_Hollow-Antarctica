@@ -60,7 +60,7 @@ MonoBehaviour:
   soundShot_3: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
   typeMovementLvl3: 0
   ChargedLvl3AmmoCost: 8
-  ChargedLvl3ProjectileSpeed: 12
+  ChargedLvl3ProjectileSpeed: 24
   baseDamageLvl3: 1000
   pitchSound_3: {x: 1, y: 1}
   OverloadDamageToPlayer: 10
