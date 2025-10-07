@@ -57,7 +57,7 @@ MonoBehaviour:
   pitchSound_2: {x: 1, y: 1}
   ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 55e073e2bda34a041bc2991089ab388f,
     type: 3}
-  soundShot_3: {fileID: 8300000, guid: 33597b1774e3d3943a730360d0664ca2, type: 3}
+  soundShot_3: {fileID: 8300000, guid: 8a548cf09ead10a46993a37131f280e9, type: 3}
   typeMovementLvl3: 0
   ChargedLvl3AmmoCost: 8
   ChargedLvl3ProjectileSpeed: 24

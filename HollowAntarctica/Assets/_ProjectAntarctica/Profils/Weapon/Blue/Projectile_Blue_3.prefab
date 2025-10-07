@@ -215,11 +215,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   colliderUpdateDelay: 0.04
   destroyAfterCollision: 0
-  maxLifeTime: 12
+  maxLifeTime: 3
   useEffect: 1
   effectDuration: 10
   effectPower: 0
-  impactVFX: {fileID: 5058106848113976763, guid: 7e056de56003580478a278a1e3a99f00,
+  impactVFX: {fileID: 5058106848113976763, guid: 6666fd9681d58c74ca36ce03f9656d69,
     type: 3}
   prefabCombatEffect: {fileID: 1459689672827613335, guid: 0de5696e297e71643b6cfa45275d44b7,
     type: 3}
