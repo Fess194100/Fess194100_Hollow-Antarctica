@@ -45,7 +45,7 @@ MonoBehaviour:
   typeMovementLvl1: 0
   ChargedLvl1AmmoCost: 2
   ChargedLvl1ProjectileSpeed: 20
-  baseDamageLvl1: 200
+  baseDamageLvl1: 10
   pitchSound_1: {x: 0.98, y: 1.02}
   ChargedLvl2ProjectilePrefab: {fileID: 2158188021835919910, guid: 13013d0b737a5cb4ea9353998d6ef7b5,
     type: 3}
@@ -53,7 +53,7 @@ MonoBehaviour:
   typeMovementLvl2: 0
   ChargedLvl2AmmoCost: 4
   ChargedLvl2ProjectileSpeed: 30
-  baseDamageLvl2: 200
+  baseDamageLvl2: 20
   pitchSound_2: {x: 1, y: 1}
   ChargedLvl3ProjectilePrefab: {fileID: 1000773871819285129, guid: 55e073e2bda34a041bc2991089ab388f,
     type: 3}
@@ -61,7 +61,7 @@ MonoBehaviour:
   typeMovementLvl3: 0
   ChargedLvl3AmmoCost: 8
   ChargedLvl3ProjectileSpeed: 24
-  baseDamageLvl3: 1000
+  baseDamageLvl3: 35
   pitchSound_3: {x: 1, y: 1}
   OverloadDamageToPlayer: 10
   OverloadDuration: 0.5

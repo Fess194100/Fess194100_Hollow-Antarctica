@@ -15201,7 +15201,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 1
+          value: 1.5
         fsmIntParams: []
         fsmBoolParams:
         - useVariable: 0
@@ -15867,7 +15867,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.2673247
+      time: 0.18507095
       value: 1
       inSlope: -30.011993
       outSlope: -0.021084903

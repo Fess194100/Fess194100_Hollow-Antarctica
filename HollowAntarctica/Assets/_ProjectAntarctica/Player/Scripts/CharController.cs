@@ -80,6 +80,7 @@ namespace SimpleCharController
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         [Header("Cinemachine")]
         public CinemachineBrain cinemachineBrain;
+        public CinemachineVirtualCamera virtualCamera;
         public GameObject CinemachineCameraTarget;
         public Transform mainCamera;
 
@@ -89,9 +90,13 @@ namespace SimpleCharController
         public float sensativeCam = 50f;
 
         [Space(6)]
-        public CinemachineFollowZoom cinemachineFollowZoom;
+        [Header("CinemachineEffects")]
+        public bool applyNoiseCamera = true;
+        public CinemachineFollowZoom cinemachineFollowZoom;        
         public float smoothTimeFOV = 0.3f;
         public AnimationCurve FOV_AtSpeed;
+        public AnimationCurve amplitudeNoiseAtSpeed;
+        public AnimationCurve frequencyNoiseAtSpeed;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         [Header("Current State Player")]
@@ -121,6 +126,7 @@ namespace SimpleCharController
         //private float distanceToClimbObj;
 
         // Cinemachine
+        private CinemachineBasicMultiChannelPerlin _noiseVirtualCamera;
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
         private float currentFOV;
@@ -148,6 +154,7 @@ namespace SimpleCharController
         {
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<SimpleInputActions>();
+            _noiseVirtualCamera = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
             GetAnimator();
             AssignAnimationIDs();
@@ -182,6 +189,8 @@ namespace SimpleCharController
 
             CameraRotation();
             UpdateFOV();
+
+            if (applyNoiseCamera && _noiseVirtualCamera != null) UpdateNoiseCamera();
         }        
 
         private void GroundedCheck()
@@ -529,6 +538,11 @@ namespace SimpleCharController
             if (currentFOV <= 0.01f) currentFOV = velocityFOV = 0;
         }
 
+        private void UpdateNoiseCamera()
+        {
+            _noiseVirtualCamera.m_AmplitudeGain = amplitudeNoiseAtSpeed.Evaluate(_currentSpeed);
+            _noiseVirtualCamera.m_FrequencyGain = frequencyNoiseAtSpeed.Evaluate(_currentSpeed);
+        }
         #region Climb
         private float SpeedOffClimb()
         {
