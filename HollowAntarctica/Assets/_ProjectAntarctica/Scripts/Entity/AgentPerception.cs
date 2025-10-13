@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using SimpleCharController;
 
 namespace AdaptivEntityAgent
 {
@@ -40,6 +39,7 @@ namespace AdaptivEntityAgent
         private GameObject currentTarget;
         private Vector3 lastKnownTargetPosition;
         private Coroutine perceptionCoroutine;
+        private EntityType currentEntityType;
 
         private void Start()
         {
@@ -64,8 +64,10 @@ namespace AdaptivEntityAgent
             {
                 if (IsValidTarget(target.gameObject))
                 {
+                    if (debugMode) Debug.Log($"IsValidTarget: {target.gameObject.name}");
                     if (IsTargetVisible(target.gameObject))
                     {
+                        if (debugMode) Debug.Log($"IsTargetVisible: {target.gameObject.name}");
                         if (currentTarget != target.gameObject)
                         {
                             currentTarget = target.gameObject;
@@ -93,9 +95,13 @@ namespace AdaptivEntityAgent
 
         private bool IsValidTarget(GameObject target)
         {
-            // Проверяем, является ли объект потенциальной целью
-            // Можно добавить проверку по тегам, компонентам и т.д.
-            return target.GetComponent<EssenceHealth>() != null && target != gameObject;
+            FlagFaction flagFaction = target.GetComponent<FlagFaction>();
+            if (flagFaction != null)
+            {
+                if (flagFaction.flagFaction == currentEntityType || flagFaction.flagFaction == EntityType.Neutral) return false;
+                else return true;
+            }
+            else return false;
         }
 
         private bool IsTargetVisible(GameObject target)
@@ -105,10 +111,11 @@ namespace AdaptivEntityAgent
 
             // Проверка угла обзора
             float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+            if (debugMode) Debug.Log($"Angle To Target: {angleToTarget}");
 
             if (angleToTarget > visionSettings.visionAngle / 2f &&
                 distanceToTarget > visionSettings.peripheralVisionRange)
-            {
+            {                
                 return false;
             }
 
@@ -144,7 +151,10 @@ namespace AdaptivEntityAgent
         public GameObject GetCurrentTarget() => currentTarget;
         public Vector3 GetLastKnownTargetPosition() => lastKnownTargetPosition;
         public bool HasTarget() => currentTarget != null;
-
+        public void SetCurrentEntityType(EntityType entityType)
+        {
+            currentEntityType = entityType;
+        }
         private void OnDrawGizmosSelected()
         {
             if (!debugMode) return;

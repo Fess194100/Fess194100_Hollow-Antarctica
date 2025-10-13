@@ -154,7 +154,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2440231547451513034}
   - component: {fileID: 8231616474466260450}
-  - component: {fileID: 5029110698668422963}
+  - component: {fileID: 4409271119356768854}
+  - component: {fileID: 5786050222826766806}
+  - component: {fileID: 2461154847674688987}
+  - component: {fileID: 4602665248473082717}
   - component: {fileID: 2626202641052996304}
   - component: {fileID: 2844184010569375799}
   - component: {fileID: 1267316530732537045}
@@ -207,7 +210,7 @@ NavMeshAgent:
   m_BaseOffset: -0.08
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
---- !u!114 &5029110698668422963
+--- !u!114 &4409271119356768854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,34 +219,84 @@ MonoBehaviour:
   m_GameObject: {fileID: 996572738830793022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbd5727e4da59604e9592b7693bda94b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f79586c3d5f51448add98438d9a3e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTarget: {fileID: 0}
-  waypoints:
-  - {fileID: 6789191199658061263}
-  - {fileID: 5664840248284868600}
-  - {fileID: 5277970235716603399}
-  - {fileID: 7880892915398290624}
-  - {fileID: 8353231296408437258}
-  - {fileID: 2726024365962844053}
-  - {fileID: 4845619595446912084}
-  waitTime: 0.5
-  OnNextPoint:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5491897034805764246}
-        m_TargetAssemblyTypeName: PlayMakerFSM, PlayMaker
-        m_MethodName: SendEvent
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: OnNextPoint
-          m_BoolArgument: 0
-        m_CallState: 2
+  entityType: 0
+  stateUpdateFrequency: 0.4
+  debugMode: 1
+  currentState: 0
+  fleeHealthThreshold: 0.3
+  investigationTime: 5
+--- !u!114 &5786050222826766806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996572738830793022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f90dfa6572ba74c884f7d4d3a84155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolSpeed: 2
+  combatSpeed: 3.5
+  fleeSpeed: 4
+  rotationSpeed: 270
+  patrolPoints:
+  - {fileID: 3631874114778606138}
+  - {fileID: 4478132921239206574}
+  - {fileID: 4107223095100563615}
+  - {fileID: 5278630444128652484}
+  - {fileID: 1668888143777125665}
+  - {fileID: 6996265902491431067}
+  - {fileID: 1392842547047615795}
+  waitTimeAtPoints: 2
+  pointReachedThreshold: 0.5
+--- !u!114 &2461154847674688987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996572738830793022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61a06c9bb7a7e94b9ea3fde24b56892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionSettings:
+    visionRange: 30
+    visionAngle: 75
+    visionObstacleMask:
+      serializedVersion: 2
+      m_Bits: 65
+    peripheralVisionRange: 8.33
+  hearingSettings:
+    hearingRange: 15
+    soundObstacleMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  debugMode: 1
+--- !u!114 &4602665248473082717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996572738830793022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e5d2c7048cd0745b56e98e9a83a413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 10
+  attackRate: 1
+  attackDamage: 10
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &2626202641052996304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5855,6 +5908,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7657966619581158213, guid: 77472ad30e0d8114a95a0abde1e855f6,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1330338341715524089}
+    - targetCorrespondingSourceObject: {fileID: -7657966619581158213, guid: 77472ad30e0d8114a95a0abde1e855f6,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4896110579114688406}
     - targetCorrespondingSourceObject: {fileID: -7657966619581158213, guid: 77472ad30e0d8114a95a0abde1e855f6,
         type: 3}
@@ -5947,6 +6004,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1505925182106855023}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1330338341715524089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98922062904265428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b924b44e0b57d8d45b1c03316c2f56fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagFaction: 0
 --- !u!65 &4896110579114688406
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6607,7 +6677,7 @@ MonoBehaviour:
             showInInspector: 0
             networkSync: 0
             typeName: UnityEngine.Object
-            value: {fileID: 5029110698668422963}
+            value: {fileID: 0}
           TargetTypeName: AIMannequin
           PropertyName: currentTarget
           BoolParameter:
@@ -6952,7 +7022,7 @@ MonoBehaviour:
             showInInspector: 0
             networkSync: 0
             typeName: UnityEngine.Object
-            value: {fileID: 5029110698668422963}
+            value: {fileID: 0}
           TargetTypeName: AIMannequin
           PropertyName: currentTarget
           BoolParameter:

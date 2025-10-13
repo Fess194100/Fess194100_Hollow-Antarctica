@@ -7,41 +7,30 @@ namespace AdaptivEntityAgent
         [Header("Enemy Specific Settings")]
         [SerializeField] private float fleeHealthThreshold = 0.3f;
         [SerializeField] private float investigationTime = 5f;
+        [Range(0f, 1f)]
+        [SerializeField] private float attackTypeWeight = 0.5f;
 
+        private AgentCombat agentCombat;
         private float investigationTimer = 0f;
+        private AgentState previousCombatState;
 
-        // Правильное переопределение Start
         protected override void Start()
         {
-            // Сначала получаем компоненты (они уже protected в родителе)
-            // perception и movement уже инициализированы в Awake родителя
-
-            // Вызываем базовый Start
             base.Start();
 
-            // Теперь безопасно подписываемся на события
+            agentCombat = GetComponent<AgentCombat>();
+            if (agentCombat != null)
+            {
+                agentCombat.SetAttackTypeWeight(attackTypeWeight);
+            }
+
             if (perception != null)
             {
                 perception.OnTargetSpotted += OnTargetSpotted;
                 perception.OnTargetLost += OnTargetLost;
                 perception.OnSoundHeard += OnSoundHeard;
+                perception.SetCurrentEntityType(GetEntityType());
             }
-        }
-
-        // Альтернативный вариант - инициализация в Awake
-        protected override void Awake()
-        {
-            // Сначала вызываем базовый Awake (который инициализирует компоненты)
-            base.Awake();
-
-            // Здесь perception и movement уже инициализированы
-            // Можно выполнить дополнительную настройку специфичную для врага
-        }
-
-        protected override void UpdatePatrolState()
-        {
-            // Базовая логика патрулирования уже в AgentMovement
-            // Можно добавить вражескую специфику
         }
 
         protected override void UpdateCombatState()
@@ -52,10 +41,24 @@ namespace AdaptivEntityAgent
                 return;
             }
 
-            // Проверка необходимости отступления
+            // Проверка необходимости отступления по здоровью
             if (health != null && health.GetHealthPercentage() < fleeHealthThreshold)
             {
                 ChangeState(AgentState.Flee);
+                return;
+            }
+
+            // Для исключительно дальних бойцов - отступление при близкой цели
+            if (attackTypeWeight >= 0.9f && agentCombat != null)
+            {
+                GameObject target = perception.GetCurrentTarget();
+                float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+
+                if (distanceToTarget < agentCombat.GetMeleeAttackSettings().optimalDistance)
+                {
+                    ChangeState(AgentState.Flee);
+                    return;
+                }
             }
         }
 
@@ -69,7 +72,6 @@ namespace AdaptivEntityAgent
                 ChangeState(AgentState.Patrol);
             }
 
-            // Если увидели цель во время исследования - переходим в бой
             if (perception != null && perception.HasTarget())
             {
                 investigationTimer = 0f;
@@ -79,7 +81,7 @@ namespace AdaptivEntityAgent
 
         protected override void UpdateFleeState()
         {
-            // Логика бегства - движение в случайном направлении от цели
+            // Логика бегства
             if (perception != null && perception.HasTarget() && movement != null)
             {
                 Vector3 fleeDirection = (transform.position - perception.GetCurrentTarget().transform.position).normalized;
@@ -87,16 +89,19 @@ namespace AdaptivEntityAgent
                 movement.MoveToPosition(fleePosition);
             }
 
-            // Возврат к патрулированию через некоторое время
+            // Возврат к патрулированию при восстановлении здоровья
             if (health != null && health.GetHealthPercentage() > 0.6f)
             {
-                ChangeState(AgentState.Patrol);
+                // Проверяем, нет ли целей рядом
+                if (perception == null || !perception.HasTarget())
+                {
+                    ChangeState(AgentState.Patrol);
+                }
             }
         }
 
         protected override void UpdateAlertState()
         {
-            // Повышенная бдительность - поиск целей
             if (perception != null && perception.HasTarget())
             {
                 ChangeState(AgentState.Combat);
@@ -106,7 +111,19 @@ namespace AdaptivEntityAgent
         // Обработчики событий восприятия
         private void OnTargetSpotted(GameObject target)
         {
-            ChangeState(AgentState.Combat);
+            // Запоминаем предыдущее состояние перед боем
+            previousCombatState = GetCurrentState();
+
+            if (previousCombatState == AgentState.Idle ||
+                previousCombatState == AgentState.Investigate ||
+                previousCombatState == AgentState.Patrol)
+            {
+                ChangeState(AgentState.Combat);
+            }
+            else
+            {
+                ChangeState(AgentState.Patrol);
+            }
         }
 
         private void OnTargetLost(GameObject target)
@@ -128,9 +145,17 @@ namespace AdaptivEntityAgent
             }
         }
 
+        public void SetAttackTypeWeight(float weight)
+        {
+            attackTypeWeight = Mathf.Clamp01(weight);
+            if (agentCombat != null)
+            {
+                agentCombat.SetAttackTypeWeight(attackTypeWeight);
+            }
+        }
+
         protected override void OnDestroy()
         {
-            // Отписываемся от событий
             if (perception != null)
             {
                 perception.OnTargetSpotted -= OnTargetSpotted;
@@ -138,7 +163,6 @@ namespace AdaptivEntityAgent
                 perception.OnSoundHeard -= OnSoundHeard;
             }
 
-            // Вызываем базовый OnDestroy
             base.OnDestroy();
         }
     }

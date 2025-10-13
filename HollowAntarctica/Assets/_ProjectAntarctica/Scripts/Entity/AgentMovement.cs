@@ -28,6 +28,11 @@ namespace AdaptivEntityAgent
             navMeshAgent.angularSpeed = rotationSpeed;
         }
 
+        private void OnDestroy()
+        {
+            StopPatrol();
+        }
+
         public void OnStateChanged(AgentState newState)
         {
             // Ќастройка скорости в зависимости от состо€ни€
@@ -107,7 +112,8 @@ namespace AdaptivEntityAgent
             }
         }
 
-        // Public API дл€ управлени€ движением
+        #region Public API дл€ управлени€ движением
+
         public void MoveToPosition(Vector3 position)
         {
             navMeshAgent.SetDestination(position);
@@ -135,10 +141,8 @@ namespace AdaptivEntityAgent
         {
             navMeshAgent.speed = speed;
         }
+        #endregion
 
-        private void OnDestroy()
-        {
-            StopPatrol();
-        }
+        
     }
 }
