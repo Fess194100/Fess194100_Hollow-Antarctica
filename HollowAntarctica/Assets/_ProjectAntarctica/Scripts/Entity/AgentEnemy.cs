@@ -26,18 +26,19 @@ namespace AdaptivEntityAgent
 
             if (perception != null)
             {
-                perception.OnTargetSpotted += OnTargetSpotted;
-                perception.OnTargetLost += OnTargetLost;
-                perception.OnSoundHeard += OnSoundHeard;
+                perception.perceptionEvents.OnTargetSpotted.AddListener(OnTargetSpotted);
+                perception.perceptionEvents.OnTargetLost.AddListener(OnTargetLost);
+                perception.perceptionEvents.OnTargetChanged.AddListener(OnTargetChanged);
+                perception.perceptionEvents.OnSoundHeard.AddListener(OnSoundHeard);
                 perception.SetCurrentEntityType(GetEntityType());
             }
         }
 
         protected override void UpdateCombatState()
         {
-            if (perception == null || !perception.HasTarget())
+            if (perception == null || !perception.HasTarget)
             {
-                ChangeState(AgentState.Alert);
+                ChangeState(AgentState.Investigate);
                 return;
             }
 
@@ -72,7 +73,7 @@ namespace AdaptivEntityAgent
                 ChangeState(AgentState.Patrol);
             }
 
-            if (perception != null && perception.HasTarget())
+            if (perception != null && perception.HasTarget)
             {
                 investigationTimer = 0f;
                 ChangeState(AgentState.Combat);
@@ -82,7 +83,7 @@ namespace AdaptivEntityAgent
         protected override void UpdateFleeState()
         {
             // Логика бегства
-            if (perception != null && perception.HasTarget() && movement != null)
+            if (perception != null && perception.HasTarget && movement != null)
             {
                 Vector3 fleeDirection = (transform.position - perception.GetCurrentTarget().transform.position).normalized;
                 Vector3 fleePosition = transform.position + fleeDirection * 10f;
@@ -93,7 +94,7 @@ namespace AdaptivEntityAgent
             if (health != null && health.GetHealthPercentage() > 0.6f)
             {
                 // Проверяем, нет ли целей рядом
-                if (perception == null || !perception.HasTarget())
+                if (perception == null || !perception.HasTarget)
                 {
                     ChangeState(AgentState.Patrol);
                 }
@@ -102,7 +103,7 @@ namespace AdaptivEntityAgent
 
         protected override void UpdateAlertState()
         {
-            if (perception != null && perception.HasTarget())
+            if (perception != null && perception.HasTarget)
             {
                 ChangeState(AgentState.Combat);
             }
@@ -124,6 +125,11 @@ namespace AdaptivEntityAgent
             {
                 ChangeState(AgentState.Patrol);
             }
+        }
+
+        private void OnTargetChanged(GameObject target)
+        {
+            // Не реализованно
         }
 
         private void OnTargetLost(GameObject target)
@@ -158,9 +164,10 @@ namespace AdaptivEntityAgent
         {
             if (perception != null)
             {
-                perception.OnTargetSpotted -= OnTargetSpotted;
-                perception.OnTargetLost -= OnTargetLost;
-                perception.OnSoundHeard -= OnSoundHeard;
+                perception.perceptionEvents.OnTargetSpotted.RemoveListener(OnTargetSpotted);
+                perception.perceptionEvents.OnTargetLost.RemoveListener(OnTargetLost);
+                perception.perceptionEvents.OnTargetChanged.RemoveListener(OnTargetChanged);
+                perception.perceptionEvents.OnSoundHeard.RemoveListener(OnSoundHeard);
             }
 
             base.OnDestroy();

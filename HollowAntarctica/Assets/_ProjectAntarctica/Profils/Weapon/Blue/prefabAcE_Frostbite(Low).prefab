@@ -52,6 +52,7 @@ MonoBehaviour:
   showGizmos: 1
   projectileType: 1
   effectType: 2
+  hitRaection: 1
   numberEffectTargets: 99
   effectDamage: 18
   effectDuration: 3

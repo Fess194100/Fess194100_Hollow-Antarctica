@@ -18,6 +18,9 @@ namespace SimpleCharController
         [Header("Weapon Settings")]
         [SerializeField] private LayerMask targetingMask = ~0;
         [SerializeField] private WeaponProjectileData[] projectileData;
+
+        [Space(15)]
+        [SerializeField] private bool hitReaction = true;
         [SerializeField] private float timeToMaxCharge = 2f;
         [SerializeField] private float overheatThresholdTime = 0.5f;
         [SerializeField] private float autoFireRateMultiplier = 1f;
@@ -238,7 +241,7 @@ namespace SimpleCharController
 
         private void ApplyOwerloarEffect(WeaponProjectileData data)
         {
-            essenceHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3);
+            essenceHealth.TakeDamage(data.OverloadDamageToPlayer, currentProjectileType, 3, gameObject, false, false);
 
             switch (currentProjectileType)
             {
@@ -524,7 +527,8 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
+                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage,
+                            TypeMovement.Linear, true, hitReaction);
                     }
                 }
             }
@@ -562,7 +566,7 @@ namespace SimpleCharController
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear);
+                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear, true, hitReaction);
                     }
 
                     playSound?.Invoke(soundShot, pitch);
@@ -665,7 +669,7 @@ namespace SimpleCharController
 
             if (projectileScript != null)
             {
-                projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, chargeLevel, damage, typeMovement);
+                projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, chargeLevel, damage, typeMovement, true, hitReaction);
             }
         }
 

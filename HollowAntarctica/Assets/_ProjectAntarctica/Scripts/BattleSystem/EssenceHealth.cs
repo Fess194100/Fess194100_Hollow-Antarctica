@@ -1,3 +1,4 @@
+using Breeze.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,7 @@ namespace SimpleCharController
         public bool DeBug = false;
 
         [Header("References")]
+        [SerializeField] private BreezeSystem agentController;
         [SerializeField] private HandlerCombatEffects handlerCombatEffects;
 
         [Space(10)]
@@ -29,8 +31,7 @@ namespace SimpleCharController
             OnHealthChanged?.Invoke(currentHealth);
         }
 
-        // Нанесение урона игроку
-        public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel, BodyPart bodyPart)
+        public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel, BodyPart bodyPart, GameObject sender, bool isPlayer, bool hitReaction)
         {
             if (!_isDead)
             {
@@ -48,13 +49,18 @@ namespace SimpleCharController
                 }
 
                 if (DeBug) Debug.Log("Take damage = " + damage + " | Body part - " + bodyPart);
+
+                if (agentController != null)
+                {
+                    agentController.TakeDamage(damage, sender, isPlayer, hitReaction);
+                }
             }
         }
 
-        public void TakeDamage(float damage, ProjectileType damageType, int chargeLevel)
+        public void TakeDamage(float damage, ProjectileType damageType, int chargeLevel, GameObject sender, bool isPlayer, bool hitReaction)
         {
             // Перегрузка для обратной совместимости
-            TakeDamage(damage, damageType, chargeLevel, BodyPart.Body);
+            TakeDamage(damage, damageType, chargeLevel, BodyPart.Body, sender, isPlayer, hitReaction);
         }
 
         // Восстановление здоровья игроку

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Breeze.Core;
 
 namespace SimpleCharController
 {
@@ -8,7 +9,7 @@ namespace SimpleCharController
         public bool DeBug = true;
 
         [Header("Movement Controllers References")]
-        [SerializeField] private MonoBehaviour movementController; // Базовый контроллер движения
+        [SerializeField] private BreezeSystem agentController; // AgentController
         [SerializeField] private MonoBehaviour characterController; // Контроллер персонажа
 
         [Space(10)]
@@ -17,17 +18,7 @@ namespace SimpleCharController
 
         private StatusEffectType currentEffect = StatusEffectType.None;
         private Coroutine _effectCoroutine;
-        private float _originalSpeed = 1f;
-
-        void Start()
-        {
-            // Сохраняем оригинальную скорость если есть контроллер движения
-            if (movementController != null)
-            {
-                // Здесь нужно получить ссылку на скорость из вашего контроллера движения
-                // Например: _originalSpeed = movementController.moveSpeed;
-            }
-        }
+        private float _originalSpeedMultiplier = 1f;
 
         public void ApplyFrostbiteEffect(float freezePower, float freezeDuration)
         {
@@ -37,9 +28,10 @@ namespace SimpleCharController
                          $"Power: {freezePower:F2}" + $"║ Duration: {freezeDuration:F2}s");
             }
 
-            ApplyFrostbite(freezePower);
+            //ApplyFrostbite(freezePower);
             ApplyStatusEffect(StatusEffectType.Frostbite, freezeDuration);
             combatEffectEvents.OnFrostbite.Invoke();
+            ApplyFrostbite(freezePower);
         }
 
         public void ApplyFreezeEffect(float freezePower, float freezeDuration)
@@ -50,9 +42,10 @@ namespace SimpleCharController
                          $"Power: {freezePower:F2}" + $"║ Duration: {freezeDuration:F2}s");
             }
 
-            ApplyFreeze(freezePower);
+            //ApplyFreeze(freezePower);
             ApplyStatusEffect(StatusEffectType.Freeze, freezeDuration);
             combatEffectEvents.OnFreeze.Invoke();
+            ApplyFreeze(freezePower);
         }
 
         public void ApplyElectroShortEffect(float duration)
@@ -63,8 +56,9 @@ namespace SimpleCharController
                          $"║ Duration: {duration:F2}s");
             }
 
-            ApplyElectroShort();
+            //ApplyElectroShort();
             ApplyStatusEffect(StatusEffectType.ElectroShort, duration);
+            ApplyElectroShort();
         }
 
         public void ApplyChainLightningEffect(float power)
@@ -75,8 +69,9 @@ namespace SimpleCharController
                          $"║ Power: {power:F2}s");
             }
 
-            ApplyChainLightning(power);
+            //ApplyChainLightning(power);
             ApplyStatusEffect(StatusEffectType.ChainLightning, 0.04f);
+            ApplyChainLightning(power);
         }
 
         private void ApplyStatusEffect(StatusEffectType effectType, float duration)
@@ -126,10 +121,9 @@ namespace SimpleCharController
         private void ApplyFreeze(float power)
         {
             // Полная остановка движения
-            if (movementController != null)
+            if (agentController != null)
             {
-                // movementController.SetMovementEnabled(false);
-                // movementController.SetRotationEnabled(false);
+                agentController.SetSpeedMultiplier(0);
             }
 
             // Визуальные эффекты ледяной блок
@@ -140,10 +134,9 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnFreezeComplete.Invoke();
             // Восстановление движения
-            if (movementController != null)
+            if (agentController != null)
             {
-                // movementController.SetMovementEnabled(true);
-                // movementController.SetRotationEnabled(true);
+                agentController.SetSpeedMultiplier(1);
             }
 
             // Удаление визуальных эффектов
@@ -153,10 +146,9 @@ namespace SimpleCharController
         private void ApplyFrostbite(float power)
         {
             // Замедление движения
-            if (movementController != null)
+            if (agentController != null)
             {
-                float slowFactor = 1f - power; // power от 0 до 1
-                // movementController.SetSpeedMultiplier(slowFactor);
+                agentController.SetSpeedMultiplier(power);
             }
 
             // Визуальные эффекты обморожения
@@ -167,9 +159,9 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnFrostbiteComplete.Invoke();
             // Восстановление скорости
-            if (movementController != null)
+            if (agentController != null)
             {
-                // movementController.SetSpeedMultiplier(1f);
+                agentController.SetSpeedMultiplier(1f);
             }
 
             // Удаление визуальных эффектов
@@ -180,7 +172,7 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnElectroShort.Invoke();
             // Временная потеря контроля
-            if (movementController != null)
+            if (agentController != null)
             {
                 // movementController.SetMovementEnabled(false);
             }
@@ -193,7 +185,7 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnElectroShortComplete.Invoke();
             // Восстановление контроля
-            if (movementController != null)
+            if (agentController != null)
             {
                 // movementController.SetMovementEnabled(true);
             }
@@ -206,7 +198,7 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnChainLightning.Invoke();
             // Временная потеря контроля
-            if (movementController != null)
+            if (agentController != null)
             {
                 // movementController.SetMovementEnabled(false);
             }
@@ -219,7 +211,7 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnChainLightningComplete.Invoke();
             // Восстановление контроля
-            if (movementController != null)
+            if (agentController != null)
             {
                 // movementController.SetMovementEnabled(true);
             }

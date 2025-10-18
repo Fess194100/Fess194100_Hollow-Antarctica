@@ -13,6 +13,7 @@ namespace SimpleCharController
         [Header("Area Effect Settings")]
         public ProjectileType projectileType;
         public StatusEffectType effectType = StatusEffectType.None;
+        public bool hitRaection;
         public int numberEffectTargets = 99;
         public float effectDamage;
         public float effectDuration;
@@ -41,7 +42,6 @@ namespace SimpleCharController
             _owner = owner;
             _ownerHealth = ownerHealth;
             _ownerHandlerCombatEffects = ownerHandlerCombatEffects;
-
             /*if (sphereCollider != null)
             {
                 sphereCollider.radius = _effectRadius;
@@ -93,7 +93,7 @@ namespace SimpleCharController
 
             if (targetEssenceHealth != null && targetEssenceHealth != _ownerHealth)
             {
-                hitBox.TakeDamage(effectDamage, projectileType, -2);
+                hitBox.TakeDamage(effectDamage, projectileType, -2, _owner, true, hitRaection);
             }
 
             HandlerCombatEffects targetHandler = hitBox.GetCombatEffects();

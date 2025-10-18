@@ -9831,8 +9831,8 @@ MonoBehaviour:
   destroyAfterCollision: 1
   maxLifeTime: 6
   useEffect: 1
-  effectDuration: 0.4
-  effectPower: 0.9
+  effectDuration: 2.6
+  effectPower: 0
   impactVFX: {fileID: 5058106848113976763, guid: 7e056de56003580478a278a1e3a99f00,
     type: 3}
   prefabCombatEffect: {fileID: 0}

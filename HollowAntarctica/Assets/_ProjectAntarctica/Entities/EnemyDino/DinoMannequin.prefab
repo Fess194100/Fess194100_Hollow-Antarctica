@@ -228,6 +228,7 @@ MonoBehaviour:
   currentState: 0
   fleeHealthThreshold: 0.3
   investigationTime: 5
+  attackTypeWeight: 0.5
 --- !u!114 &5786050222826766806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,12 +292,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e5d2c7048cd0745b56e98e9a83a413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 10
-  attackRate: 1
-  attackDamage: 10
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  debug: 0
+  meleeAttackSettings:
+    attackRange: 2
+    attackDamage: 10
+    attackRate: 1
+    optimalDistance: 5
+    projectilePrefab: {fileID: 0}
+    attackStartPosition: {fileID: 0}
+    targetMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  rangedAttackSettings:
+    attackRange: 2
+    attackDamage: 10
+    attackRate: 1
+    optimalDistance: 5
+    projectilePrefab: {fileID: 0}
+    attackStartPosition: {fileID: 0}
+    targetMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  attackTypeWeight: 0.5
 --- !u!114 &2626202641052996304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
+  agentController: {fileID: 0}
   handlerCombatEffects: {fileID: 0}
   maxHealth: 100
   currentHealth: 100
@@ -374,7 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 1
-  movementController: {fileID: 0}
+  agentController: {fileID: 0}
   characterController: {fileID: 0}
   combatEffectEvents:
     OnFrostbite:

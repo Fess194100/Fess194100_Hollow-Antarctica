@@ -24,12 +24,12 @@ namespace SimpleCharController
             }
         }
 
-        public void TakeDamage(float damage, ProjectileType damageType, int chargeLevel)
+        public void TakeDamage(float damage, ProjectileType damageType, int chargeLevel, GameObject sender, bool isPlayer, bool hitReaction)
         {
             if (parentHealth != null)
             {
                 float finalDamage = damage * damageMultiplier;
-                parentHealth.TakeDamage(finalDamage, damageType, chargeLevel, bodyPart);
+                parentHealth.TakeDamage(finalDamage, damageType, chargeLevel, bodyPart, sender, isPlayer, hitReaction);
             }
         }
 

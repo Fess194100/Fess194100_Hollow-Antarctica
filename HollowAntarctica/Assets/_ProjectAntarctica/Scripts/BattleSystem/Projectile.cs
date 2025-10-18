@@ -34,6 +34,8 @@ namespace SimpleCharController
         private TypeMovement _typeMovement;
         private ProjectileType _type;
         private bool _collisionProcessed = false;
+        private bool _isPlayer;
+        private bool _hitReaction;
         private int _chargeLevel;
         private float _speed;
         private float _damage;
@@ -43,17 +45,20 @@ namespace SimpleCharController
         private Vector3 _gravity;
         private Quaternion previsionRotation;
         #endregion
-        public void Initialize(float speed, GameObject owner, EssenceHealth essenceHealth, ProjectileType projectileType, int chargeLevel, float damage, TypeMovement typeMovement)
+        public void Initialize(float speed, GameObject owner, EssenceHealth essenceHealth, ProjectileType projectileType,
+            int chargeLevel, float damage, TypeMovement typeMovement, bool isPlayer, bool hitReaction)
         {
             _collisionProcessed = false;
             _speed = speed;
             _owner = owner;
+            _hitReaction = hitReaction;
             _ownerEssenceHealth = essenceHealth;
             _chargeLevel = chargeLevel;
             _damage = damage;
             _typeMovement = typeMovement;
             _type = projectileType;
             _gravity = Vector3.down * rigidbody.mass;
+            _isPlayer = isPlayer;
 
             if (destroyAfterCollision)
             {
@@ -101,7 +106,7 @@ namespace SimpleCharController
 
             if (damageable != null)
             {
-                damageable.TakeDamage(_damage, _type, _chargeLevel);
+                damageable.TakeDamage(_damage, _type, _chargeLevel, _owner, _isPlayer, _hitReaction);
                 bool wasKilled = damageable.IsDead();
                 _handlerCombatEffects = damageable.GetCombatEffects();
 

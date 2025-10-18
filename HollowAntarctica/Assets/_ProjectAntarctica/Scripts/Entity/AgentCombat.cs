@@ -45,7 +45,9 @@ namespace AdaptivEntityAgent
         // Combat state variables
         private bool canAttack = true;
         private bool isAiming = false;
+        private bool canRotation = false;
         private Vector3 attackPosition;
+        private Quaternion targetRotation;
         private AttackType currentAttackType;
         private float rotationSpeed = 120f;
 
@@ -63,6 +65,17 @@ namespace AdaptivEntityAgent
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
+        private void FixedUpdate()
+        {
+            if (canRotation)
+            {
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
+        }
         public void OnStateChanged(AgentState newState)
         {
             // Остановка боевой корутины при выходе из состояния боя
@@ -71,6 +84,7 @@ namespace AdaptivEntityAgent
                 StopCoroutine(combatCoroutine);
                 combatCoroutine = null;
                 isAiming = false;
+                canRotation = false;
             }
             else if (newState == AgentState.Combat)
             {
@@ -82,11 +96,12 @@ namespace AdaptivEntityAgent
         {
             while (true)
             {
-                if (perception.HasTarget())
+                if (perception.HasTarget)
                 {
                     GameObject target = perception.GetCurrentTarget();
                     ProcessCombat(target);
                 }
+                else canRotation = false;
                 yield return new WaitForSeconds(0.2f);
             }
         }
@@ -97,6 +112,7 @@ namespace AdaptivEntityAgent
 
             if (!isAiming)
             {
+                canRotation = false;
                 // Выбираем тип атаки и позицию
                 currentAttackType = ChooseAttackType(target);
                 attackPosition = CalculateAttackPosition(target, currentAttackType);
@@ -231,13 +247,10 @@ namespace AdaptivEntityAgent
 
             if (direction != Vector3.zero)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime
-                );
-            }
+                targetRotation = Quaternion.LookRotation(direction);
+                canRotation = true;
+            } 
+            else canRotation = false;
         }
 
         private bool IsReadyToAttack(GameObject target, AttackType attackType)
@@ -281,7 +294,7 @@ namespace AdaptivEntityAgent
         private void PerformMeleeAttack(GameObject target, EssenceHealth targetHealth, AttackSettings settings)
         {
             // Ближняя атака - мгновенное нанесение урона
-            targetHealth.TakeDamage(settings.attackDamage, ProjectileType.Green, 1, BodyPart.Body);
+            //targetHealth.TakeDamage(settings.attackDamage, ProjectileType.Green, 1, BodyPart.Body);
 
             // Визуальные эффекты для ближней атаки (опционально)
             if (settings.projectilePrefab != null && settings.attackStartPosition != null)

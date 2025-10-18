@@ -16,7 +16,7 @@ namespace AdaptivEntityAgent
                 AgentPerception perception = listener.GetComponent<AgentPerception>();
                 if (perception != null)
                 {
-                    perception.RegisterSound(transform.position, volume);
+                    //perception.RegisterSound(transform.position, volume);
                 }
             }
         }
