@@ -7,9 +7,8 @@ namespace AdaptivEntityAgent
         [Header("Enemy Specific Settings")]
         [SerializeField] private float fleeHealthThreshold = 0.3f;
         [SerializeField] private float investigationTime = 5f;
-        [Range(0f, 1f)]
-        [SerializeField] private float attackTypeWeight = 0.5f;
-
+        
+        private float attackTypeWeight = 0.5f;
         private AgentCombat agentCombat;
         private float investigationTimer = 0f;
         private AgentState previousCombatState;
@@ -21,7 +20,7 @@ namespace AdaptivEntityAgent
             agentCombat = GetComponent<AgentCombat>();
             if (agentCombat != null)
             {
-                agentCombat.SetAttackTypeWeight(attackTypeWeight);
+                attackTypeWeight = agentCombat.AttackTypeWeight;
             }
 
             if (perception != null)
@@ -38,7 +37,7 @@ namespace AdaptivEntityAgent
         {
             if (perception == null || !perception.HasTarget)
             {
-                ChangeState(AgentState.Investigate);
+                ChangeState(AgentState.Combat);
                 return;
             }
 
@@ -52,10 +51,10 @@ namespace AdaptivEntityAgent
             // Для исключительно дальних бойцов - отступление при близкой цели
             if (attackTypeWeight >= 0.9f && agentCombat != null)
             {
-                GameObject target = perception.GetCurrentTarget();
+                GameObject target = perception.CurrentTarget;
                 float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-                if (distanceToTarget < agentCombat.GetMeleeAttackSettings().optimalDistance)
+                if (distanceToTarget < agentCombat.MeleeAttackSettings.optimalDistance)
                 {
                     ChangeState(AgentState.Flee);
                     return;
@@ -85,7 +84,7 @@ namespace AdaptivEntityAgent
             // Логика бегства
             if (perception != null && perception.HasTarget && movement != null)
             {
-                Vector3 fleeDirection = (transform.position - perception.GetCurrentTarget().transform.position).normalized;
+                Vector3 fleeDirection = (transform.position - perception.CurrentTarget.transform.position).normalized;
                 Vector3 fleePosition = transform.position + fleeDirection * 10f;
                 movement.MoveToPosition(fleePosition);
             }
@@ -137,7 +136,7 @@ namespace AdaptivEntityAgent
             ChangeState(AgentState.Investigate);
             if (movement != null && perception != null)
             {
-                movement.MoveToPosition(perception.GetLastKnownTargetPosition());
+                movement.MoveToPosition(perception.LastKnownTargetPosition);
             }
         }
 

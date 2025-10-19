@@ -12568,6 +12568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagFaction: 1
+  targetHealth: {fileID: 6200174266677484524}
 --- !u!143 &7182463550397853413
 CharacterController:
   m_ObjectHideFlags: 0
@@ -15615,6 +15616,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
   - {fileID: 11400000, guid: 653db812ef4376d4f818479e6ebb98c3, type: 2}
   - {fileID: 11400000, guid: 7254033aa610b8844994465a78ce736d, type: 2}
+  hitReaction: 1
   timeToMaxCharge: 2
   overheatThresholdTime: 0.5
   autoFireRateMultiplier: 1
@@ -15887,6 +15889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
+  agentController: {fileID: 0}
   handlerCombatEffects: {fileID: 2401443997797990867}
   maxHealth: 100
   currentHealth: 100
@@ -15915,7 +15918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
-  movementController: {fileID: 0}
+  agentController: {fileID: 0}
   characterController: {fileID: 0}
   combatEffectEvents:
     OnFrostbite:

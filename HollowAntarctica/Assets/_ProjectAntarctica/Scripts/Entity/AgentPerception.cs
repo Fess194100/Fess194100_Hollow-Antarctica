@@ -57,6 +57,7 @@ namespace AdaptivEntityAgent
 
         [Header("Debug")]
         [SerializeField] private bool debugMode = false;
+        [SerializeField] private bool drawDebugGizmo = false;
         #endregion
 
         #region Private Variables
@@ -65,7 +66,6 @@ namespace AdaptivEntityAgent
         private Coroutine perceptionCoroutine;
         private EntityType currentEntityType;
         private List<PotentialTarget> potentialTargets;
-        private Dictionary<GameObject, float> targetLostTimers = new Dictionary<GameObject, float>();
         private float currentTargetDistance;
         #endregion
 
@@ -97,7 +97,7 @@ namespace AdaptivEntityAgent
 
         private void OnDrawGizmosSelected()
         {
-            if (!debugMode) return;
+            if (!drawDebugGizmo) return;
 
             DrawVisionGizmos();
             DrawTargetGizmos();
@@ -204,7 +204,11 @@ namespace AdaptivEntityAgent
                     return;
                 }
 
-                if (potentialTargets.Count == 0 && currentTargetDistance > visionSettings.visionRange) SetCurrentTarget();
+                if (potentialTargets.Count == 0 && currentTargetDistance > visionSettings.visionRange)
+                {
+                    if (currentTarget != null) lastKnownTargetPosition = currentTarget.transform.position;
+                    LostCurrentTarget();
+                } 
             }
         }
 
@@ -317,10 +321,7 @@ namespace AdaptivEntityAgent
                     }
                     else
                     {
-                        perceptionEvents.OnTargetLost?.Invoke(currentTarget);
-                        if (debugMode) Debug.Log($" Target lost: {currentTarget.name}");
-                        currentTarget = null;
-                        currentTargetDistance = float.MaxValue;
+                        LostCurrentTarget();
                     }
                 }
                 else
@@ -347,19 +348,23 @@ namespace AdaptivEntityAgent
         private bool CanSeeTarget(GameObject target)
         {
             Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
-
-            // Используем кэшированную дистанцию для текущей цели
-            float distanceToTarget = (target == currentTarget) ? currentTargetDistance :
-                Vector3.Distance(transform.position, target.transform.position);
+            float distanceToTarget = (target == currentTarget) ? currentTargetDistance : Vector3.Distance(transform.position, target.transform.position);
 
             // Проверка препятствий
-            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit,
-                distanceToTarget, visionSettings.visionObstacleMask))
+            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, distanceToTarget, visionSettings.visionObstacleMask))
             {
                 return hit.collider.gameObject == target;
             }
 
             return true;
+        }
+
+        private void LostCurrentTarget()
+        {
+            perceptionEvents.OnTargetLost?.Invoke(currentTarget);
+            if (debugMode) Debug.Log($" Target lost: {currentTarget.name}");
+            currentTarget = null;
+            currentTargetDistance = float.MaxValue;
         }
 
         //------------------------------------------------------------------------------------------------
@@ -397,7 +402,6 @@ namespace AdaptivEntityAgent
                 {
                     var updatedTarget = potentialTargets[i];
 
-                    // Для текущей цели используем кэшированную дистанцию, для других вычисляем
                     if (target == currentTarget)
                     {
                         updatedTarget.distance = currentTargetDistance;
@@ -417,10 +421,6 @@ namespace AdaptivEntityAgent
         private void RemoveTargetFromList(GameObject target)
         {
             potentialTargets.RemoveAll(t => t.target == target);
-            if (targetLostTimers.ContainsKey(target))
-            {
-                targetLostTimers.Remove(target);
-            }
         }
         #endregion
 
@@ -467,12 +467,6 @@ namespace AdaptivEntityAgent
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, currentTarget.transform.position);
 
-                // Отображаем кэшированную дистанцию
-#if UNITY_EDITOR
-                UnityEditor.Handles.Label(transform.position + Vector3.up * 2,
-                    $"Dist: {currentTargetDistance:F1}m");
-#endif
-
                 // Визуализация потенциальных целей
                 foreach (var target in potentialTargets)
                 {
@@ -486,38 +480,16 @@ namespace AdaptivEntityAgent
         }
         #endregion
 
-        #region Public Methods
-        // Старые методы оставлены для обратной совместимости
-        public GameObject GetCurrentTarget() => currentTarget;
-
-        public Vector3 GetLastKnownTargetPosition() => lastKnownTargetPosition;
+        #region Public Methods API
 
         public void SetCurrentEntityType(EntityType entityType)
         {
             currentEntityType = entityType;
         }
 
-        public List<GameObject> GetAllPotentialTargets()
-        {
-            return potentialTargets.ConvertAll(t => t.target);
-        }
-
         public int GetPotentialTargetsCount()
         {
             return potentialTargets.Count;
-        }
-
-        public AgentEventsPerception GetPerceptionEvents()
-        {
-            return perceptionEvents;
-        }
-
-        /// <summary>
-        /// Принудительно обновить кэшированную дистанцию до текущей цели
-        /// </summary>
-        public void RefreshCurrentTargetDistance()
-        {
-            UpdateCurrentTargetDistance();
         }
         #endregion
     }
