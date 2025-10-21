@@ -83,12 +83,35 @@ namespace AdaptivEntityAgent
         protected override void UpdateFleeState()
         {
             // Логика бегства
-            if (previousState == AgentState.Combat)
+
+            if (movement.GetRemainingDistance() <= 0.5f)
             {
-                if (movement.GetRemainingDistance() <= 0.5f) SetInvestigateState();
+                switch (previousState)
+                {
+                    case AgentState.Idle:
+                    case AgentState.Investigate:
+                    case AgentState.Patrol:
+                    case AgentState.Flee:
+                        ChangeState(AgentState.Patrol);
+                        break;
+
+                    case AgentState.Combat:
+                        SetInvestigateState();
+                        break;
+                    case AgentState.Follow:
+                        break;
+                    case AgentState.Interact:
+                        ChangeState(AgentState.Combat);
+                        break;
+                    case AgentState.Alert:
+                        ChangeState(AgentState.Combat);
+                        break;
+                    default:
+                        ChangeState(AgentState.Patrol);
+                        break;
+                }
             }
 
-            // 
             if (perception != null && perception.HasTarget && movement != null)
             {
                 Vector3 fleeDirection = (transform.position - perception.CurrentTarget.transform.position).normalized;
@@ -162,7 +185,7 @@ namespace AdaptivEntityAgent
                     break;
 
                 case AgentState.Combat:
-                    ChangeState(AgentState.Patrol);
+                    //ChangeState(AgentState.Patrol);
                     break;
 
                 case AgentState.Flee:

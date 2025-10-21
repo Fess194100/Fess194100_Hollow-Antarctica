@@ -120,14 +120,18 @@ namespace AdaptivEntityAgent
 
         private void StopCombatState()
         {
+            if (debug) Debug.Log($"AgentCombat - StopCombatState() combatCoroutine = {combatCoroutine}");
             if (combatCoroutine != null)
             {
                 StopCoroutine(combatCoroutine);
+                StopCoroutine(CombatRoutine());
                 combatCoroutine = null;
             }
             isAiming = false;
             canRotation = false;
             isFlee = false;
+
+
         }
         #endregion
 
@@ -181,6 +185,7 @@ namespace AdaptivEntityAgent
             if (attackPosition == Vector3.zero)
             {
                 if (debug) Debug.Log("No valid attack position found, fleeing!");
+                agentMovement.MoveToPosition(target.transform.position);
                 return;
             }
 
@@ -195,7 +200,7 @@ namespace AdaptivEntityAgent
 
             if (currentAttackType == AttackType.Ranged)
             {
-                distanceToSwitchAttackPosition = rangedAttackSettings.optimalDistance / 2;
+                distanceToSwitchAttackPosition = rangedAttackSettings.optimalDistance / 2.3f;
             }
 
             if (distanceToAttackPosition > distanceToSwitchAttackPosition)
@@ -231,6 +236,8 @@ namespace AdaptivEntityAgent
                 // Реализация атаки
                 PerformAttack(target, currentAttackType);
             }
+
+            if (debug) Debug.Log($"AgentCombat - HandleAimingPhase = {target} ||| IsReadyToAttack = {IsReadyToAttack(target)}");
         }
 
         private void UpdateRotation()
@@ -274,8 +281,8 @@ namespace AdaptivEntityAgent
                 currentTargetAttack = target;
                 targetHealth = currentTargetAttack.GetComponent<FlagFaction>().EssenceHealth;
             }
-            
 
+            if (debug) Debug.Log($"AgentCombat - PerformAttack = {target} ||| targetHealth = {targetHealth.IsDead()}");
             if (targetHealth == null || targetHealth.IsDead()) return; // Если у цели нет здоровья или цель мертва, то нужны действия. Эта проверка должна быть раньше!!!
 
             if(debug) LogAttack(attackType, target, settings.attackDamage);
@@ -357,7 +364,7 @@ namespace AdaptivEntityAgent
 
         #region Deterministic Functions
 
-        private AttackType ChooseAttackType(float distance)
+        /*private AttackType ChooseAttackType(float distance)
         {
             if (attackTypeWeight <= 0.02f) return AttackType.Melee;
             if (attackTypeWeight >= 0.98f) return AttackType.Ranged;
@@ -372,6 +379,24 @@ namespace AdaptivEntityAgent
             if (debug) Debug.Log($"Melee preference: {meleePreference}, Ranged preference: {rangedPreference}");
 
             return meleePreference >= rangedPreference ? AttackType.Melee : AttackType.Ranged;
+        }*/
+
+        private AttackType ChooseAttackType(float distance)
+        {
+            if (attackTypeWeight <= 0.02f) return AttackType.Melee;
+            if (attackTypeWeight >= 0.98f) return AttackType.Ranged;
+
+            float meleeMaxDistance = meleeAttackSettings.optimalDistance * 1.5f;
+            float rangeMinDistance = rangedAttackSettings.optimalDistance * 1.3f;
+
+            if (distance <= meleeMaxDistance) return AttackType.Melee;
+            if (distance >= rangeMinDistance) return AttackType.Ranged;
+
+            float normalizedDistance = Mathf.InverseLerp(meleeMaxDistance, rangeMinDistance, distance);
+            float decisionThreshold = 0.5f + (0.5f - attackTypeWeight) * 0.4f;
+
+            if (debug) Debug.Log($"AgentCombat - ChooseAttackType || normalizedDistance = {normalizedDistance} ||| decisionThreshold = {decisionThreshold}");
+            return normalizedDistance > decisionThreshold ? AttackType.Ranged : AttackType.Melee;
         }
 
         private bool IsReadyToAttack(GameObject target)
@@ -379,8 +404,10 @@ namespace AdaptivEntityAgent
             if (target == null) return false;
 
             Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
+            directionToTarget.y = 0f;
             float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
 
+            if (debug) Debug.Log($"AgentCombat - IsReadyToAttack || directionToTarget = {directionToTarget} ||| angleToTarget = {angleToTarget}");
             return angleToTarget < 15f;
         }
 

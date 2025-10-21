@@ -183,7 +183,9 @@ namespace AdaptivEntityAgent
                 GameObject closestTarget = FindClosestTarget();
                 if (closestTarget != null)
                 {
-                    SetCurrentTarget(closestTarget);
+                    //SetCurrentTarget(closestTarget);
+                    currentTarget = closestTarget;
+                    if (debugMode) Debug.Log($" currentTarget = closestTarget NOT at Event OnChengetTarget");
                 }
                 return;
             }
@@ -327,7 +329,9 @@ namespace AdaptivEntityAgent
                 else
                 {
                     UpdateTargetInList(currentTarget, isCurrentlyVisible);
-                    SetCurrentTarget();
+                    //SetCurrentTarget();
+                    currentTarget = null;
+                    if (debugMode) Debug.Log($" currentTarget = null NOT at Event OnLostTarget");
                 }
             }
         }
