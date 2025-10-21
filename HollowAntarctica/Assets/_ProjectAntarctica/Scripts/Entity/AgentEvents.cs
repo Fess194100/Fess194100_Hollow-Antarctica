@@ -21,11 +21,14 @@ namespace AdaptivEntityAgent
     }
 
     [Serializable]
-    public class AgentEventsCombat //?????
+    public class AgentEventsCombat
     {
-        public UnityEvent<GameObject> OnAttackStarted;
-        public UnityEvent<GameObject> OnAttackCompleted;
-        public UnityEvent<float> OnDamageTaken;
+        public UnityEvent OnAttackMelle;
+        public UnityEvent OnAttackRange;
+        public UnityEvent OnFleeAgent;
+        //public UnityEvent<GameObject> OnAttackStarted;
+        //public UnityEvent<GameObject> OnAttackCompleted;
+        //public UnityEvent<float> OnDamageTaken;
     }
 
     [Serializable]

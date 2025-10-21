@@ -347,13 +347,21 @@ namespace AdaptivEntityAgent
 
         private bool CanSeeTarget(GameObject target)
         {
-            Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
+            Vector3 directionToTarget = ((target.transform.position + Vector3.up) - transform.position).normalized;
             float distanceToTarget = (target == currentTarget) ? currentTargetDistance : Vector3.Distance(transform.position, target.transform.position);
+            Vector3 rayStart = transform.position + Vector3.up * 1.8f;
 
             // Проверка препятствий
-            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, distanceToTarget, visionSettings.visionObstacleMask))
+            if (Physics.Raycast(rayStart, directionToTarget, out RaycastHit hit, distanceToTarget, visionSettings.visionObstacleMask))
             {
-                return hit.collider.gameObject == target;
+#if UNITY_EDITOR
+                if (debugMode)
+                {
+                    Debug.DrawRay(rayStart, directionToTarget * hit.distance, Color.blue, 0.1f);
+                    Debug.Log($"RayVision - Hit = {hit.collider.gameObject.name}, Layer = {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+                }
+#endif
+                return false;
             }
 
             return true;
@@ -372,7 +380,7 @@ namespace AdaptivEntityAgent
         private bool IsValidTarget(GameObject target)
         {
             FlagFaction flagFaction = target.GetComponent<FlagFaction>();
-            if (flagFaction != null)
+            if (flagFaction != null && flagFaction.EssenceHealth != null && !flagFaction.EssenceHealth.IsDead())
             {
                 if (flagFaction.flagFaction == currentEntityType || flagFaction.flagFaction == EntityType.Neutral)
                     return false;
@@ -467,6 +475,9 @@ namespace AdaptivEntityAgent
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, currentTarget.transform.position);
 
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(transform.position + Vector3.up * 1.8f, currentTarget.transform.position + Vector3.up);
+
                 // Визуализация потенциальных целей
                 foreach (var target in potentialTargets)
                 {
@@ -485,6 +496,12 @@ namespace AdaptivEntityAgent
         public void SetCurrentEntityType(EntityType entityType)
         {
             currentEntityType = entityType;
+        }
+
+        public void RemoveCurrentTarget()
+        {
+            if (HasTarget) RemoveTargetFromList(currentTarget);
+            SetCurrentTarget();
         }
 
         public int GetPotentialTargetsCount()

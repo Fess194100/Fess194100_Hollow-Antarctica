@@ -56,17 +56,10 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.4028103
-        functionName: BreezeAttackEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
-      maskSource: {instanceID: 0}
+      maskSource: {fileID: 31900000, guid: b840c07e53fbd0b4090065a3b8f59b63, type: 2}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:

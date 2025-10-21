@@ -5,6 +5,7 @@ namespace AdaptivEntityAgent
     public class AgentEnemy : AgentStateController
     {
         [Header("Enemy Specific Settings")]
+        [SerializeField] private float fleeOtimalDistantion = 15.0f;
         [SerializeField] private float fleeHealthThreshold = 0.3f;
         [SerializeField] private float investigationTime = 5f;
         
@@ -21,6 +22,7 @@ namespace AdaptivEntityAgent
             if (agentCombat != null)
             {
                 attackTypeWeight = agentCombat.AttackTypeWeight;
+                agentCombat.agentEventsCombat.OnFleeAgent.AddListener(OnFleeAgent);
             }
 
             if (perception != null)
@@ -48,18 +50,17 @@ namespace AdaptivEntityAgent
                 return;
             }
 
-            // Для исключительно дальних бойцов - отступление при близкой цели
+            /*// Для исключительно дальних бойцов - отступление при близкой цели
             if (attackTypeWeight >= 0.9f && agentCombat != null)
             {
-                GameObject target = perception.CurrentTarget;
-                float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-
-                if (distanceToTarget < agentCombat.MeleeAttackSettings.optimalDistance)
+                if (debugMode) Debug.Log($"AgentEnemy - UpdateCombatState() - chesk AgentState.Flee to RangedFighters");
+                if (perception.CurrentTargetDistance < agentCombat.MeleeAttackSettings.optimalDistance * 2)
                 {
                     ChangeState(AgentState.Flee);
+                    UpdateFleeState();
                     return;
                 }
-            }
+            }*/
         }
 
         protected override void UpdateInvestigateState()
@@ -82,14 +83,21 @@ namespace AdaptivEntityAgent
         protected override void UpdateFleeState()
         {
             // Логика бегства
+            if (previousState == AgentState.Combat)
+            {
+                if (movement.GetRemainingDistance() <= 0.5f) SetInvestigateState();
+            }
+
+            // 
             if (perception != null && perception.HasTarget && movement != null)
             {
                 Vector3 fleeDirection = (transform.position - perception.CurrentTarget.transform.position).normalized;
-                Vector3 fleePosition = transform.position + fleeDirection * 10f;
+                Vector3 fleePosition = transform.position + fleeDirection * fleeOtimalDistantion;
                 movement.MoveToPosition(fleePosition);
             }
 
-            // Возврат к патрулированию при восстановлении здоровья
+
+            /* // Возврат к патрулированию при восстановлении здоровья
             if (health != null && health.GetHealthPercentage() > 0.6f)
             {
                 // Проверяем, нет ли целей рядом
@@ -97,7 +105,8 @@ namespace AdaptivEntityAgent
                 {
                     ChangeState(AgentState.Patrol);
                 }
-            }
+            }*/
+
         }
 
         protected override void UpdateAlertState()
@@ -114,24 +123,72 @@ namespace AdaptivEntityAgent
             // Запоминаем предыдущее состояние перед боем
             previousCombatState = GetCurrentState();
 
-            if (previousCombatState == AgentState.Idle ||
-                previousCombatState == AgentState.Investigate ||
-                previousCombatState == AgentState.Patrol)
+            switch (previousCombatState)
             {
-                ChangeState(AgentState.Combat);
-            }
-            else
-            {
-                ChangeState(AgentState.Patrol);
+                case AgentState.Idle:
+                case AgentState.Investigate:
+                case AgentState.Patrol:
+                    ChangeState(AgentState.Combat);
+                    break;
+
+                case AgentState.Combat:
+                    break;
+
+                case AgentState.Flee:
+                    break;
+                case AgentState.Follow:
+                    break;
+                case AgentState.Interact:
+                    ChangeState(AgentState.Combat);
+                    break;
+                case AgentState.Alert:
+                    ChangeState(AgentState.Combat);
+                    break;
+                default:
+                    ChangeState(AgentState.Patrol);
+                    break;
             }
         }
 
         private void OnTargetChanged(GameObject target)
         {
-            // Не реализованно
+            previousCombatState = GetCurrentState();
+
+            switch (previousCombatState)
+            {
+                case AgentState.Idle:
+                case AgentState.Investigate:
+                case AgentState.Patrol:
+                    break;
+
+                case AgentState.Combat:
+                    ChangeState(AgentState.Patrol);
+                    break;
+
+                case AgentState.Flee:
+                    //ChangeState(AgentState.Combat);
+                    break;
+                case AgentState.Follow:
+                    break;
+                case AgentState.Interact:
+                    ChangeState(AgentState.Combat);
+                    break;
+                case AgentState.Alert:
+                    ChangeState(AgentState.Combat);
+                    break;
+                default:
+                    ChangeState(AgentState.Patrol);
+                    break;
+            }
         }
 
-        private void OnTargetLost(GameObject target)
+        private void OnTargetLost(GameObject target = null)
+        {
+            if (GetCurrentState() == AgentState.Flee) return;
+            SetInvestigateState();
+        }
+
+        private void SetInvestigateState()
         {
             ChangeState(AgentState.Investigate);
             if (movement != null && perception != null)
@@ -150,6 +207,8 @@ namespace AdaptivEntityAgent
             }
         }
 
+        private void OnFleeAgent() => ChangeState(AgentState.Flee);
+
         public void SetAttackTypeWeight(float weight)
         {
             attackTypeWeight = Mathf.Clamp01(weight);
@@ -159,8 +218,15 @@ namespace AdaptivEntityAgent
             }
         }
 
+
+
         protected override void OnDestroy()
         {
+            if (agentCombat != null)
+            {
+                agentCombat.agentEventsCombat.OnFleeAgent.RemoveListener(OnFleeAgent);
+            }
+            
             if (perception != null)
             {
                 perception.perceptionEvents.OnTargetSpotted.RemoveListener(OnTargetSpotted);

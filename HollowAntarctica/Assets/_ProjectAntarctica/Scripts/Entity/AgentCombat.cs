@@ -3,6 +3,7 @@ using System.Collections;
 using SimpleCharController;
 using UnityEngine.AI;
 using UnityEngine.InputSystem.LowLevel;
+using static Breeze.Core.BreezeMeleeWeapon.impactEffect;
 
 namespace AdaptivEntityAgent
 {
@@ -33,13 +34,16 @@ namespace AdaptivEntityAgent
         [SerializeField] private AttackSettings rangedAttackSettings = new AttackSettings();
 
         [Header("Attack Settings")]
+        [SerializeField] private bool debug = false;
+
+        [Space(10)]
         [Tooltip(" 0 = melee, 1 = ranged")]
         [Range(0f, 1f)]
         [SerializeField] private float attackTypeWeight = 0.5f;
         [SerializeField] private float rotationSpeed = 120f;
 
-        [Header("Debug")]
-        [SerializeField] private bool debug = false;
+        [Space(10)]
+        public AgentEventsCombat agentEventsCombat;
         #endregion
 
         #region Private Variables
@@ -54,6 +58,7 @@ namespace AdaptivEntityAgent
         private bool canAttack = true;
         private bool isAiming = false;
         private bool canRotation = false;
+        private bool isFlee = false;
         private Vector3 attackPosition;
         private Quaternion targetRotation;
         private AttackType currentAttackType;
@@ -122,6 +127,7 @@ namespace AdaptivEntityAgent
             }
             isAiming = false;
             canRotation = false;
+            isFlee = false;
         }
         #endregion
 
@@ -130,7 +136,7 @@ namespace AdaptivEntityAgent
         {
             while (true)
             {
-                if (debug) Debug.Log($"AgentCombat - CombatRoutine()");
+                if (debug) Debug.Log($"AgentCombat - CombatRoutine() HasTarget = {perception.HasTarget}");
                 if (perception.HasTarget)
                 {
                     ProcessCombat();
@@ -184,16 +190,32 @@ namespace AdaptivEntityAgent
         private void MoveToAttackPosition()
         {
             float distanceToAttackPosition = Vector3.Distance(transform.position, attackPosition);
+            float distanceToSwitchAttackPosition = 1f;
             if (debug) Debug.Log($"AgentCombat - distanceToAttackPosition = {distanceToAttackPosition}");
-            if (distanceToAttackPosition > 1f)
+
+            if (currentAttackType == AttackType.Ranged)
             {
-                agentMovement.MoveToPosition(attackPosition);
+                distanceToSwitchAttackPosition = rangedAttackSettings.optimalDistance / 2;
+            }
+
+            if (distanceToAttackPosition > distanceToSwitchAttackPosition)
+            {
+                agentMovement.MoveToPosition(attackPosition);                
                 if (debug) Debug.Log($"Moving to attack position for {currentAttackType} attack, Distance: {distanceToAttackPosition:F1}");
+
+                if (perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)
+                {
+                    // Агент отступает
+                    isFlee = true;
+                    agentEventsCombat.OnFleeAgent.Invoke();
+                    if (debug) Debug.Log("AgentCombat - MoveToAttackPosition - <color=yellow>FLEE</color>");
+                }
             }
             else
             {
                 agentMovement.StopMovement();
                 isAiming = true;
+                isFlee = false;
                 if (debug) Debug.Log($"Starting aim for {currentAttackType} attack");
             }
         }
@@ -256,14 +278,16 @@ namespace AdaptivEntityAgent
 
             if (targetHealth == null || targetHealth.IsDead()) return; // Если у цели нет здоровья или цель мертва, то нужны действия. Эта проверка должна быть раньше!!!
 
-            LogAttack(attackType, target, settings.attackDamage);
+            if(debug) LogAttack(attackType, target, settings.attackDamage);
 
             if (attackType == AttackType.Melee)
             {
+                agentEventsCombat.OnAttackMelle.Invoke();
                 PerformMeleeAttack(target, targetHealth, settings);
             }
             else
             {
+                agentEventsCombat.OnAttackRange.Invoke();
                 PerformRangedAttack(target, targetHealth, settings);
             }
 
@@ -326,7 +350,8 @@ namespace AdaptivEntityAgent
             if (debug) Debug.Log($"Attack cooldown: {1f / settings.attackRate}s");
             yield return new WaitForSeconds(1f / settings.attackRate);
 
-            canAttack = true;
+            if (!targetHealth.IsDead()) canAttack = true;
+            else perception.RemoveCurrentTarget();
         }
         #endregion
 
@@ -334,12 +359,10 @@ namespace AdaptivEntityAgent
 
         private AttackType ChooseAttackType(float distance)
         {
-            // Для исключительно дальних бойцов - избегание близких целей
-            if (attackTypeWeight >= 0.9f && distance < meleeAttackSettings.optimalDistance)
-            {
-                return AttackType.Ranged;
-            }
+            if (attackTypeWeight <= 0.02f) return AttackType.Melee;
+            if (attackTypeWeight >= 0.98f) return AttackType.Ranged;
 
+            // Для смешанных весов (0.02-0.98) используем сложную логику выбора
             float meleePreference = CalculateMeleePreference(distance);
             float rangedPreference = CalculateRangedPreference(distance);
 
@@ -365,12 +388,7 @@ namespace AdaptivEntityAgent
         {
             AttackSettings settings = meleeAttackSettings;
 
-            if (distance <= settings.optimalDistance)
-                return 1f;
-            else if (distance <= settings.attackRange)
-                return 0.5f;
-            else
-                return 0f;
+            return Mathf.Clamp01(1f - (distance - settings.optimalDistance) / (settings.optimalDistance * 3f));
         }
 
         private float CalculateRangedPreference(float distance)

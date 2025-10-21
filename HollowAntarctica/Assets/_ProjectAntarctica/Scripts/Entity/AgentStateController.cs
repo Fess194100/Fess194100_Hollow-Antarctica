@@ -13,7 +13,7 @@ namespace AdaptivEntityAgent
         [SerializeField] private float stateUpdateFrequency = 0.2f;
 
         [Header("Debug")]
-        [SerializeField] private bool debugMode = false;
+        public bool debugMode = false;
         [SerializeField] private AgentState currentState = AgentState.Idle;
 
         // Компоненты (изменяем на protected для доступа в наследниках)

@@ -125,6 +125,8 @@ namespace AdaptivEntityAgent
             navMeshAgent.isStopped = true;
         }
 
+        public void UpdateRotation(bool updateRotation = true) => navMeshAgent.updateRotation = updateRotation;
+
         public bool HasReachedDestination()
         {
             return !navMeshAgent.pathPending &&
@@ -140,6 +142,11 @@ namespace AdaptivEntityAgent
         public void SetMovementSpeed(float speed)
         {
             navMeshAgent.speed = speed;
+        }
+
+        public float GetRemainingDistance()
+        {
+            return navMeshAgent.remainingDistance;
         }
         #endregion
 
