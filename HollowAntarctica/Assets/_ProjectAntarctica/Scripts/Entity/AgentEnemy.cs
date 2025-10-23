@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace AdaptivEntityAgent
 {
@@ -160,14 +159,15 @@ namespace AdaptivEntityAgent
 
                 case AgentState.Combat:
 
-                    if (perception.CountPotentialTargets > 0)
+                    if (target == null)
                     {
-                        StartCoroutine(DelayAfterCombat(1.2f));
+                        if (perception.CountPotentialTargets > 0) ChangeState(AgentState.Investigate);
+                        else ChangeState(AgentState.Patrol);
+
                         break;
                     }
 
-                    if (target == null) StartCoroutine(DelayAfterCombat(0.2f));
-                    else perception.RemoveCurrentTarget();
+                    Debug.Log("ÕÓÉ ÇÍÀÅÒ ×ÒÎ ÄÅËÀÒÜ?????????????????????????????????????????");
 
                     break;
 
@@ -213,14 +213,6 @@ namespace AdaptivEntityAgent
         }
 
         private void OnFleeAgent() => ChangeState(AgentState.Flee);
-
-        private IEnumerator DelayAfterCombat(float time)
-        {
-            yield return new WaitForSeconds(time);
-
-            if (previousState != AgentState.Combat) ChangeState(previousState);
-            else ChangeState(AgentState.Patrol);
-        }
 
         public void SetAttackTypeWeight(float weight)
         {
