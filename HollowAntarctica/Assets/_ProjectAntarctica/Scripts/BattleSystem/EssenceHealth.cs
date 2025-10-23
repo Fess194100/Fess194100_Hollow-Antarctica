@@ -16,7 +16,7 @@ namespace SimpleCharController
         [Header("Health Settings")]
         [SerializeField] private float maxHealth = 100f;
         [SerializeField] private float currentHealth = 100f;
-
+        
         [Header("Events")]
         public UnityEvent<float> OnHealthChanged; // Текущее здоровье
         public UnityEvent<float, BodyPart> OnDamageTaken;   // Количество полученного урона

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 namespace AdaptivEntityAgent
 {
@@ -6,12 +7,11 @@ namespace AdaptivEntityAgent
     {
         [Header("Enemy Specific Settings")]
         [SerializeField] private float fleeOtimalDistantion = 15.0f;
-        [SerializeField] private float fleeHealthThreshold = 0.3f;
         [SerializeField] private float investigationTime = 5f;
-        
+
         private float attackTypeWeight = 0.5f;
-        private AgentCombat agentCombat;
         private float investigationTimer = 0f;
+        private AgentCombat agentCombat;
         private AgentState previousCombatState;
 
         protected override void Start()
@@ -42,25 +42,6 @@ namespace AdaptivEntityAgent
                 ChangeState(AgentState.Combat);
                 return;
             }
-
-            // Проверка необходимости отступления по здоровью
-            if (health != null && health.GetHealthPercentage() < fleeHealthThreshold)
-            {
-                ChangeState(AgentState.Flee);
-                return;
-            }
-
-            /*// Для исключительно дальних бойцов - отступление при близкой цели
-            if (attackTypeWeight >= 0.9f && agentCombat != null)
-            {
-                if (debugMode) Debug.Log($"AgentEnemy - UpdateCombatState() - chesk AgentState.Flee to RangedFighters");
-                if (perception.CurrentTargetDistance < agentCombat.MeleeAttackSettings.optimalDistance * 2)
-                {
-                    ChangeState(AgentState.Flee);
-                    UpdateFleeState();
-                    return;
-                }
-            }*/
         }
 
         protected override void UpdateInvestigateState()
@@ -118,18 +99,6 @@ namespace AdaptivEntityAgent
                 Vector3 fleePosition = transform.position + fleeDirection * fleeOtimalDistantion;
                 movement.MoveToPosition(fleePosition);
             }
-
-
-            /* // Возврат к патрулированию при восстановлении здоровья
-            if (health != null && health.GetHealthPercentage() > 0.6f)
-            {
-                // Проверяем, нет ли целей рядом
-                if (perception == null || !perception.HasTarget)
-                {
-                    ChangeState(AgentState.Patrol);
-                }
-            }*/
-
         }
 
         protected override void UpdateAlertState()
@@ -138,6 +107,11 @@ namespace AdaptivEntityAgent
             {
                 ChangeState(AgentState.Combat);
             }
+        }
+
+        protected override void OnCriticalHealth()
+        {
+            if (GetCurrentState() != AgentState.Flee) OnFleeAgent();
         }
 
         // Обработчики событий восприятия
@@ -185,11 +159,19 @@ namespace AdaptivEntityAgent
                     break;
 
                 case AgentState.Combat:
-                    //ChangeState(AgentState.Patrol);
+
+                    if (perception.CountPotentialTargets > 0)
+                    {
+                        StartCoroutine(DelayAfterCombat(1.2f));
+                        break;
+                    }
+
+                    if (target == null) StartCoroutine(DelayAfterCombat(0.2f));
+                    else perception.RemoveCurrentTarget();
+
                     break;
 
                 case AgentState.Flee:
-                    //ChangeState(AgentState.Combat);
                     break;
                 case AgentState.Follow:
                     break;
@@ -232,6 +214,14 @@ namespace AdaptivEntityAgent
 
         private void OnFleeAgent() => ChangeState(AgentState.Flee);
 
+        private IEnumerator DelayAfterCombat(float time)
+        {
+            yield return new WaitForSeconds(time);
+
+            if (previousState != AgentState.Combat) ChangeState(previousState);
+            else ChangeState(AgentState.Patrol);
+        }
+
         public void SetAttackTypeWeight(float weight)
         {
             attackTypeWeight = Mathf.Clamp01(weight);
@@ -240,8 +230,6 @@ namespace AdaptivEntityAgent
                 agentCombat.SetAttackTypeWeight(attackTypeWeight);
             }
         }
-
-
 
         protected override void OnDestroy()
         {

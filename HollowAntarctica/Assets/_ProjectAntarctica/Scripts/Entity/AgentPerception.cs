@@ -70,6 +70,7 @@ namespace AdaptivEntityAgent
         #endregion
 
         #region Public Properties
+        public int CountPotentialTargets => potentialTargets.Count;
         public float CurrentTargetDistance => currentTargetDistance;
         public bool HasTarget => currentTarget != null;
         public GameObject CurrentTarget => currentTarget;
@@ -203,6 +204,8 @@ namespace AdaptivEntityAgent
                             SetCurrentTarget(closestTarget);
                         }
                     }
+
+                    if(!IsValidTarget(currentTarget)) RemoveCurrentTarget();
                     return;
                 }
 
@@ -294,11 +297,10 @@ namespace AdaptivEntityAgent
 
             bool isCurrentlyVisible = IsTargetVisible(currentTarget);
             bool targetFromListVisible = GetTargetFromList(currentTarget).isVisible;
+            lastKnownTargetPosition = currentTarget.transform.position;
 
             if (isCurrentlyVisible)
             {
-                lastKnownTargetPosition = currentTarget.transform.position;
-
                 // Если цель только что стала видимой (была невидима в списке)
                 if (!targetFromListVisible)
                 {
@@ -330,6 +332,7 @@ namespace AdaptivEntityAgent
                 {
                     UpdateTargetInList(currentTarget, isCurrentlyVisible);
                     //SetCurrentTarget();
+
                     currentTarget = null;
                     if (debugMode) Debug.Log($" currentTarget = null NOT at Event OnLostTarget");
                 }
@@ -506,11 +509,6 @@ namespace AdaptivEntityAgent
         {
             if (HasTarget) RemoveTargetFromList(currentTarget);
             SetCurrentTarget();
-        }
-
-        public int GetPotentialTargetsCount()
-        {
-            return potentialTargets.Count;
         }
         #endregion
     }

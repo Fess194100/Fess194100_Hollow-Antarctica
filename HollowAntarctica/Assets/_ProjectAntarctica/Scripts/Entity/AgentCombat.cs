@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 using SimpleCharController;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.LowLevel;
-using static Breeze.Core.BreezeMeleeWeapon.impactEffect;
 
 namespace AdaptivEntityAgent
 {
@@ -11,8 +9,6 @@ namespace AdaptivEntityAgent
     public class AttackSettings
     {
         [Header("Basic Settings")]
-        public float attackRange = 2f;
-        public float attackDamage = 10f;
         public float attackRate = 1f;
         public float optimalDistance = 5f;
 
@@ -51,7 +47,6 @@ namespace AdaptivEntityAgent
         private AgentPerception perception;
         private AgentMovement agentMovement;
         private NavMeshAgent navMeshAgent;
-        private Coroutine combatCoroutine;
         private EssenceHealth targetHealth;
 
         // Combat state variables
@@ -63,6 +58,7 @@ namespace AdaptivEntityAgent
         private Quaternion targetRotation;
         private AttackType currentAttackType;
         private GameObject currentTargetAttack;
+        private Coroutine combatCoroutine;
         #endregion
 
         #region Public Properties
@@ -86,7 +82,7 @@ namespace AdaptivEntityAgent
 
         private void OnDestroy()
         {
-            CleanupCoroutines();
+            StopCombatState();
         }
 
         private void InitializeComponents()
@@ -120,13 +116,14 @@ namespace AdaptivEntityAgent
 
         private void StopCombatState()
         {
-            if (debug) Debug.Log($"AgentCombat - StopCombatState() combatCoroutine = {combatCoroutine}");
+            if (debug) Debug.Log($"AgentCombat - StopCombatState()");
+
             if (combatCoroutine != null)
             {
                 StopCoroutine(combatCoroutine);
-                StopCoroutine(CombatRoutine());
                 combatCoroutine = null;
             }
+
             isAiming = false;
             canRotation = false;
             isFlee = false;
@@ -159,6 +156,7 @@ namespace AdaptivEntityAgent
             float distance = perception.CurrentTargetDistance;
 
             if (target == null) return;
+            UpdateAttackTarget(target);
 
             if (!isAiming)
             {
@@ -208,7 +206,7 @@ namespace AdaptivEntityAgent
                 agentMovement.MoveToPosition(attackPosition);                
                 if (debug) Debug.Log($"Moving to attack position for {currentAttackType} attack, Distance: {distanceToAttackPosition:F1}");
 
-                if (perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)
+                if (currentAttackType == AttackType.Ranged && perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)
                 {
                     // Агент отступает
                     isFlee = true;
@@ -252,6 +250,16 @@ namespace AdaptivEntityAgent
             }
         }
 
+        private void UpdateAttackTarget(GameObject target)
+        {
+            if (currentTargetAttack != target)
+            {
+                currentTargetAttack = target;
+                canAttack = true;
+                targetHealth = currentTargetAttack.GetComponent<FlagFaction>().EssenceHealth;
+                if (debug) Debug.Log($"AgentCombat - UpdateAttackTarget_____Update EssenceHealth ++++++");
+            }
+        }
         private void AimAtTarget(GameObject target)
         {
             if (target == null) return;
@@ -276,16 +284,10 @@ namespace AdaptivEntityAgent
         {
             AttackSettings settings = GetAttackSettings(attackType);
 
-            if (target != null && currentTargetAttack != target)
-            {
-                currentTargetAttack = target;
-                targetHealth = currentTargetAttack.GetComponent<FlagFaction>().EssenceHealth;
-            }
-
-            if (debug) Debug.Log($"AgentCombat - PerformAttack = {target} ||| targetHealth = {targetHealth.IsDead()}");
+            if (debug) Debug.Log($"AgentCombat - PerformAttack = {target} ||| targetHealth_IsDead = {targetHealth.IsDead()}");
             if (targetHealth == null || targetHealth.IsDead()) return; // Если у цели нет здоровья или цель мертва, то нужны действия. Эта проверка должна быть раньше!!!
 
-            if(debug) LogAttack(attackType, target, settings.attackDamage);
+            if(debug) LogAttack(attackType, target);
 
             if (attackType == AttackType.Melee)
             {
@@ -364,23 +366,6 @@ namespace AdaptivEntityAgent
 
         #region Deterministic Functions
 
-        /*private AttackType ChooseAttackType(float distance)
-        {
-            if (attackTypeWeight <= 0.02f) return AttackType.Melee;
-            if (attackTypeWeight >= 0.98f) return AttackType.Ranged;
-
-            // Для смешанных весов (0.02-0.98) используем сложную логику выбора
-            float meleePreference = CalculateMeleePreference(distance);
-            float rangedPreference = CalculateRangedPreference(distance);
-
-            meleePreference *= (1f - attackTypeWeight);
-            rangedPreference *= attackTypeWeight;
-
-            if (debug) Debug.Log($"Melee preference: {meleePreference}, Ranged preference: {rangedPreference}");
-
-            return meleePreference >= rangedPreference ? AttackType.Melee : AttackType.Ranged;
-        }*/
-
         private AttackType ChooseAttackType(float distance)
         {
             if (attackTypeWeight <= 0.02f) return AttackType.Melee;
@@ -409,27 +394,6 @@ namespace AdaptivEntityAgent
 
             if (debug) Debug.Log($"AgentCombat - IsReadyToAttack || directionToTarget = {directionToTarget} ||| angleToTarget = {angleToTarget}");
             return angleToTarget < 15f;
-        }
-
-        private float CalculateMeleePreference(float distance)
-        {
-            AttackSettings settings = meleeAttackSettings;
-
-            return Mathf.Clamp01(1f - (distance - settings.optimalDistance) / (settings.optimalDistance * 3f));
-        }
-
-        private float CalculateRangedPreference(float distance)
-        {
-            AttackSettings settings = rangedAttackSettings;
-            float optimalDistance = settings.optimalDistance;
-            float maxDistance = settings.attackRange;
-
-            if (distance >= optimalDistance * 0.8f && distance <= optimalDistance * 1.2f)
-                return 1f;
-            else if (distance <= maxDistance)
-                return 0.7f;
-            else
-                return 0f;
         }
 
         private Vector3 CalculateAttackPosition(GameObject target, AttackType attackType)
@@ -472,20 +436,14 @@ namespace AdaptivEntityAgent
 
         #region Utility Methods
 
-        private void LogAttack(AttackType attackType, GameObject target, float damage)
+        private void LogAttack(AttackType attackType, GameObject target)
         {
             string attackTypeString = attackType == AttackType.Melee ? "MELEE" : "RANGED";
             string debugMessage = $"<color=red><size=16><b>{attackTypeString} ATTACK!</b></size></color>\n" +
                                 $"<color=yellow>Attacker: {gameObject}</color>\n" +
-                                $"<color=cyan>Target: {target}</color>\n" +
-                                $"<color=white>Damage: {damage}</color>";
+                                $"<color=cyan>Target: {target}</color>\n";
 
             Debug.Log(debugMessage);
-        }
-
-        private void CleanupCoroutines()
-        {
-            if (combatCoroutine != null) StopCoroutine(combatCoroutine);
         }
         #endregion
 
@@ -498,12 +456,6 @@ namespace AdaptivEntityAgent
         public void SetRotationSpeed(float speed)
         {
             rotationSpeed = speed;
-        }
-
-        public bool IsInAttackRange(Vector3 targetPosition, AttackType attackType = AttackType.Melee)
-        {
-            AttackSettings settings = GetAttackSettings(attackType);
-            return Vector3.Distance(transform.position, targetPosition) <= settings.attackRange;
         }
         #endregion
     }

@@ -10,7 +10,8 @@ namespace AdaptivEntityAgent
         Flee,
         Follow,
         Interact,
-        Alert
+        Alert,
+        Dead
     }
 
     // Type entity

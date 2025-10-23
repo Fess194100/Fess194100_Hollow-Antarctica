@@ -1,56 +1,67 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using SimpleCharController;
 using UnityEngine.AI;
 
 namespace AdaptivEntityAgent
 {
     public class AgentStateController : MonoBehaviour
     {
+        #region Variables
         [Header("Agent Configuration")]
         [SerializeField] private EntityType entityType = EntityType.Enemy;
         [SerializeField] private float stateUpdateFrequency = 0.2f;
+        [SerializeField] private float criticalHealthThreshold = 0.3f;
 
         [Header("Debug")]
         public bool debugMode = false;
         [SerializeField] private AgentState currentState = AgentState.Idle;
+        #endregion
 
-        // Компоненты (изменяем на protected для доступа в наследниках)
+        #region Public Property
+        public float CriticalHealthThreshold => criticalHealthThreshold;
+        #endregion
+
+        #region Private Variables
+        protected float currentHealth = 100f;
         protected NavMeshAgent navMeshAgent;
-        protected EssenceHealth health;
         protected AgentPerception perception;
         protected AgentCombat combat;
         protected AgentMovement movement;
+        protected AgentState previousState;
+        //protected Coroutine stateUpdateCoroutine;
+        #endregion
 
-        // События для внешних систем
+        #region Events
         public event Action<AgentState> OnStateChanged;
         public event Action<AgentState, AgentState> OnStateTransition;
+        #endregion
 
-        protected AgentState previousState;
-        protected Coroutine stateUpdateCoroutine;
-
-        // Изменяем Awake на virtual
+        #region System Functions
         protected virtual void Awake()
         {
             InitializeComponents();
         }
 
-        // Изменяем Start на virtual
         protected virtual void Start()
         {
             StartStateMachine();
         }
 
+        protected virtual void OnDestroy()
+        {
+            /*if (stateUpdateCoroutine != null)
+                StopCoroutine(stateUpdateCoroutine);*/
+            StopCoroutine(StateUpdateLoop());
+        }
+
         protected void InitializeComponents()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            health = GetComponent<EssenceHealth>();
             perception = GetComponent<AgentPerception>();
             combat = GetComponent<AgentCombat>();
             movement = GetComponent<AgentMovement>();
 
-            // Автоматическое создание обязательных компонентов
             if (perception == null) perception = gameObject.AddComponent<AgentPerception>();
             if (combat == null) combat = gameObject.AddComponent<AgentCombat>();
             if (movement == null) movement = gameObject.AddComponent<AgentMovement>();
@@ -58,16 +69,9 @@ namespace AdaptivEntityAgent
 
         protected void StartStateMachine()
         {
-            // Подписка на события здоровья
-            if (health != null)
-            {
-                health.OnDamageTaken.AddListener(OnDamageTaken);
-                health.OnDeath.AddListener(OnDeath);
-            }
-
-            // Начальное состояние в зависимости от типа сущности
             SetInitialState();
-            stateUpdateCoroutine = StartCoroutine(StateUpdateLoop());
+            //stateUpdateCoroutine = StartCoroutine(StateUpdateLoop());
+            StartCoroutine(StateUpdateLoop());
         }
 
         private void SetInitialState()
@@ -85,7 +89,9 @@ namespace AdaptivEntityAgent
                     break;
             }
         }
+        #endregion
 
+        #region State Management
         private IEnumerator StateUpdateLoop()
         {
             while (true)
@@ -97,14 +103,12 @@ namespace AdaptivEntityAgent
 
         private void UpdateStateLogic()
         {
-            if (health != null && health.IsDead())
+            if (currentState == AgentState.Dead)
             {
-                // Обработка смерти - остановка всех действий
                 navMeshAgent.isStopped = true;
                 return;
             }
 
-            // Логика принятия решений на основе состояния
             switch (currentState)
             {
                 case AgentState.Idle:
@@ -134,6 +138,43 @@ namespace AdaptivEntityAgent
             }
         }
 
+        // Update States
+        protected virtual void UpdateIdleState() { }
+        protected virtual void UpdatePatrolState() { }
+        protected virtual void UpdateInvestigateState() { }
+        protected virtual void UpdateCombatState() { }
+        protected virtual void UpdateFleeState() { }
+        protected virtual void UpdateFollowState() { }
+        protected virtual void UpdateInteractState() { }
+        protected virtual void UpdateAlertState() { }
+        protected virtual void OnCriticalHealth() { }
+        #endregion
+
+        #region Private Methods
+        private void OnDeath()
+        {
+            //if (stateUpdateCoroutine != null) StopCoroutine(stateUpdateCoroutine);
+            ChangeState(AgentState.Dead);
+            StopCoroutine(StateUpdateLoop());
+            navMeshAgent.isStopped = true;
+        }
+
+        private void RebirthAgent()
+        {
+            //if (stateUpdateCoroutine != null) StopCoroutine(stateUpdateCoroutine);
+            UpdateHealth(100f);
+            StartStateMachine();
+            navMeshAgent.isStopped = false;
+        }
+        #endregion
+
+        #region Public API
+        public AgentState GetCurrentState() => currentState;
+        public AgentState GetPreviousState() => previousState;
+        public EntityType GetEntityType() => entityType;
+        public void ForceStateChange(AgentState newState) => ChangeState(newState);
+        public void ReturnToPreviousState() => ChangeState(previousState);
+
         public void ChangeState(AgentState newState)
         {
             if (currentState == newState) return;
@@ -154,50 +195,32 @@ namespace AdaptivEntityAgent
             combat?.OnStateChanged(newState);
         }
 
-        // Методы обновления состояний (меняем на protected virtual)
-        protected virtual void UpdateIdleState() { }
-        protected virtual void UpdatePatrolState() { }
-        protected virtual void UpdateInvestigateState() { }
-        protected virtual void UpdateCombatState() { }
-        protected virtual void UpdateFleeState() { }
-        protected virtual void UpdateFollowState() { }
-        protected virtual void UpdateInteractState() { }
-        protected virtual void UpdateAlertState() { }
-
-        // Обработчики событий здоровья
-        private void OnDamageTaken(float damage, BodyPart bodyPart)
+        public void UpdateHealth(float health)
         {
-            // Логика реакции на получение урона
-            if (entityType == EntityType.Neutral && currentState != AgentState.Flee)
+            if (currentHealth == health) return;
+            currentHealth = health;
+
+            if (currentHealth <= 0f)
             {
-                ChangeState(AgentState.Flee);
+                OnDeath();
+                return;
             }
-            else if (health.GetHealthPercentage() < 0.3f && currentState != AgentState.Flee)
+
+            if (currentHealth < criticalHealthThreshold)
             {
-                ChangeState(AgentState.Flee);
+                OnCriticalHealth();
             }
         }
 
-        private void OnDeath()
+        public void RespawnAgent()
         {
-            if (stateUpdateCoroutine != null)
-                StopCoroutine(stateUpdateCoroutine);
-
-            navMeshAgent.isStopped = true;
+            transform.position = Vector3.zero;
+            transform.rotation = Quaternion.identity;
+            RebirthAgent();
         }
+        #endregion
 
-        // Public API для внешнего управления
-        public AgentState GetCurrentState() => currentState;
-        public AgentState GetPreviousState() => previousState;
-        public EntityType GetEntityType() => entityType;
 
-        public void ForceStateChange(AgentState newState) => ChangeState(newState);
-        public void ReturnToPreviousState() => ChangeState(previousState);
 
-        protected virtual void OnDestroy()
-        {
-            if (stateUpdateCoroutine != null)
-                StopCoroutine(stateUpdateCoroutine);
-        }
     }
 }
