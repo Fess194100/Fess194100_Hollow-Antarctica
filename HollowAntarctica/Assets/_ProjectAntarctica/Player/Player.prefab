@@ -14026,7 +14026,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1367
+    m_Bits: 3415
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -15611,7 +15611,7 @@ MonoBehaviour:
   crosshairRectTransform: {fileID: 1999775775033365851}
   targetingMask:
     serializedVersion: 2
-    m_Bits: 277
+    m_Bits: 2325
   projectileData:
   - {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
   - {fileID: 11400000, guid: 653db812ef4376d4f818479e6ebb98c3, type: 2}

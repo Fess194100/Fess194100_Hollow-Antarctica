@@ -63,5 +63,5 @@ MonoBehaviour:
   ChargedLvl3ProjectileSpeed: 12
   baseDamageLvl3: 40
   pitchSound_3: {x: 1, y: 1}
-  OverloadDamageToPlayer: 100
+  OverloadDamageToPlayer: 59.03
   OverloadDuration: 0.5

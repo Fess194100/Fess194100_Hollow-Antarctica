@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace AdaptivEntityAgent
 {
@@ -86,6 +87,7 @@ namespace AdaptivEntityAgent
         private void InitializePerception()
         {
             potentialTargets = new List<PotentialTarget>();
+            currentTarget = null;
             currentTargetDistance = float.MaxValue;
             perceptionCoroutine = StartCoroutine(PerceptionUpdate());
         }
@@ -106,6 +108,13 @@ namespace AdaptivEntityAgent
         #endregion
 
         #region Private Methods
+        /*public void OnStateChanged(AgentState newState)
+        {
+            if (debugMode) Debug.Log($"AgentPerception - OnStateChanged.RemoveCurrentTarget XXX = {newState}");
+            if (newState == AgentState.Dead) RemoveCurrentTarget();
+        }*/
+
+        
         private IEnumerator PerceptionUpdate()
         {
             while (true)
@@ -510,6 +519,16 @@ namespace AdaptivEntityAgent
             if (HasTarget) RemoveTargetFromList(currentTarget);
             SetCurrentTarget();
         }
+
+        public void OnDeadAgent()
+        {
+            if (debugMode) Debug.Log($"AgentPerception - OnDeadAgent XXX RemoveCurrentTarget XXX");
+
+            if (perceptionCoroutine != null) StopCoroutine(perceptionCoroutine);
+            RemoveCurrentTarget();
+        }
+
+        public void OnRespawnAgent() => InitializePerception();
         #endregion
     }
 }

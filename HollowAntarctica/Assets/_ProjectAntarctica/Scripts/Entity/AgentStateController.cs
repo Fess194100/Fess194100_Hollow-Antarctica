@@ -29,7 +29,7 @@ namespace AdaptivEntityAgent
         protected AgentCombat combat;
         protected AgentMovement movement;
         protected AgentState previousState;
-        //protected Coroutine stateUpdateCoroutine;
+        protected Coroutine stateUpdateCoroutine;
         #endregion
 
         #region Events
@@ -50,9 +50,7 @@ namespace AdaptivEntityAgent
 
         protected virtual void OnDestroy()
         {
-            /*if (stateUpdateCoroutine != null)
-                StopCoroutine(stateUpdateCoroutine);*/
-            StopCoroutine(StateUpdateLoop());
+            if (stateUpdateCoroutine != null) StopCoroutine(stateUpdateCoroutine);
         }
 
         protected void InitializeComponents()
@@ -70,8 +68,7 @@ namespace AdaptivEntityAgent
         protected void StartStateMachine()
         {
             SetInitialState();
-            //stateUpdateCoroutine = StartCoroutine(StateUpdateLoop());
-            StartCoroutine(StateUpdateLoop());
+            stateUpdateCoroutine = StartCoroutine(StateUpdateLoop());
         }
 
         private void SetInitialState()
@@ -153,18 +150,18 @@ namespace AdaptivEntityAgent
         #region Private Methods
         private void OnDeath()
         {
-            //if (stateUpdateCoroutine != null) StopCoroutine(stateUpdateCoroutine);
             ChangeState(AgentState.Dead);
-            StopCoroutine(StateUpdateLoop());
+            perception?.OnDeadAgent();
             navMeshAgent.isStopped = true;
+
+            if (stateUpdateCoroutine != null) StopCoroutine(stateUpdateCoroutine);
         }
 
         private void RebirthAgent()
         {
-            //if (stateUpdateCoroutine != null) StopCoroutine(stateUpdateCoroutine);
             UpdateHealth(100f);
-            StartStateMachine();
             navMeshAgent.isStopped = false;
+            StartStateMachine();
         }
         #endregion
 
@@ -179,7 +176,7 @@ namespace AdaptivEntityAgent
         {
             if (currentState == newState) return;
 
-            previousState = currentState;
+            previousState = currentState; 
             currentState = newState;
 
             OnStateTransition?.Invoke(previousState, currentState);
@@ -217,10 +214,8 @@ namespace AdaptivEntityAgent
             transform.position = Vector3.zero;
             transform.rotation = Quaternion.identity;
             RebirthAgent();
+            perception?.OnRespawnAgent();
         }
         #endregion
-
-
-
     }
 }

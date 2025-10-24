@@ -140,6 +140,8 @@ namespace AdaptivEntityAgent
                 case AgentState.Alert:
                     ChangeState(AgentState.Combat);
                     break;
+                case AgentState.Dead:
+                    break;
                 default:
                     ChangeState(AgentState.Patrol);
                     break;
@@ -180,6 +182,8 @@ namespace AdaptivEntityAgent
                     break;
                 case AgentState.Alert:
                     ChangeState(AgentState.Combat);
+                    break;
+                case AgentState.Dead:
                     break;
                 default:
                     ChangeState(AgentState.Patrol);
