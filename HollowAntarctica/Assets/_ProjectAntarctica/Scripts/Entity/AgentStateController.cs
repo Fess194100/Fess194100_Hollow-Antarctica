@@ -211,7 +211,7 @@ namespace AdaptivEntityAgent
 
         public void RespawnAgent()
         {
-            transform.position = Vector3.zero;
+            transform.localPosition = Vector3.zero;
             transform.rotation = Quaternion.identity;
             RebirthAgent();
             perception?.OnRespawnAgent();

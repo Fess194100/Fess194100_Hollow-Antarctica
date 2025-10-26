@@ -284,8 +284,15 @@ namespace AdaptivEntityAgent
             if (target == null) return;
             if (target == currentTarget)
             {
-                RemoveTargetFromList(target);
-                UpdateCurrentTarget();
+                if (potentialTargets.Count > 1)
+                {
+                    RemoveTargetFromList(target);
+                    UpdateCurrentTarget();
+                }
+                else
+                {
+                    RemoveCurrentTarget();
+                }
             }
             else
             {

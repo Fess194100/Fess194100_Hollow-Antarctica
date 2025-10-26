@@ -33,6 +33,7 @@ namespace AdaptivEntityAgent
         [SerializeField] private bool debug = false;
 
         [Space(10)]
+        [SerializeField] private float combatUpdateFrequency = 0.2f;
         [Tooltip(" 0 = melee, 1 = ranged")]
         [Range(0f, 1f)]
         [SerializeField] private float attackTypeWeight = 0.5f;
@@ -127,8 +128,6 @@ namespace AdaptivEntityAgent
             isAiming = false;
             canRotation = false;
             isFlee = false;
-
-
         }
         #endregion
 
@@ -146,7 +145,7 @@ namespace AdaptivEntityAgent
                 {
                     canRotation = false;
                 }
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(combatUpdateFrequency);
             }
         }
 
@@ -203,7 +202,7 @@ namespace AdaptivEntityAgent
 
             if (distanceToAttackPosition > distanceToSwitchAttackPosition)
             {
-                agentMovement.MoveToPosition(attackPosition);                
+                agentMovement.MoveToPosition(attackPosition);
                 if (debug) Debug.Log($"Moving to attack position for {currentAttackType} attack, Distance: {distanceToAttackPosition:F1}");
 
                 if (currentAttackType == AttackType.Ranged && perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)
@@ -242,11 +241,7 @@ namespace AdaptivEntityAgent
         {
             if (canRotation)
             {
-                transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime
-                );
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             }
         }
 
@@ -305,7 +300,7 @@ namespace AdaptivEntityAgent
 
         private void PerformMeleeAttack(GameObject target, EssenceHealth targetHealth, AttackSettings settings)
         {
-            // Визуальные эффекты для ближней атаки
+            /*// Визуальные эффекты для ближней атаки
             if (settings.projectilePrefab != null && settings.attackStartPosition != null)
             {
                 GameObject meleeEffect = Instantiate(
@@ -315,13 +310,13 @@ namespace AdaptivEntityAgent
                     settings.attackStartPosition
                 );
                 Destroy(meleeEffect, 1f);
-            }
+            }*/
         }
 
         private void PerformRangedAttack(GameObject target, EssenceHealth targetHealth, AttackSettings settings)
         {
             // Дальняя атака - создание снаряда
-            if (settings.projectilePrefab != null && settings.attackStartPosition != null)
+            /*if (settings.projectilePrefab != null && settings.attackStartPosition != null)
             {
                 Vector3 spawnPosition = settings.attackStartPosition.position;
                 Quaternion spawnRotation = Quaternion.LookRotation(
@@ -331,7 +326,7 @@ namespace AdaptivEntityAgent
                 GameObject projectile = Instantiate(settings.projectilePrefab, spawnPosition, spawnRotation);
 
                 // Настройка снаряда (требует реализации ProjectileController)
-                /*
+                
                 ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
                 if (projectileController != null)
                 {
@@ -342,13 +337,13 @@ namespace AdaptivEntityAgent
                     targetHealth.TakeDamage(settings.attackDamage, ProjectileType.Green, 1, BodyPart.Body);
                     Destroy(projectile, 2f);
                 }
-                */
+                
             }
             else
             {
                 // Fallback - мгновенное нанесение урона
                 // targetHealth.TakeDamage(settings.attackDamage, ProjectileType.Green, 1, BodyPart.Body);
-            }
+            }*/
         }
 
         private IEnumerator AttackCooldown(AttackSettings settings)

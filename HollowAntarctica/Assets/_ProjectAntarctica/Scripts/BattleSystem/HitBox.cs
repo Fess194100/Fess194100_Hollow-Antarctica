@@ -11,6 +11,10 @@ namespace SimpleCharController
         [SerializeField] private float damageMultiplier = 1f;
         [SerializeField] public bool isAffectedByAreaEffects;
 
+        [Space(10)]
+        [Header("FX Settings")]
+        [SerializeField] private FX_ParticleSystemEmission fX_ParticleSystemEmission;
+
         private void Awake()
         {
             if (parentHealth == null)
@@ -30,6 +34,7 @@ namespace SimpleCharController
             {
                 float finalDamage = damage * damageMultiplier;
                 parentHealth.TakeDamage(finalDamage, damageType, chargeLevel, bodyPart, sender, isPlayer, hitReaction);
+                fX_ParticleSystemEmission.SetEmission(true);
             }
         }
 

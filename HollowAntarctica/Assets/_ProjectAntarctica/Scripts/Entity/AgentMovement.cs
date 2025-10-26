@@ -117,7 +117,7 @@ namespace AdaptivEntityAgent
         public void MoveToPosition(Vector3 position)
         {
             navMeshAgent.SetDestination(position);
-            navMeshAgent.isStopped = false;
+            if (navMeshAgent.isStopped == true) navMeshAgent.isStopped = false;
         }
 
         public void StopMovement()
@@ -129,8 +129,7 @@ namespace AdaptivEntityAgent
 
         public bool HasReachedDestination()
         {
-            return !navMeshAgent.pathPending &&
-                   navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance;
+            return !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance;
         }
 
         public void SetPatrolPoints(Transform[] points)
