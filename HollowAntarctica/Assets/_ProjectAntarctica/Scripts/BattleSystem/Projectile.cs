@@ -10,6 +10,7 @@ namespace SimpleCharController
         public CapsuleCollider capsuleCollider;
 
         [Header("Setting Projectile")]
+        public LayerMask excludeLayersForPlayer;
         public AnimationCurve curveSpeed = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
         public AnimationCurve curveGravity = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
         [SerializeField] private float colliderUpdateDelay = 0.04f;
@@ -59,6 +60,11 @@ namespace SimpleCharController
             _type = projectileType;
             _gravity = Vector3.down * rigidbody.mass;
             _isPlayer = isPlayer;
+
+            if (isPlayer)
+            {
+                capsuleCollider.excludeLayers = excludeLayersForPlayer;
+            }
 
             if (destroyAfterCollision)
             {

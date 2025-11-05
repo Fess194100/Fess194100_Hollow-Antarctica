@@ -19,7 +19,6 @@ namespace AdaptivEntityAgent
 
         private NavMeshAgent navMeshAgent;
         private int currentPatrolIndex = 0;
-        private bool isMovingToPoint = false;
         private Coroutine patrolCoroutine;
 
         private void Awake()
@@ -90,14 +89,11 @@ namespace AdaptivEntityAgent
                 {
                     Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
                     navMeshAgent.SetDestination(targetPoint);
-                    isMovingToPoint = true;
 
                     // ∆дем достижени€ точки
                     yield return new WaitUntil(() =>
                         !navMeshAgent.pathPending &&
                         navMeshAgent.remainingDistance <= pointReachedThreshold);
-
-                    isMovingToPoint = false;
 
                     // ∆дем на точке
                     yield return new WaitForSeconds(waitTimeAtPoints);

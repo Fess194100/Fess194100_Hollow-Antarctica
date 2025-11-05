@@ -9,7 +9,6 @@ namespace SimpleCharController
         public bool DeBug = true;
 
         [Header("Movement Controllers References")]
-        [SerializeField] private BreezeSystem agentController; // AgentController
         [SerializeField] private MonoBehaviour characterController; // Контроллер персонажа
 
         [Space(10)]
@@ -121,10 +120,6 @@ namespace SimpleCharController
         private void ApplyFreeze(float power)
         {
             // Полная остановка движения
-            if (agentController != null)
-            {
-                agentController.SetSpeedMultiplier(0);
-            }
 
             // Визуальные эффекты ледяной блок
             //VFXCombatEffect.Instance.ApplyFreezeVFX(transform, power);
@@ -134,10 +129,6 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnFreezeComplete.Invoke();
             // Восстановление движения
-            if (agentController != null)
-            {
-                agentController.SetSpeedMultiplier(1);
-            }
 
             // Удаление визуальных эффектов
             //VFXCombatEffect.Instance.RemoveFreezeVFX(transform);
@@ -146,10 +137,6 @@ namespace SimpleCharController
         private void ApplyFrostbite(float power)
         {
             // Замедление движения
-            if (agentController != null)
-            {
-                agentController.SetSpeedMultiplier(power);
-            }
 
             // Визуальные эффекты обморожения
             //VFXCombatEffect.Instance.ApplyFrostbiteVFX(transform, power);
@@ -159,10 +146,6 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnFrostbiteComplete.Invoke();
             // Восстановление скорости
-            if (agentController != null)
-            {
-                agentController.SetSpeedMultiplier(1f);
-            }
 
             // Удаление визуальных эффектов
             //VFXCombatEffect.Instance.RemoveFrostbiteVFX(transform);
@@ -172,10 +155,6 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnElectroShort.Invoke();
             // Временная потеря контроля
-            if (agentController != null)
-            {
-                // movementController.SetMovementEnabled(false);
-            }
 
             // Визуальные эффекты оглушения
             //VFXCombatEffect.Instance.ApplyStunVFX(transform, power);
@@ -185,10 +164,6 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnElectroShortComplete.Invoke();
             // Восстановление контроля
-            if (agentController != null)
-            {
-                // movementController.SetMovementEnabled(true);
-            }
 
             // Удаление визуальных эффектов
             //VFXCombatEffect.Instance.RemoveStunVFX(transform);
@@ -198,10 +173,6 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnChainLightning.Invoke();
             // Временная потеря контроля
-            if (agentController != null)
-            {
-                // movementController.SetMovementEnabled(false);
-            }
 
             // Визуальные эффекты оглушения
             //VFXCombatEffect.Instance.ApplyStunVFX(transform, power);
@@ -211,10 +182,6 @@ namespace SimpleCharController
         {
             combatEffectEvents.OnChainLightningComplete.Invoke();
             // Восстановление контроля
-            if (agentController != null)
-            {
-                // movementController.SetMovementEnabled(true);
-            }
 
             // Удаление визуальных эффектов
             //VFXCombatEffect.Instance.RemoveStunVFX(transform);

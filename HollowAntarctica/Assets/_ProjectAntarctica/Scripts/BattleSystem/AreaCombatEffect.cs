@@ -89,7 +89,7 @@ namespace SimpleCharController
 
             _currentNumberTarget += 1;
             _targets.Add(target);
-            EssenceHealth targetEssenceHealth = hitBox.GetEssenceHealth();
+            EssenceHealth targetEssenceHealth = hitBox.EssencelHealth;
 
             if (targetEssenceHealth != null && targetEssenceHealth != _ownerHealth)
             {

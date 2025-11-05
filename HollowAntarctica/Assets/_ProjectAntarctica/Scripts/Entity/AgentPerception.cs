@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using UnityEngine.InputSystem.LowLevel;
 
 namespace AdaptivEntityAgent
 {
@@ -108,13 +107,6 @@ namespace AdaptivEntityAgent
         #endregion
 
         #region Private Methods
-        /*public void OnStateChanged(AgentState newState)
-        {
-            if (debugMode) Debug.Log($"AgentPerception - OnStateChanged.RemoveCurrentTarget XXX = {newState}");
-            if (newState == AgentState.Dead) RemoveCurrentTarget();
-        }*/
-
-        
         private IEnumerator PerceptionUpdate()
         {
             while (true)
@@ -158,14 +150,11 @@ namespace AdaptivEntityAgent
                     {
                         float distance = Vector3.Distance(transform.position, target.transform.position);
                         potentialTargets.Add(new PotentialTarget(target.gameObject, distance));
-
-                        //if (debugMode) Debug.Log($"Added potential target: {target.gameObject.name}");
                     }
                 }
             }
             else
             {
-                // Обновляем дистанции для всех существующих целей
                 for (int i = 0; i < potentialTargets.Count; i++)
                 {
                     if (potentialTargets[i].target != null)
@@ -180,27 +169,23 @@ namespace AdaptivEntityAgent
                 }
             }
 
-            // Удаляем цели, которые вышли из радиуса или стали null
             potentialTargets.RemoveAll(target => target.target == null || target.distance > visionSettings.visionRange);
         }
 
         //------------------------------------------------------------------------------------------------
         private void UpdateCurrentTarget()
         {
-            // Если текущей цели нет - находим ближайшую
             if (currentTarget == null && potentialTargets.Count > 0)
             {
                 GameObject closestTarget = FindClosestTarget();
                 if (closestTarget != null)
                 {
-                    //SetCurrentTarget(closestTarget);
                     currentTarget = closestTarget;
                     if (debugMode) Debug.Log($" currentTarget = closestTarget NOT at Event OnChengetTarget");
                 }
                 return;
             }
 
-            // Если текущая цель есть, проверяем нужно ли сменить или удалить если она далеко.
             if (currentTarget != null)
             {
                 if (potentialTargets.Count > 0)
@@ -317,7 +302,6 @@ namespace AdaptivEntityAgent
 
             if (isCurrentlyVisible)
             {
-                // Если цель только что стала видимой (была невидима в списке)
                 if (!targetFromListVisible)
                 {
                     perceptionEvents.OnTargetSpotted?.Invoke(currentTarget);
@@ -327,12 +311,10 @@ namespace AdaptivEntityAgent
             }
             else
             {
-                // Если цель только что потеряна из виду (была видима в списке)
                 if (targetFromListVisible)
                 {
                     UpdateTargetInList(currentTarget, isCurrentlyVisible);
 
-                    //Выбираем новую цель если есть другие потенциальные цели
                     if (potentialTargets.Count >= 2)
                     {
                         RemoveTargetFromList(currentTarget);
@@ -347,7 +329,6 @@ namespace AdaptivEntityAgent
                 else
                 {
                     UpdateTargetInList(currentTarget, isCurrentlyVisible);
-                    //SetCurrentTarget();
 
                     currentTarget = null;
                     if (debugMode) Debug.Log($" currentTarget = null NOT at Event OnLostTarget");
@@ -363,7 +344,6 @@ namespace AdaptivEntityAgent
             float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
             float distanceToTarget = (target == currentTarget) ? currentTargetDistance : Vector3.Distance(transform.position, target.transform.position);
 
-            // Проверка угла обзора потери цели
             if (angleToTarget > visionSettings.visionAngle / 2f && distanceToTarget > visionSettings.peripheralVisionRange) return false;
             return true;
         }
@@ -374,7 +354,6 @@ namespace AdaptivEntityAgent
             float distanceToTarget = (target == currentTarget) ? currentTargetDistance : Vector3.Distance(transform.position, target.transform.position);
             Vector3 rayStart = transform.position + Vector3.up * 1.8f;
 
-            // Проверка препятствий
             if (Physics.Raycast(rayStart, directionToTarget, out RaycastHit hit, distanceToTarget, visionSettings.visionObstacleMask))
             {
 #if UNITY_EDITOR
@@ -402,7 +381,9 @@ namespace AdaptivEntityAgent
 
         private bool IsValidTarget(GameObject target)
         {
+            if (target == null) return false;
             FlagFaction flagFaction = target.GetComponent<FlagFaction>();
+
             if (flagFaction != null && flagFaction.EssenceHealth != null && !flagFaction.EssenceHealth.IsDead())
             {
                 if (flagFaction.flagFaction == currentEntityType || flagFaction.flagFaction == EntityType.Neutral)
@@ -460,11 +441,9 @@ namespace AdaptivEntityAgent
         {
             Vector3 offset = Vector3.up * 0.1f;
 
-            // Визуализация зрения
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position + offset, visionSettings.visionRange);
 
-            // Визуализация угла обзора
             Vector3 leftBoundary = Quaternion.Euler(0, -visionSettings.visionAngle / 2, 0) * transform.forward * visionSettings.visionRange;
             Vector3 rightBoundary = Quaternion.Euler(0, visionSettings.visionAngle / 2, 0) * transform.forward * visionSettings.visionRange;
 
@@ -472,11 +451,9 @@ namespace AdaptivEntityAgent
             Gizmos.DrawRay(transform.position + offset, leftBoundary);
             Gizmos.DrawRay(transform.position + offset, rightBoundary);
 
-            // Визуализация радиуса смены цели
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position + offset, visionSettings.targetSwitchRadius);
 
-            // Визуализация радиуса перефирийного зрения
             Gizmos.color = Color.blue;
             Vector3[] points = new Vector3[25];
 
@@ -492,7 +469,6 @@ namespace AdaptivEntityAgent
 
         private void DrawTargetGizmos()
         {
-            // Визуализация текущей цели
             if (currentTarget != null)
             {
                 Gizmos.color = Color.red;
@@ -501,7 +477,6 @@ namespace AdaptivEntityAgent
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(transform.position + Vector3.up * 1.8f, currentTarget.transform.position + Vector3.up);
 
-                // Визуализация потенциальных целей
                 foreach (var target in potentialTargets)
                 {
                     if (target.target != null && target.target != currentTarget)

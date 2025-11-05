@@ -2,34 +2,21 @@ using UnityEngine;
 using System.Collections;
 using SimpleCharController;
 using UnityEngine.AI;
+using System.Security.Claims;
 
 namespace AdaptivEntityAgent
 {
     [System.Serializable]
     public class AttackSettings
     {
-        [Header("Basic Settings")]
         public float attackRate = 1f;
         public float optimalDistance = 5f;
-
-        [Header("Projectile Settings")]
-        public GameObject projectilePrefab;
-        public Transform attackStartPosition;
-
-        [Header("Layers")]
-        public LayerMask targetMask = ~0;
+        public float optimalAngle = 15f;
     }
 
     public class AgentCombat : MonoBehaviour
     {
         #region Variables
-        [Header("Melee Attack Settings")]
-        [SerializeField] private AttackSettings meleeAttackSettings = new AttackSettings();
-
-        [Header("Ranged Attack Settings")]
-        [SerializeField] private AttackSettings rangedAttackSettings = new AttackSettings();
-
-        [Header("Attack Settings")]
         [SerializeField] private bool debug = false;
 
         [Space(10)]
@@ -40,17 +27,21 @@ namespace AdaptivEntityAgent
         [SerializeField] private float rotationSpeed = 120f;
 
         [Space(10)]
+        [Tooltip("Additional distance beyond optimal melee range at which the agent will still close in for a hand-to-hand attack.")]
+        [SerializeField] private float meleeApproachThreshold = 0.5f;
+        [SerializeField] private AttackSettings meleeAttackSettings = new AttackSettings();
+        [SerializeField] private AttackSettings rangedAttackSettings = new AttackSettings();
+
+        [Space(10)]
         public AgentEventsCombat agentEventsCombat;
         #endregion
 
         #region Private Variables
-        private EssenceHealth health;
         private AgentPerception perception;
         private AgentMovement agentMovement;
-        private NavMeshAgent navMeshAgent;
         private EssenceHealth targetHealth;
 
-        // Combat state variables
+        private bool hashComponents;
         private bool canAttack = true;
         private bool isAiming = false;
         private bool canRotation = false;
@@ -64,16 +55,15 @@ namespace AdaptivEntityAgent
 
         #region Public Properties
         public float AttackTypeWeight => attackTypeWeight;
-        public AttackType CurrentAttackType => currentAttackType;
-        public bool IsAiming => isAiming;
-        public AttackSettings MeleeAttackSettings => meleeAttackSettings;
-        public AttackSettings RangedAttackSettings => rangedAttackSettings;
         #endregion
 
         #region System Functions
         private void Awake()
         {
-            InitializeComponents();
+            perception = GetComponent<AgentPerception>();
+            agentMovement = GetComponent<AgentMovement>();
+
+            if (agentMovement != null && perception != null) hashComponents = true;
         }
 
         private void FixedUpdate()
@@ -84,14 +74,6 @@ namespace AdaptivEntityAgent
         private void OnDestroy()
         {
             StopCombatState();
-        }
-
-        private void InitializeComponents()
-        {
-            health = GetComponent<EssenceHealth>();
-            perception = GetComponent<AgentPerception>();
-            agentMovement = GetComponent<AgentMovement>();
-            navMeshAgent = GetComponent<NavMeshAgent>();
         }
         #endregion
 
@@ -106,7 +88,7 @@ namespace AdaptivEntityAgent
             else if (newState == AgentState.Combat)
             {
                 if (debug) Debug.Log($"AgentCombat - StartCombatState");
-                StartCombatState();
+                if (hashComponents) StartCombatState();
             }
         }
 
@@ -125,6 +107,7 @@ namespace AdaptivEntityAgent
                 combatCoroutine = null;
             }
 
+            canAttack = true;
             isAiming = false;
             canRotation = false;
             isFlee = false;
@@ -136,13 +119,14 @@ namespace AdaptivEntityAgent
         {
             while (true)
             {
-                if (debug) Debug.Log($"AgentCombat - CombatRoutine() HasTarget = {perception.HasTarget}");
                 if (perception.HasTarget)
                 {
+                    if (debug) Debug.Log($"AgentCombat - CombatRoutine. HasTarget = true");
                     ProcessCombat();
                 }
                 else
                 {
+                    if (debug) Debug.Log($"AgentCombat - CombatRoutine. HasTarget = false");
                     canRotation = false;
                 }
                 yield return new WaitForSeconds(combatUpdateFrequency);
@@ -186,18 +170,25 @@ namespace AdaptivEntityAgent
                 return;
             }
 
-            MoveToAttackPosition();
+            MoveToAttackPosition(target);
         }
 
-        private void MoveToAttackPosition()
+        private void MoveToAttackPosition(GameObject target)
         {
             float distanceToAttackPosition = Vector3.Distance(transform.position, attackPosition);
-            float distanceToSwitchAttackPosition = 1f;
+            float distanceToSwitchAttackPosition = meleeApproachThreshold;
             if (debug) Debug.Log($"AgentCombat - distanceToAttackPosition = {distanceToAttackPosition}");
 
             if (currentAttackType == AttackType.Ranged)
             {
                 distanceToSwitchAttackPosition = rangedAttackSettings.optimalDistance / 2.3f;
+            }
+            else
+            {
+                if (distanceToAttackPosition < distanceToSwitchAttackPosition + meleeAttackSettings.optimalDistance / 2)
+                {
+                    HandleAimingPhase(target, false);
+                }
             }
 
             if (distanceToAttackPosition > distanceToSwitchAttackPosition)
@@ -207,7 +198,7 @@ namespace AdaptivEntityAgent
 
                 if (currentAttackType == AttackType.Ranged && perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)
                 {
-                    // Агент отступает
+                    // Agent is Flee
                     isFlee = true;
                     agentEventsCombat.OnFleeAgent.Invoke();
                     if (debug) Debug.Log("AgentCombat - MoveToAttackPosition - <color=yellow>FLEE</color>");
@@ -224,17 +215,13 @@ namespace AdaptivEntityAgent
 
         //---------------------------------------------------------------------------------------
 
-        private void HandleAimingPhase(GameObject target)
+        private void HandleAimingPhase(GameObject target, bool canAim = true)
         {
-            AimAtTarget(target);
+            if (canAim) AimAtTarget(target);
 
-            if (IsReadyToAttack(target) && canAttack)
-            {
-                // Реализация атаки
-                PerformAttack(target, currentAttackType);
-            }
+            if (IsReadyToAttack(target) && canAttack) PerformAttack(target, currentAttackType);
 
-            if (debug) Debug.Log($"AgentCombat - HandleAimingPhase = {target} ||| IsReadyToAttack = {IsReadyToAttack(target)}");
+            if (debug) Debug.Log($"AgentCombat - HandleAimingPhase = {target}");
         }
 
         private void UpdateRotation()
@@ -255,6 +242,7 @@ namespace AdaptivEntityAgent
                 if (debug) Debug.Log($"AgentCombat - UpdateAttackTarget_____Update EssenceHealth ++++++");
             }
         }
+
         private void AimAtTarget(GameObject target)
         {
             if (target == null) return;
@@ -278,72 +266,23 @@ namespace AdaptivEntityAgent
         private void PerformAttack(GameObject target, AttackType attackType)
         {
             AttackSettings settings = GetAttackSettings(attackType);
+            if (debug) Debug.Log($"AgentCombat - PerformAttack = {target}");
 
-            if (debug) Debug.Log($"AgentCombat - PerformAttack = {target} ||| targetHealth_IsDead = {targetHealth.IsDead()}");
-            if (targetHealth == null || targetHealth.IsDead()) return; // Если у цели нет здоровья или цель мертва, то нужны действия. Эта проверка должна быть раньше!!!
+            if (targetHealth == null || targetHealth.IsDead()) return;
 
             if(debug) LogAttack(attackType, target);
 
-            if (attackType == AttackType.Melee)
+            switch (attackType)
             {
-                agentEventsCombat.OnAttackMelle.Invoke();
-                PerformMeleeAttack(target, targetHealth, settings);
-            }
-            else
-            {
-                agentEventsCombat.OnAttackRange.Invoke();
-                PerformRangedAttack(target, targetHealth, settings);
+                case AttackType.Melee:
+                    agentEventsCombat.OnAttackMelle.Invoke();
+                    break;
+                case AttackType.Ranged:
+                    agentEventsCombat.OnAttackRange.Invoke();
+                    break;
             }
 
             StartCoroutine(AttackCooldown(settings));
-        }
-
-        private void PerformMeleeAttack(GameObject target, EssenceHealth targetHealth, AttackSettings settings)
-        {
-            /*// Визуальные эффекты для ближней атаки
-            if (settings.projectilePrefab != null && settings.attackStartPosition != null)
-            {
-                GameObject meleeEffect = Instantiate(
-                    settings.projectilePrefab,
-                    settings.attackStartPosition.position,
-                    settings.attackStartPosition.rotation,
-                    settings.attackStartPosition
-                );
-                Destroy(meleeEffect, 1f);
-            }*/
-        }
-
-        private void PerformRangedAttack(GameObject target, EssenceHealth targetHealth, AttackSettings settings)
-        {
-            // Дальняя атака - создание снаряда
-            /*if (settings.projectilePrefab != null && settings.attackStartPosition != null)
-            {
-                Vector3 spawnPosition = settings.attackStartPosition.position;
-                Quaternion spawnRotation = Quaternion.LookRotation(
-                    (target.transform.position - spawnPosition).normalized
-                );
-
-                GameObject projectile = Instantiate(settings.projectilePrefab, spawnPosition, spawnRotation);
-
-                // Настройка снаряда (требует реализации ProjectileController)
-                
-                ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
-                if (projectileController != null)
-                {
-                    projectileController.Initialize(target, settings.attackDamage);
-                }
-                else
-                {
-                    targetHealth.TakeDamage(settings.attackDamage, ProjectileType.Green, 1, BodyPart.Body);
-                    Destroy(projectile, 2f);
-                }
-                
-            }
-            else
-            {
-                // Fallback - мгновенное нанесение урона
-                // targetHealth.TakeDamage(settings.attackDamage, ProjectileType.Green, 1, BodyPart.Body);
-            }*/
         }
 
         private IEnumerator AttackCooldown(AttackSettings settings)
@@ -387,8 +326,15 @@ namespace AdaptivEntityAgent
             directionToTarget.y = 0f;
             float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
 
-            if (debug) Debug.Log($"AgentCombat - IsReadyToAttack || directionToTarget = {directionToTarget} ||| angleToTarget = {angleToTarget}");
-            return angleToTarget < 15f;
+            float currentOptimalAngle = currentAttackType switch
+            {
+                AttackType.Melee => meleeAttackSettings.optimalAngle,
+                AttackType.Ranged => rangedAttackSettings.optimalAngle,
+                _ => 15f
+            };
+
+            if (debug) Debug.Log($"AgentCombat - IsReadyToAttack ||| angleToTarget = {angleToTarget}");
+            return angleToTarget < currentOptimalAngle;
         }
 
         private Vector3 CalculateAttackPosition(GameObject target, AttackType attackType)

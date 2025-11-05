@@ -14,9 +14,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.07
   m_TransitionOffset: 0
-  m_ExitTime: 0.7580645
+  m_ExitTime: 0.06
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -65,9 +65,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.34429538
-  m_TransitionOffset: 0.20887966
-  m_ExitTime: 0.20887938
+  m_TransitionDuration: 0.34184453
+  m_TransitionOffset: 0.088879704
+  m_ExitTime: 0.0000000011597806
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -81,7 +81,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Melle
-  m_Speed: 1.77
+  m_Speed: 1.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4751828003837694962}
@@ -95,8 +95,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 9bfed179f9848624baeb8ccf361244ea,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 86b09ba1767de4a47934f695cd0e83f5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -194,7 +193,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: MoveSpeed
-    m_EventTreshold: 1.8
+    m_EventTreshold: 2.9
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -294,7 +293,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Range
-  m_Speed: 1.9
+  m_Speed: 1.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3163541701104318125}
@@ -308,8 +307,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: aecb5c436113bed479203c76f5f9153e,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: a1c08c6a66ccb134ea9979065ea4400c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -452,7 +450,7 @@ AnimatorController:
     m_Mask: {fileID: 31900000, guid: b840c07e53fbd0b4090065a3b8f59b63, type: 2}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 0
+    m_BlendingMode: 1
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 0.6
     m_IKPass: 0

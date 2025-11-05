@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.Events;
 
 namespace SimpleCharController
 {
     public class CharController : MonoBehaviour
     {
+        #region Variables
+        
         public GameObject modelOrigin;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -105,6 +106,7 @@ namespace SimpleCharController
         public bool isFalling = false;
         public bool isClimbing = false;
         public bool isOffClimb = false;
+        #endregion
 
         #region Private Variable
 
@@ -154,7 +156,7 @@ namespace SimpleCharController
         {
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<SimpleInputActions>();
-            _noiseVirtualCamera = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _noiseVirtualCamera = virtualCamera?.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
             GetAnimator();
             AssignAnimationIDs();
@@ -663,6 +665,24 @@ namespace SimpleCharController
             else Debug.Log("_animator - null :(");
         }
         #endregion TypeClimb
+
+        #region Public API
+
+        public void OnDead()
+        {
+            ExitModeClimb();
+            canControl = false;
+            canJump = false;
+            canClimb = false;
+        }
+
+        public void OnRespawn()
+        {
+            canControl = true;
+            canJump = true;
+            canClimb = true;
+        }
+        #endregion
     }
 }
 

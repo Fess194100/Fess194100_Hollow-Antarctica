@@ -1,4 +1,3 @@
-using Breeze.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +8,6 @@ namespace SimpleCharController
         public bool DeBug = false;
 
         [Header("References")]
-        [SerializeField] private BreezeSystem agentController;
         [SerializeField] private HandlerCombatEffects handlerCombatEffects;
 
         [Space(10)]
@@ -22,6 +20,7 @@ namespace SimpleCharController
         public UnityEvent<float, BodyPart> OnDamageTaken;   // Количество полученного урона
         public UnityEvent<float> OnHealthRestored; // Количество восстановленного здоровья
         public UnityEvent OnDeath;
+        public UnityEvent OnRespawn;
 
         private bool _isDead = false;
 
@@ -49,11 +48,6 @@ namespace SimpleCharController
                 }
 
                 if (DeBug) Debug.Log("Take damage = " + damage + " | Body part - " + bodyPart);
-
-                if (agentController != null)
-                {
-                    agentController.TakeDamage(damage, sender, isPlayer, hitReaction);
-                }
             }
         }
 
@@ -109,6 +103,7 @@ namespace SimpleCharController
             _isDead = false;
             currentHealth = maxHealth;
             OnHealthChanged?.Invoke(currentHealth);
+            OnRespawn?.Invoke();
         }
 
         // Проверка, мертв ли игрок
@@ -123,6 +118,10 @@ namespace SimpleCharController
             return currentHealth;
         }
 
+        public void AddHealth(float countHealth)
+        {
+            SetHealth(countHealth + currentHealth);
+        }
         // Получение максимального здоровья
         public float GetMaxHealth()
         {

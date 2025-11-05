@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511906499646159037}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,6 +104,13 @@ MonoBehaviour:
   bodyPart: 0
   damageMultiplier: 2
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &613582135142306897
 GameObject:
@@ -114,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8413881546047994601}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,6 +249,13 @@ MonoBehaviour:
   bodyPart: 3
   damageMultiplier: 0.7
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &1287309232210663426
 GameObject:
@@ -254,7 +268,7 @@ GameObject:
   - component: {fileID: 6475992991974650740}
   - component: {fileID: 7219589419742353823}
   - component: {fileID: 2368758626677442775}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,6 +329,13 @@ MonoBehaviour:
   bodyPart: 3
   damageMultiplier: 0.7
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &1354059777157588385
 GameObject:
@@ -374,7 +395,7 @@ NavMeshAgent:
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 270
-  m_StoppingDistance: 0.71
+  m_StoppingDistance: 0.235
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -502,26 +523,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e5d2c7048cd0745b56e98e9a83a413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeAttackSettings:
-    attackRate: 1
-    optimalDistance: 1.4
-    projectilePrefab: {fileID: 0}
-    attackStartPosition: {fileID: 0}
-    targetMask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-  rangedAttackSettings:
-    attackRate: 0.5
-    optimalDistance: 18
-    projectilePrefab: {fileID: 0}
-    attackStartPosition: {fileID: 0}
-    targetMask:
-      serializedVersion: 2
-      m_Bits: 4294967295
   debug: 0
   combatUpdateFrequency: 0.2
   attackTypeWeight: 0.25
   rotationSpeed: 120
+  meleeApproachThreshold: 0.5
+  meleeAttackSettings:
+    attackRate: 1
+    optimalDistance: 0.9
+    optimalAngle: 90
+  rangedAttackSettings:
+    attackRate: 1.5
+    optimalDistance: 18
+    optimalAngle: 15
   agentEventsCombat:
     OnAttackMelle:
       m_PersistentCalls:
@@ -569,8 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
-  agentController: {fileID: 0}
-  handlerCombatEffects: {fileID: 0}
+  handlerCombatEffects: {fileID: 5606174357477191432}
   maxHealth: 100
   currentHealth: 100
   OnHealthChanged:
@@ -645,6 +658,9 @@ MonoBehaviour:
           m_StringArgument: OnDead
           m_BoolArgument: 0
         m_CallState: 2
+  OnRespawn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5606174357477191432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,7 +674,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeBug: 0
-  agentController: {fileID: 0}
   characterController: {fileID: 0}
   combatEffectEvents:
     OnFrostbite:
@@ -1741,12 +1756,12 @@ MonoBehaviour:
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams:
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: DelayToRespawn
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 5
+          value: 0
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
@@ -3260,7 +3275,13 @@ MonoBehaviour:
       linkTarget: 0
       colorIndex: 0
     variables:
-      floatVariables: []
+      floatVariables:
+      - useVariable: 1
+        name: DelayToRespawn
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 5
       intVariables: []
       boolVariables:
       - useVariable: 1
@@ -3307,7 +3328,7 @@ MonoBehaviour:
       enumVariables: []
       categories:
       - 
-      variableCategoryIDs: 0000000000000000000000000000000000000000
+      variableCategoryIDs: 000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -4457,6 +4478,39 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 0
+--- !u!1 &1652304896561563930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8782073651037911598}
+  m_Layer: 11
+  m_Name: OriginWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8782073651037911598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652304896561563930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0321, y: 0.1289, z: 0.0675}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4920968120816482051}
+  - {fileID: 4437677100010417656}
+  m_Father: {fileID: 1565623873528225642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1752207771295554766
 GameObject:
   m_ObjectHideFlags: 0
@@ -5313,6 +5367,13 @@ MonoBehaviour:
   bodyPart: 1
   damageMultiplier: 1
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 7360908004006643350}
 --- !u!114 &7360908004006643350
 MonoBehaviour:
@@ -5454,7 +5515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7558362338168564455}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5580,6 +5641,13 @@ MonoBehaviour:
   bodyPart: 0
   damageMultiplier: 2
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &2986151852864576284
 GameObject:
@@ -5654,6 +5722,13 @@ MonoBehaviour:
   bodyPart: 1
   damageMultiplier: 1
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 304314678953230335}
 --- !u!114 &304314678953230335
 MonoBehaviour:
@@ -5793,7 +5868,7 @@ GameObject:
   - component: {fileID: 6967827099746079812}
   - component: {fileID: 5775481237129742605}
   - component: {fileID: 3442016241805875329}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Hit (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10643,6 +10718,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2931799170372589473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3329096656143070976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4920968120816482051}
+  m_Layer: 11
+  m_Name: StartRangedAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4920968120816482051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3329096656143070976}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.145, y: 0.177, z: 0.005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8782073651037911598}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3794528726138780102
 GameObject:
   m_ObjectHideFlags: 0
@@ -10654,7 +10760,7 @@ GameObject:
   - component: {fileID: 6669807466533175965}
   - component: {fileID: 599520745257959028}
   - component: {fileID: 2552317687331743795}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10710,11 +10816,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
-  parentHandlerEffects: {fileID: 0}
+  parentHealth: {fileID: 5613681582678293238}
+  parentHandlerEffects: {fileID: 5606174357477191432}
   bodyPart: 2
   damageMultiplier: 0.8
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &3795234572664651883
 GameObject:
@@ -10727,7 +10840,7 @@ GameObject:
   - component: {fileID: 4823797941744582220}
   - component: {fileID: 5673142791689595627}
   - component: {fileID: 8364121142753166157}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10783,11 +10896,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
-  parentHandlerEffects: {fileID: 0}
+  parentHealth: {fileID: 5613681582678293238}
+  parentHandlerEffects: {fileID: 5606174357477191432}
   bodyPart: 2
   damageMultiplier: 0.8
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &3963546037202981329
 GameObject:
@@ -10798,7 +10918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 418303304004980693}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10834,7 +10954,7 @@ GameObject:
   - component: {fileID: 9024582851012817466}
   - component: {fileID: 6811298619709885377}
   - component: {fileID: 3302891010396761341}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10890,11 +11010,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
-  parentHandlerEffects: {fileID: 0}
+  parentHealth: {fileID: 5613681582678293238}
+  parentHandlerEffects: {fileID: 5606174357477191432}
   bodyPart: 2
   damageMultiplier: 0.8
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &4474107509863817226
 GameObject:
@@ -10943,7 +11070,7 @@ GameObject:
   - component: {fileID: 1549503497326390330}
   - component: {fileID: 5434890506703220117}
   - component: {fileID: 5740697792366282569}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11228,8 +11355,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 0
-      minColor: {r: 0.24528301, g: 0.056692775, b: 0.056692775, a: 1}
-      maxColor: {r: 1, g: 0, b: 0.079120636, a: 1}
+      minColor: {r: 0.16062222, g: 0.7490196, b: 0.11372549, a: 1}
+      maxColor: {r: 0.5566038, g: 0.107645065, b: 0.107645065, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -15809,7 +15936,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 511821452754919878}
+  - component: {fileID: 1972969078727194033}
   - component: {fileID: 2693304932640976473}
+  - component: {fileID: 4678626146523787593}
   - component: {fileID: 5784813721115344177}
   - component: {fileID: 4285044196129412207}
   m_Layer: 0
@@ -15836,6 +15965,25 @@ Transform:
   - {fileID: 6465224793876942821}
   m_Father: {fileID: 820628153679517224}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!205 &1972969078727194033
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801990503461795723}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1.51
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.032
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6379346760864806630}
+  m_Enabled: 1
 --- !u!95 &2693304932640976473
 Animator:
   serializedVersion: 5
@@ -15857,6 +16005,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4678626146523787593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801990503461795723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef8474998fa6e34b90e316a0b10d28c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 4920968120816482051}
+  ownerEssenceHealth: {fileID: 5613681582678293238}
+  perception: {fileID: 9133765305126075438}
+  meleeHit: {fileID: 3562403896722007747}
+  projectileData: {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
+  melleData: {fileID: 11400000, guid: 43bb3ff33b6f5e84586242f9f9779f6a, type: 2}
 --- !u!114 &5784813721115344177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17540,7 +17706,7 @@ GameObject:
   - component: {fileID: 5532025720835331527}
   - component: {fileID: 5690425708094260382}
   - component: {fileID: 2752250645784630413}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17601,6 +17767,13 @@ MonoBehaviour:
   bodyPart: 3
   damageMultiplier: 0.7
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &5594346160203572013
 GameObject:
@@ -17705,6 +17878,13 @@ MonoBehaviour:
   bodyPart: 3
   damageMultiplier: 0.7
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &5937063669811636710
 GameObject:
@@ -17717,7 +17897,7 @@ GameObject:
   - component: {fileID: 5304338207825563754}
   - component: {fileID: 7067764173588777836}
   - component: {fileID: 1555193775678460007}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17772,11 +17952,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
-  parentHandlerEffects: {fileID: 0}
+  parentHealth: {fileID: 5613681582678293238}
+  parentHandlerEffects: {fileID: 5606174357477191432}
   bodyPart: 2
   damageMultiplier: 0.8
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &6069359699230825152
 GameObject:
@@ -17787,7 +17974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2451061556428539154}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17820,7 +18007,7 @@ GameObject:
   - component: {fileID: 1570046473122014138}
   - component: {fileID: 3675301869333566614}
   - component: {fileID: 72089918799047119}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17881,6 +18068,13 @@ MonoBehaviour:
   bodyPart: 3
   damageMultiplier: 0.7
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &6345228305798678713
 GameObject:
@@ -17893,7 +18087,7 @@ GameObject:
   - component: {fileID: 5569390554132454589}
   - component: {fileID: 6082065683527760694}
   - component: {fileID: 5264383638181689966}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17954,6 +18148,13 @@ MonoBehaviour:
   bodyPart: 3
   damageMultiplier: 0.7
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &6354945541346343651
 GameObject:
@@ -17966,7 +18167,7 @@ GameObject:
   - component: {fileID: 4828553375336235613}
   - component: {fileID: 1866598292623060284}
   - component: {fileID: 4236347973896604135}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Hit (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18252,7 +18453,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.24528301, g: 0.056692775, b: 0.056692775, a: 1}
-      maxColor: {r: 1, g: 0, b: 0.079120636, a: 1}
+      maxColor: {r: 0.5568628, g: 0.105882354, b: 0.105882354, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -22871,7 +23072,7 @@ GameObject:
   - component: {fileID: 9058970925887905292}
   - component: {fileID: 2869283934412942101}
   - component: {fileID: 319318247594200958}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22927,11 +23128,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
-  parentHandlerEffects: {fileID: 0}
+  parentHealth: {fileID: 5613681582678293238}
+  parentHandlerEffects: {fileID: 5606174357477191432}
   bodyPart: 2
   damageMultiplier: 0.8
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &7174825793708545311
 GameObject:
@@ -23040,6 +23248,13 @@ MonoBehaviour:
   bodyPart: 4
   damageMultiplier: 5
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &7351386388218558994
 GameObject:
@@ -23130,6 +23345,13 @@ MonoBehaviour:
   bodyPart: 1
   damageMultiplier: 1
   isAffectedByAreaEffects: 1
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 487444654731100148}
 --- !u!114 &487444654731100148
 MonoBehaviour:
@@ -23160,7 +23382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4468775109074027155}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23191,7 +23413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2575396131338311986}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:HeadTop_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23300,7 +23522,7 @@ GameObject:
   - component: {fileID: 1565623873528225642}
   - component: {fileID: 1756923216466127081}
   - component: {fileID: 1428602409520073037}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23319,7 +23541,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0.30261678, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8782073651037911598}
   m_Father: {fileID: 6669807466533175965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1756923216466127081
@@ -23355,11 +23578,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea621de14cceb4ea13661f944b00cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentHealth: {fileID: 0}
-  parentHandlerEffects: {fileID: 0}
+  parentHealth: {fileID: 5613681582678293238}
+  parentHandlerEffects: {fileID: 5606174357477191432}
   bodyPart: 2
   damageMultiplier: 0.8
   isAffectedByAreaEffects: 0
+  canSwitchLayer: 1
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   fX_ParticleSystemEmission: {fileID: 0}
 --- !u!1 &8397392061216899346
 GameObject:
@@ -23684,7 +23914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6987078944696317152}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mixamorig:LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23841,6 +24071,106 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8691093120209652503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4437677100010417656}
+  - component: {fileID: 6478200863064896736}
+  - component: {fileID: 1818125773696421697}
+  - component: {fileID: 3562403896722007747}
+  m_Layer: 11
+  m_Name: MelleHitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4437677100010417656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691093120209652503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.093, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8782073651037911598}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6478200863064896736
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691093120209652503}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 10000
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 8119
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!135 &1818125773696421697
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691093120209652503}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 8119
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3562403896722007747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691093120209652503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f97c9531a69ef04288c4a02b00bc6b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerEssenceHealth: {fileID: 5613681582678293238}
+  weaponCollider: {fileID: 1818125773696421697}
+  debugMode: 0
+  excludeLayersForPlayer:
+    serializedVersion: 2
+    m_Bits: 6135
 --- !u!1 &8712498526305863134
 GameObject:
   m_ObjectHideFlags: 0
