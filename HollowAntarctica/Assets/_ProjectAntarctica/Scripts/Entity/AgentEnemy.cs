@@ -108,6 +108,11 @@ namespace AdaptivEntityAgent
             }
         }
 
+        protected override void UpdateInteractState()
+        {
+
+        }
+
         protected override void OnCriticalHealth()
         {
             if (GetCurrentState() != AgentState.Flee) OnFleeAgent();
@@ -178,7 +183,7 @@ namespace AdaptivEntityAgent
                 case AgentState.Follow:
                     break;
                 case AgentState.Interact:
-                    ChangeState(AgentState.Combat);
+                    //ChangeState(AgentState.Combat);
                     break;
                 case AgentState.Alert:
                     ChangeState(AgentState.Combat);

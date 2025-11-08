@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 namespace AdaptivEntityAgent
 {
@@ -9,13 +10,13 @@ namespace AdaptivEntityAgent
     {
         #region Variables
         [Header("Agent Configuration")]
+        public bool debugMode = false;
+
+        [Space(10)]
         [SerializeField] private EntityType entityType = EntityType.Enemy;
+        [SerializeField] private AgentState startAgentState = AgentState.Patrol;
         [SerializeField] private float stateUpdateFrequency = 0.2f;
         [SerializeField] private float criticalHealthThreshold = 0.3f;
-
-        [Header("Debug")]
-        public bool debugMode = false;
-        [SerializeField] private AgentState currentState = AgentState.Idle;
         #endregion
 
         #region Public Property
@@ -23,6 +24,7 @@ namespace AdaptivEntityAgent
         #endregion
 
         #region Private Variables
+        private AgentState currentState = AgentState.Idle;
         protected float currentHealth = 100f;
         protected NavMeshAgent navMeshAgent;
         protected AgentPerception perception;
@@ -67,24 +69,8 @@ namespace AdaptivEntityAgent
 
         protected void StartStateMachine()
         {
-            SetInitialState();
+            ChangeState(startAgentState);
             stateUpdateCoroutine = StartCoroutine(StateUpdateLoop());
-        }
-
-        private void SetInitialState()
-        {
-            switch (entityType)
-            {
-                case EntityType.Enemy:
-                    ChangeState(AgentState.Patrol);
-                    break;
-                case EntityType.Ally:
-                    ChangeState(AgentState.Follow);
-                    break;
-                case EntityType.Neutral:
-                    ChangeState(AgentState.Idle);
-                    break;
-            }
         }
         #endregion
 
@@ -195,18 +181,30 @@ namespace AdaptivEntityAgent
         public void UpdateHealth(float health)
         {
             if (currentHealth == health) return;
-            currentHealth = health;
 
-            if (currentHealth <= 0f)
+            if (health < currentHealth)
+            {
+                switch (currentState)
+                {
+                    case AgentState.Interact:
+                    case AgentState.Idle:
+                        ChangeState(AgentState.Patrol);
+                        break;
+                }
+            }            
+
+            if (health <= 0f)
             {
                 OnDeath();
                 return;
             }
 
-            if (currentHealth < criticalHealthThreshold)
+            if (health < criticalHealthThreshold)
             {
                 OnCriticalHealth();
             }
+
+            currentHealth = health;
         }
 
         public void RespawnAgent()

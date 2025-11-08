@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.Events;
+using TMPro;
 
 namespace AdaptivEntityAgent
 {
@@ -12,28 +14,51 @@ namespace AdaptivEntityAgent
         [SerializeField] private float fleeSpeed = 4f;
         [SerializeField] private float rotationSpeed = 120f;
 
+#if UNITY_EDITOR_RUS
+        [Tooltip("Минимальное расстояние до цели для обновления пути. При изменениях меньше этого значения цель не обновляется")]
+#else
+        [Tooltip("Minimum distance to target for path update. Target won't update for changes smaller than this value")]
+#endif
+        [SerializeField] private float minDistanceThreshold = 0.3f;
+
         [Header("Patrol Settings")]
         [SerializeField] private Transform[] patrolPoints;
         [SerializeField] private float waitTimeAtPoints = 2f;
         [SerializeField] private float pointReachedThreshold = 0.5f;
 
+        [Header("Interact Settings")]
+        [SerializeField] private bool interactAfterPatrol;
+        [SerializeField] private Transform interactPoint;
+
+        [Header("Events")]
+        public UnityEvent OnStartInteract;
+        public UnityEvent OnEndInteract;
+
         private NavMeshAgent navMeshAgent;
         private int currentPatrolIndex = 0;
         private Coroutine patrolCoroutine;
+        private AgentStateController stateController;
 
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             navMeshAgent.angularSpeed = rotationSpeed;
+            stateController = GetComponent<AgentStateController>();
         }
 
         private void OnDestroy()
         {
-            StopPatrol();
+            StopAllCoroutines();
         }
 
         public void OnStateChanged(AgentState newState)
         {
+            // Если выходим из состояния взаимодействия - вызываем событие окончания
+            if (stateController.GetPreviousState() == AgentState.Interact && newState != AgentState.Interact)
+            {
+                EndInteraction();
+            }
+
             // Настройка скорости в зависимости от состояния
             switch (newState)
             {
@@ -55,6 +80,10 @@ namespace AdaptivEntityAgent
                     navMeshAgent.speed = patrolSpeed;
                     StopPatrol();
                     break;
+                case AgentState.Interact:
+                    navMeshAgent.speed = patrolSpeed;
+                    StartInteract();
+                    break;
                 case AgentState.Idle:
                     navMeshAgent.isStopped = true;
                     StopPatrol();
@@ -63,6 +92,8 @@ namespace AdaptivEntityAgent
 
             navMeshAgent.isStopped = false;
         }
+
+        //----------------------------------------------------------------------------------
 
         private void StartPatrol()
         {
@@ -90,15 +121,21 @@ namespace AdaptivEntityAgent
                     Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
                     navMeshAgent.SetDestination(targetPoint);
 
-                    // Ждем достижения точки
                     yield return new WaitUntil(() =>
                         !navMeshAgent.pathPending &&
                         navMeshAgent.remainingDistance <= pointReachedThreshold);
 
-                    // Ждем на точке
-                    yield return new WaitForSeconds(waitTimeAtPoints);
+                    if (interactAfterPatrol && IsLastPatrolPoint())
+                    {
+                        currentPatrolIndex = Random.Range(0, patrolPoints.Length - 1);
+                        if (stateController != null)
+                        {
+                            stateController.ForceStateChange(AgentState.Interact);
+                        }
+                        yield break;
+                    }
 
-                    // Следующая точка патруля
+                    yield return new WaitForSeconds(waitTimeAtPoints);
                     currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
                 }
                 else
@@ -108,12 +145,85 @@ namespace AdaptivEntityAgent
             }
         }
 
+        private bool IsLastPatrolPoint()
+        {
+            return patrolPoints.Length > 0 && currentPatrolIndex == patrolPoints.Length - 1;
+        }
+
+        //----------------------------------------------------------------------------------
+
+        private void StartInteract()
+        {
+            if (interactPoint == null)
+            {
+                if (stateController != null)
+                {
+                    stateController.ForceStateChange(AgentState.Patrol);
+                }
+                return;
+            }
+
+            StopPatrol();
+            patrolCoroutine = StartCoroutine(InteractRoutine());
+        }
+
+        private void StopInteract()
+        {
+            if (patrolCoroutine != null)
+            {
+                StopCoroutine(patrolCoroutine);
+                patrolCoroutine = null;
+            }
+        }
+
+        private IEnumerator InteractRoutine()
+        {
+            MoveToPosition(interactPoint.position);
+
+            yield return new WaitUntil(() =>
+                !navMeshAgent.pathPending &&
+                navMeshAgent.remainingDistance <= pointReachedThreshold);
+
+            OnStartInteract?.Invoke();
+        }
+
+        private void EndInteraction()
+        {
+            OnEndInteract?.Invoke();
+            StopInteract();
+        }
+
+        private IEnumerator CalculateAndSetPathRoutine(Vector3 targetPosition)
+        {
+            NavMeshPath newPath = new NavMeshPath();
+            NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, newPath);
+
+            yield return null;
+            yield return null;
+
+            if (newPath.status == NavMeshPathStatus.PathComplete ||
+                newPath.status == NavMeshPathStatus.PathPartial)
+            {
+                while (navMeshAgent.pathPending)
+                {
+                    yield return null;
+                }
+
+                navMeshAgent.SetPath(newPath);
+                if (navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+            }
+            else
+            {
+                Debug.LogWarning("PathInvalid - the agent continues the current route");
+            }
+        }
         #region Public API для управления движением
 
         public void MoveToPosition(Vector3 position)
         {
-            navMeshAgent.SetDestination(position);
-            if (navMeshAgent.isStopped == true) navMeshAgent.isStopped = false;
+            if (Vector3.Distance(navMeshAgent.destination, position) <= minDistanceThreshold) return;
+
+            StartCoroutine(CalculateAndSetPathRoutine(position));
         }
 
         public void StopMovement()
@@ -143,8 +253,16 @@ namespace AdaptivEntityAgent
         {
             return navMeshAgent.remainingDistance;
         }
-        #endregion
 
-        
+        public void SetInteractPoint(Transform point)
+        {
+            interactPoint = point;
+        }
+
+        public void SetInteractAfterPatrol(bool enable)
+        {
+            interactAfterPatrol = enable;
+        }
+        #endregion
     }
 }

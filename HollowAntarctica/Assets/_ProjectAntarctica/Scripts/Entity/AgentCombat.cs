@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using SimpleCharController;
 using UnityEngine.AI;
-using System.Security.Claims;
 
 namespace AdaptivEntityAgent
 {
@@ -18,6 +17,7 @@ namespace AdaptivEntityAgent
     {
         #region Variables
         [SerializeField] private bool debug = false;
+        [SerializeField] private bool drawDebugGizmo = false;
 
         [Space(10)]
         [SerializeField] private float combatUpdateFrequency = 0.2f;
@@ -74,6 +74,13 @@ namespace AdaptivEntityAgent
         private void OnDestroy()
         {
             StopCombatState();
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (!drawDebugGizmo) return;
+
+            DrawCombatGizmos();
         }
         #endregion
 
@@ -345,6 +352,7 @@ namespace AdaptivEntityAgent
 
             Vector3 directionToTarget = (targetPosition - transform.position).normalized;
             Vector3 desiredPosition = targetPosition - directionToTarget * optimalDistance;
+            desiredPosition.y = Mathf.Clamp(desiredPosition.y, transform.position.y - 2.1f, transform.position.y + 2.1f);
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(desiredPosition, out hit, 5f, NavMesh.AllAreas))
@@ -366,7 +374,7 @@ namespace AdaptivEntityAgent
                 return hit.position;
             }
 
-            return Vector3.zero;
+            return targetPosition;
         }
 
         private AttackSettings GetAttackSettings(AttackType attackType)
@@ -385,6 +393,11 @@ namespace AdaptivEntityAgent
                                 $"<color=cyan>Target: {target}</color>\n";
 
             Debug.Log(debugMessage);
+        }
+
+        private void DrawCombatGizmos()
+        {
+            Gizmos.DrawSphere(attackPosition, 0.1f);
         }
         #endregion
 
