@@ -63,6 +63,12 @@ namespace AdaptivEntityAgent
         protected override void UpdateFleeState()
         {
             // Логика бегства
+            if (perception != null && perception.HasTarget && movement != null)
+            {
+                Vector3 fleeDirection = (transform.position - perception.CurrentTarget.transform.position).normalized;
+                Vector3 fleePosition = transform.position + fleeDirection * fleeOtimalDistantion;
+                movement.MoveToPosition(fleePosition);
+            }
 
             if (movement.GetRemainingDistance() <= 0.5f)
             {
@@ -90,13 +96,6 @@ namespace AdaptivEntityAgent
                         ChangeState(AgentState.Patrol);
                         break;
                 }
-            }
-
-            if (perception != null && perception.HasTarget && movement != null)
-            {
-                Vector3 fleeDirection = (transform.position - perception.CurrentTarget.transform.position).normalized;
-                Vector3 fleePosition = transform.position + fleeDirection * fleeOtimalDistantion;
-                movement.MoveToPosition(fleePosition);
             }
         }
 

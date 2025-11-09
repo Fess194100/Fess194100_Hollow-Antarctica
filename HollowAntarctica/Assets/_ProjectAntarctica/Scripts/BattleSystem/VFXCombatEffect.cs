@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class VFXCombatEffect
 {
-    public bool DeBug = true;
+    public bool DeBug = false;
 
     public List<GameObject> targets = new List<GameObject>();
     public float durationVFX;

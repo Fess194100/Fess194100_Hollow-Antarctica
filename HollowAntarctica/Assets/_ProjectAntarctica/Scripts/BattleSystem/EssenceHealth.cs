@@ -94,7 +94,7 @@ namespace SimpleCharController
             OnDeath?.Invoke();
 
             // Здесь можно добавить логику смерти (анимация, отключение управления и т.д.)
-            Debug.Log("Player died!");
+            if (DeBug) Debug.Log("Player died!");
         }
 
         // Воскрешение игрока

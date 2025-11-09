@@ -58,6 +58,11 @@ namespace SimpleCharController
             //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
         }
 
+        public void InitializeAreaDamage()
+        {
+            StartCoroutine(LifeTimeCoroutine());
+            ApplyEffectToExistingTargets();
+        }
         private void ApplyEffectToExistingTargets()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, effectRadius); // Нужна маска слоев!!!

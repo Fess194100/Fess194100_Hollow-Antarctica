@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using TMPro;
 
 namespace AdaptivEntityAgent
 {
     public class AgentMovement : MonoBehaviour
     {
         [Header("Movement Settings")]
+        [SerializeField] private bool debugMode;
         [SerializeField] private float patrolSpeed = 2f;
         [SerializeField] private float combatSpeed = 3.5f;
         [SerializeField] private float fleeSpeed = 4f;
@@ -169,6 +169,7 @@ namespace AdaptivEntityAgent
 
         private void StopInteract()
         {
+            Debug.Log("StopInteract");
             if (patrolCoroutine != null)
             {
                 StopCoroutine(patrolCoroutine);
@@ -180,9 +181,9 @@ namespace AdaptivEntityAgent
         {
             MoveToPosition(interactPoint.position);
 
-            yield return new WaitUntil(() =>
-                !navMeshAgent.pathPending &&
-                navMeshAgent.remainingDistance <= pointReachedThreshold);
+            yield return new WaitUntil(() => navMeshAgent.hasPath && navMeshAgent.velocity.magnitude > 0.1f);
+
+            yield return new WaitUntil(() => navMeshAgent.remainingDistance <= pointReachedThreshold && navMeshAgent.velocity.magnitude < 0.1f);
 
             OnStartInteract?.Invoke();
         }
@@ -214,7 +215,7 @@ namespace AdaptivEntityAgent
             }
             else
             {
-                Debug.LogWarning("PathInvalid - the agent continues the current route");
+                if (debugMode) Debug.LogWarning("PathInvalid - the agent continues the current route");
             }
         }
         #region Public API для управления движением
