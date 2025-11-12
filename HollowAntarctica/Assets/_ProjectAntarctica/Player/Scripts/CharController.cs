@@ -7,7 +7,7 @@ namespace SimpleCharController
     public class CharController : MonoBehaviour
     {
         #region Variables
-        
+
         public GameObject modelOrigin;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace SimpleCharController
         [Space(6)]
         [Header("CinemachineEffects")]
         public bool applyNoiseCamera = true;
-        public CinemachineFollowZoom cinemachineFollowZoom;        
+        public CinemachineFollowZoom cinemachineFollowZoom;
         public float smoothTimeFOV = 0.3f;
         public AnimationCurve FOV_AtSpeed;
         public AnimationCurve amplitudeNoiseAtSpeed;
@@ -106,6 +106,9 @@ namespace SimpleCharController
         public bool isFalling = false;
         public bool isClimbing = false;
         public bool isOffClimb = false;
+
+        [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
+        public SimpleCharacterEvents characterEvents;
         #endregion
 
         #region Private Variable
@@ -150,6 +153,10 @@ namespace SimpleCharController
         private CharacterController _controller;
         bool charInTargetPosition = false; // Äëÿ MoveToTarget()
         bool charInTargetRotation = false; // Äëÿ RotateTowardsTarget()
+        #endregion
+
+        #region Public Property
+        public float CurrentStamine => currentStamina;
         #endregion
 
         void Start()
@@ -400,7 +407,7 @@ namespace SimpleCharController
                         _input.sprint = false;
                     }
 
-                    
+                    characterEvents.OnChengedStamine.Invoke(currentStamina);
                 }
                 else StaminaRecovery();
             }
@@ -417,6 +424,7 @@ namespace SimpleCharController
                 currentStamina += speedUpStamina * Time.fixedDeltaTime;
                 currentStamina = Mathf.Min(currentStamina, maxStamina);
                 normalStamina = currentStamina / maxStamina;
+                characterEvents.OnChengedStamine.Invoke(currentStamina);
             }
         }
         private void MoveToTarget(Transform targetObject, byte typeTransition)
@@ -506,7 +514,6 @@ namespace SimpleCharController
             }
             else charInTargetRotation = true;
         }
-
         #endregion
 
         private void CameraRotation()
@@ -681,6 +688,12 @@ namespace SimpleCharController
             canControl = true;
             canJump = true;
             canClimb = true;
+        }
+
+        public void ChangeStamina(float amountStamina)
+        {
+            currentStamina = Mathf.Clamp(currentStamina + amountStamina, 0f, maxStamina);
+            characterEvents.OnChengedStamine.Invoke(currentStamina);
         }
         #endregion
     }

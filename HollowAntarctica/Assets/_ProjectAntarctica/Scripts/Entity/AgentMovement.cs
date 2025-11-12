@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 namespace AdaptivEntityAgent
 {
@@ -30,14 +31,17 @@ namespace AdaptivEntityAgent
         [SerializeField] private bool interactAfterPatrol;
         [SerializeField] private Transform interactPoint;
 
-        [Header("Events")]
-        public UnityEvent OnStartInteract;
-        public UnityEvent OnEndInteract;
+        public AgentEventsMovement eventsMovement;
 
         private NavMeshAgent navMeshAgent;
         private int currentPatrolIndex = 0;
+        private Vector3 targetPositionToMove;
         private Coroutine patrolCoroutine;
         private AgentStateController stateController;
+
+        #region Public Property
+        public Vector3 TargetPositionToMove => targetPositionToMove;
+        #endregion
 
         private void Awake()
         {
@@ -120,6 +124,8 @@ namespace AdaptivEntityAgent
                 {
                     Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
                     navMeshAgent.SetDestination(targetPoint);
+                    targetPositionToMove = targetPoint;
+                    eventsMovement.OnMoveToNextPosition?.Invoke(targetPositionToMove);
 
                     yield return new WaitUntil(() =>
                         !navMeshAgent.pathPending &&
@@ -169,7 +175,6 @@ namespace AdaptivEntityAgent
 
         private void StopInteract()
         {
-            Debug.Log("StopInteract");
             if (patrolCoroutine != null)
             {
                 StopCoroutine(patrolCoroutine);
@@ -179,18 +184,18 @@ namespace AdaptivEntityAgent
 
         private IEnumerator InteractRoutine()
         {
-            MoveToPosition(interactPoint.position);
+            MoveToPosition(interactPoint.position, interactPoint.position);
 
             yield return new WaitUntil(() => navMeshAgent.hasPath && navMeshAgent.velocity.magnitude > 0.1f);
 
             yield return new WaitUntil(() => navMeshAgent.remainingDistance <= pointReachedThreshold && navMeshAgent.velocity.magnitude < 0.1f);
 
-            OnStartInteract?.Invoke();
+            eventsMovement.OnStartInteract?.Invoke();
         }
 
         private void EndInteraction()
         {
-            OnEndInteract?.Invoke();
+            eventsMovement.OnEndInteract?.Invoke();
             StopInteract();
         }
 
@@ -220,9 +225,12 @@ namespace AdaptivEntityAgent
         }
         #region Public API для управления движением
 
-        public void MoveToPosition(Vector3 position)
+        public void MoveToPosition(Vector3 position, Vector3 originPositionTarget)
         {
             if (Vector3.Distance(navMeshAgent.destination, position) <= minDistanceThreshold) return;
+
+            targetPositionToMove = originPositionTarget;
+            eventsMovement.OnMoveToNextPosition?.Invoke(targetPositionToMove);
 
             StartCoroutine(CalculateAndSetPathRoutine(position));
         }

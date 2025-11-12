@@ -173,7 +173,7 @@ namespace AdaptivEntityAgent
             if (attackPosition == Vector3.zero)
             {
                 if (debug) Debug.Log("No valid attack position found, fleeing!");
-                agentMovement.MoveToPosition(target.transform.position);
+                agentMovement.MoveToPosition(target.transform.position, target.transform.position);
                 return;
             }
 
@@ -200,7 +200,7 @@ namespace AdaptivEntityAgent
 
             if (distanceToAttackPosition > distanceToSwitchAttackPosition)
             {
-                agentMovement.MoveToPosition(attackPosition);
+                agentMovement.MoveToPosition(attackPosition, target.transform.position);
                 if (debug) Debug.Log($"Moving to attack position for {currentAttackType} attack, Distance: {distanceToAttackPosition:F1}");
 
                 if (currentAttackType == AttackType.Ranged && perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)

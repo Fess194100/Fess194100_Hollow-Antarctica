@@ -7,8 +7,7 @@ namespace AdaptivEntityAgent
     [Serializable]
     public class AgentEvents
     {
-        public UnityEvent OnAIActivated;
-        public UnityEvent OnAIDeactivated;
+        public UnityEvent<AgentState> OnStateChanged;
     }
 
     [Serializable]
@@ -26,15 +25,13 @@ namespace AdaptivEntityAgent
         public UnityEvent OnAttackMelle;
         public UnityEvent OnAttackRange;
         public UnityEvent OnFleeAgent;
-        //public UnityEvent<GameObject> OnAttackStarted;
-        //public UnityEvent<GameObject> OnAttackCompleted;
-        //public UnityEvent<float> OnDamageTaken;
     }
 
     [Serializable]
-    public class AgentEventsMovement //?????
+    public class AgentEventsMovement
     {
-        public UnityEvent<AgentState> OnStateChanged;
-        public UnityEvent<Vector3> OnDestinationReached;
+        public UnityEvent<Vector3> OnMoveToNextPosition;
+        public UnityEvent OnStartInteract;
+        public UnityEvent OnEndInteract;
     }
 }

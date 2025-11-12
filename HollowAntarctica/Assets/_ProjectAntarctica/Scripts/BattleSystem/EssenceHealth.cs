@@ -27,7 +27,6 @@ namespace SimpleCharController
         private void Start()
         {
             currentHealth = maxHealth;
-            //OnHealthChanged?.Invoke(currentHealth);
         }
 
         public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel, BodyPart bodyPart, GameObject sender, bool isPlayer, bool hitReaction)

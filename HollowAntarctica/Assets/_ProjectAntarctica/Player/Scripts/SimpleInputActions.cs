@@ -15,6 +15,7 @@ namespace SimpleCharController
         public bool jump;
         public bool sprint;
         public bool fire;
+        public bool kick;
 
         [Header("Weapon Input Values")]
         public int selectedWeaponSlot = 1;
@@ -154,6 +155,12 @@ namespace SimpleCharController
             }
         }
 
+        // ============ лерндш дкъ деиярбхи ============
+        public void OnKick(InputValue value)
+        {
+            if (canInput) KickInput(value.isPressed);
+        }
+
         #endregion
 
         #region ============ лерндш напюанрйх ббндю ==========
@@ -202,6 +209,11 @@ namespace SimpleCharController
             }
         }
 
+        public void KickInput(bool newKickState)
+        {
+            kick = newKickState;
+            if (kick) imputBattleEvents.OnKick.Invoke();
+        }
         #endregion
 
         public void ResetValueInput()

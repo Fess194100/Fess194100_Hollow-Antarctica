@@ -7,7 +7,7 @@ namespace SimpleCharController
     [Serializable]
     public class ImputBattleSystemEvents
     {
-        public UnityEvent OnFire, OffFire, OnAltFire, OffAltFire, CancelAltFire, OnWeaponSwitch;
+        public UnityEvent OnFire, OffFire, OnAltFire, OffAltFire, CancelAltFire, OnWeaponSwitch, OnKick;
     }
 
     [Serializable]
@@ -49,5 +49,11 @@ namespace SimpleCharController
         [Space(10)]
         public UnityEvent OnChainLightning;
         public UnityEvent OnChainLightningComplete;
+    }
+
+    [Serializable]
+    public class SimpleCharacterEvents
+    {
+        public UnityEvent<float> OnChengedStamine;
     }
 }

@@ -158,7 +158,7 @@ namespace AdaptivEntityAgent
         public void ForceStateChange(AgentState newState) => ChangeState(newState);
         public void ReturnToPreviousState() => ChangeState(previousState);
 
-        public void ChangeState(AgentState newState)
+        public virtual void ChangeState(AgentState newState)
         {
             if (currentState == newState) return;
 

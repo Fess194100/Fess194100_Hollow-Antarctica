@@ -5,8 +5,22 @@ using UnityEngine.Events;
 
 namespace SimpleCharController
 {
+    [System.Serializable]
+    public class KickController
+    {
+        [SerializeField] private bool canKick =true;
+        [SerializeField] private float costKick;
+
+        [Space(10)]
+        public UnityEvent<float> OnKick;
+
+        public bool CanKick => canKick;
+        public float CostKick => costKick;
+    }
     public class WeaponController : MonoBehaviour
     {
+        #region Variables
+
         [Header("References")]
         [SerializeField] private SimpleInputActions inputActions;
         [SerializeField] private Transform firePoint;
@@ -27,11 +41,19 @@ namespace SimpleCharController
         [SerializeField] private Vector2 offsetAim;
         [SerializeField] private AnimationCurve offsetAimYAtFOV;
 
+        [Space(15)]
+        [SerializeField] private KickController kickController;
+        #endregion
+
+        #region Events
+        [Space(15)]
         [Header("Events")]
         public ProgressChargeWeaponEvents progressChargeWeapon;
         public StateWeaponEvents stateWeapon;
         public UnityEvent<AudioClip, Vector2> playSound;
+        #endregion
 
+        #region Private Variables
         private ProjectileType currentProjectileType = ProjectileType.Green;
         private WeaponState currentWeaponState = WeaponState.Ready;
         private float currentChargeTime = 0f;
@@ -42,9 +64,12 @@ namespace SimpleCharController
         private int _lastChargeLevel = -1;
         private float _chargePercent;
         private float _overheatPercent;
+        private float _currentStamina;
         private Coroutine _autoFireCoroutine;
         private Coroutine _spreadFireCoroutine;
+        #endregion
 
+        #region System Function
         private void Awake()
         {
             ValidateReferences();
@@ -74,6 +99,7 @@ namespace SimpleCharController
                 inputActions.imputBattleEvents.OffAltFire.AddListener(ReleaseChargedShot);
                 inputActions.imputBattleEvents.CancelAltFire.AddListener(CancelCharging);
                 inputActions.imputBattleEvents.OnWeaponSwitch.AddListener(HandleWeaponSwitch);
+                inputActions.imputBattleEvents.OnKick.AddListener(HandleKick);
             }
         }
 
@@ -86,6 +112,7 @@ namespace SimpleCharController
                 inputActions.imputBattleEvents.OffAltFire.RemoveListener(ReleaseChargedShot);
                 inputActions.imputBattleEvents.CancelAltFire.RemoveListener(CancelCharging);
                 inputActions.imputBattleEvents.OnWeaponSwitch.RemoveListener(HandleWeaponSwitch);
+                inputActions.imputBattleEvents.OnWeaponSwitch.RemoveListener(HandleKick);
             }
         }
 
@@ -93,7 +120,9 @@ namespace SimpleCharController
         {
             HandleWeaponState();
         }
+        #endregion
 
+        #region Private Methods
         private void HandleWeaponState()
         {
             switch (currentWeaponState)
@@ -152,26 +181,6 @@ namespace SimpleCharController
             }
         }
 
-        private IEnumerator AutoFireRoutine(WeaponProjectileData data)
-        {
-            while (inputActions.fire && currentWeaponState == WeaponState.Firing)
-            {
-                if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.StandardAmmoCost))
-                {
-                    ReleaseStandardShot();
-                    playSound?.Invoke(data.soundShot_Standart, data.pitchSound_Standart);
-                    yield return new WaitForSeconds(1f / (data.StandardFireRate * autoFireRateMultiplier));
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            _autoFireCoroutine = null;
-            SetWeaponState(WeaponState.Ready);
-        }
-
         private void ReleaseStandardShot()
         {
             WeaponProjectileData data = GetCurrentProjectileData();
@@ -202,11 +211,6 @@ namespace SimpleCharController
                 currentWeaponState = newState;
                 stateWeapon.OnWeaponStateChanged?.Invoke(currentWeaponState);
             }
-        }
-
-        private bool IsValidProjectileType(ProjectileType type)
-        {
-            return type >= ProjectileType.Green && type <= ProjectileType.Orange;
         }
 
         private void StartCharging()
@@ -273,62 +277,6 @@ namespace SimpleCharController
             progressChargeWeapon.OnOverheatProgressChanged?.Invoke(0f);
             stateWeapon.OnChargeFinished?.Invoke();
             SetWeaponState(WeaponState.Ready);
-        }
-
-        private IEnumerator ChargingRoutine()
-        {
-            while (isAltFireHeld && (currentWeaponState == WeaponState.Charging || currentWeaponState == WeaponState.Overheating))
-            {
-                currentChargeTime += Time.deltaTime;
-                _chargePercent = currentChargeTime / timeToMaxCharge;
-
-                progressChargeWeapon.OnChargeProgressChanged?.Invoke(Mathf.Clamp01(_chargePercent));
-                CheckChargeLevelEvents();
-
-                if (_chargePercent >= 1 && overheatTimer <= overheatThresholdTime)
-                {
-                    if (overheatTimer < Time.deltaTime)
-                    {
-                        StartOverheating();
-                    }
-
-                    overheatTimer += Time.deltaTime;
-                    _overheatPercent = Mathf.Clamp01(overheatTimer / overheatThresholdTime);
-                    progressChargeWeapon.OnOverheatProgressChanged?.Invoke(_overheatPercent);
-
-                    if (overheatTimer >= overheatThresholdTime)
-                    {
-                        TriggerOverload();
-                        yield break;
-                    }
-                }
-
-                yield return null;
-            }
-        }
-
-        private IEnumerator OverloadRoutine(float duration)
-        {
-            overloadTimer = duration;
-
-            while (overloadTimer > 0f)
-            {
-                overloadTimer -= Time.deltaTime;
-                yield return null;
-            }
-
-            ResetCharged();
-            stateWeapon.OnOverloadFinished?.Invoke();
-        }
-
-        private IEnumerator ResetFiringState(float fireRate, int chargeLevel)
-        {
-            yield return new WaitForSeconds(1f / fireRate);
-            if (currentWeaponState == WeaponState.Firing)
-            {
-                SetWeaponState(WeaponState.Ready);
-                if (chargeLevel == 0) ResetCharged();
-            }
         }
 
         private void CheckChargeLevelEvents()
@@ -419,25 +367,6 @@ namespace SimpleCharController
             //currentWeaponState = WeaponState.Firing;
             SetWeaponState(WeaponState.Firing);
             StartCoroutine(ResetFiringState(data.Lvl0FireRate, 0));
-        }
-
-        private IEnumerator AutoChargedFireRoutine(WeaponProjectileData data)
-        {
-            while (isAltFireHeld && currentWeaponState == WeaponState.Firing)
-            {
-                if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.ChargedLvl0AmmoCost))
-                {
-                    ReleaseChargedLevel0Single(data);
-                    yield return new WaitForSeconds(1f / (data.Lvl0FireRate * autoFireRateMultiplier));
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            _autoFireCoroutine = null;
-            ResetCharged();
         }
 
         private void ReleaseChargedLevel0Single(WeaponProjectileData data)
@@ -534,7 +463,153 @@ namespace SimpleCharController
             }
         }
 
+        private void CreateBaseCoordinateSystem(Vector3 direction, out Vector3 right, out Vector3 up)
+        {
+            Vector3 forward = direction.normalized;
+
+            if (Mathf.Abs(Vector3.Dot(forward, Vector3.up)) > 0.999f)
+            {
+                right = Vector3.right;
+                up = Vector3.Cross(right, forward).normalized;
+            }
+            else
+            {
+                right = Vector3.Cross(forward, Vector3.up).normalized;
+                up = Vector3.Cross(right, forward).normalized;
+            }
+        }
+
         //-----------------------------------------------------------------------------------
+
+        private void SpawnProjectile(GameObject projectilePrefab, float speed, float damage, int chargeLevel, Vector3 directionOffset, TypeMovement typeMovement)
+        {
+            Vector3 targetPoint = GetTargetPoint();
+            Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
+
+
+
+            if (directionOffset != Vector3.zero)
+            {
+                shootDirection = Quaternion.LookRotation(shootDirection) * directionOffset;
+            }
+
+            Quaternion projectileRotation = Quaternion.LookRotation(shootDirection);
+
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, projectileRotation);
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+            if (projectileScript != null)
+            {
+                projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, chargeLevel, damage, typeMovement, true, hitReaction);
+            }
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        private void HandleKick()
+        {
+            if (kickController.CanKick && _currentStamina > kickController.CostKick)
+            {
+                kickController.OnKick?.Invoke(kickController.CostKick);
+            }
+        }
+        #endregion
+
+        #region IEnumenators
+        private IEnumerator AutoFireRoutine(WeaponProjectileData data)
+        {
+            while (inputActions.fire && currentWeaponState == WeaponState.Firing)
+            {
+                if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.StandardAmmoCost))
+                {
+                    ReleaseStandardShot();
+                    playSound?.Invoke(data.soundShot_Standart, data.pitchSound_Standart);
+                    yield return new WaitForSeconds(1f / (data.StandardFireRate * autoFireRateMultiplier));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            _autoFireCoroutine = null;
+            SetWeaponState(WeaponState.Ready);
+        }
+
+        private IEnumerator ChargingRoutine()
+        {
+            while (isAltFireHeld && (currentWeaponState == WeaponState.Charging || currentWeaponState == WeaponState.Overheating))
+            {
+                currentChargeTime += Time.deltaTime;
+                _chargePercent = currentChargeTime / timeToMaxCharge;
+
+                progressChargeWeapon.OnChargeProgressChanged?.Invoke(Mathf.Clamp01(_chargePercent));
+                CheckChargeLevelEvents();
+
+                if (_chargePercent >= 1 && overheatTimer <= overheatThresholdTime)
+                {
+                    if (overheatTimer < Time.deltaTime)
+                    {
+                        StartOverheating();
+                    }
+
+                    overheatTimer += Time.deltaTime;
+                    _overheatPercent = Mathf.Clamp01(overheatTimer / overheatThresholdTime);
+                    progressChargeWeapon.OnOverheatProgressChanged?.Invoke(_overheatPercent);
+
+                    if (overheatTimer >= overheatThresholdTime)
+                    {
+                        TriggerOverload();
+                        yield break;
+                    }
+                }
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator OverloadRoutine(float duration)
+        {
+            overloadTimer = duration;
+
+            while (overloadTimer > 0f)
+            {
+                overloadTimer -= Time.deltaTime;
+                yield return null;
+            }
+
+            ResetCharged();
+            stateWeapon.OnOverloadFinished?.Invoke();
+        }
+
+        private IEnumerator ResetFiringState(float fireRate, int chargeLevel)
+        {
+            yield return new WaitForSeconds(1f / fireRate);
+            if (currentWeaponState == WeaponState.Firing)
+            {
+                SetWeaponState(WeaponState.Ready);
+                if (chargeLevel == 0) ResetCharged();
+            }
+        }
+
+        private IEnumerator AutoChargedFireRoutine(WeaponProjectileData data)
+        {
+            while (isAltFireHeld && currentWeaponState == WeaponState.Firing)
+            {
+                if (ammoInventory.HasEnoughAmmo(currentProjectileType, data.ChargedLvl0AmmoCost))
+                {
+                    ReleaseChargedLevel0Single(data);
+                    yield return new WaitForSeconds(1f / (data.Lvl0FireRate * autoFireRateMultiplier));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            _autoFireCoroutine = null;
+            ResetCharged();
+        }
 
         private IEnumerator SpreadFireRoutine(WeaponProjectileData data, SpreadWeaponSettings spreadSettings, bool isCharged)
         {
@@ -586,8 +661,13 @@ namespace SimpleCharController
                 SetWeaponState(WeaponState.Ready);
             }
         }
+        #endregion
 
-        //-----------------------------------------------------------------------------------
+        #region Determinate Function
+        private bool IsValidProjectileType(ProjectileType type)
+        {
+            return type >= ProjectileType.Green && type <= ProjectileType.Orange;
+        }
 
         private List<Vector2> GenerateSpreadAngles(float maxSpreadAngle, int count)
         {
@@ -630,47 +710,6 @@ namespace SimpleCharController
             }
 
             return spreadOffset.normalized;
-        }        
-
-        private void CreateBaseCoordinateSystem(Vector3 direction, out Vector3 right, out Vector3 up)
-        {
-            Vector3 forward = direction.normalized;
-
-            if (Mathf.Abs(Vector3.Dot(forward, Vector3.up)) > 0.999f)
-            {
-                right = Vector3.right;
-                up = Vector3.Cross(right, forward).normalized;
-            }
-            else
-            {
-                right = Vector3.Cross(forward, Vector3.up).normalized;
-                up = Vector3.Cross(right, forward).normalized;
-            }
-        }
-
-        //-----------------------------------------------------------------------------------
-
-        private void SpawnProjectile(GameObject projectilePrefab, float speed, float damage, int chargeLevel, Vector3 directionOffset, TypeMovement typeMovement)
-        {
-            Vector3 targetPoint = GetTargetPoint();
-            Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
-
-            
-
-            if (directionOffset != Vector3.zero)
-            {
-                shootDirection = Quaternion.LookRotation(shootDirection) * directionOffset;
-            }
-
-            Quaternion projectileRotation = Quaternion.LookRotation(shootDirection);
-
-            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, projectileRotation);
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
-
-            if (projectileScript != null)
-            {
-                projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, chargeLevel, damage, typeMovement, true, hitReaction);
-            }
         }
 
         private Vector3 GetTargetPoint()
@@ -695,7 +734,7 @@ namespace SimpleCharController
         {
             Vector2 screenPoint;
             if (crosshairRectTransform != null) screenPoint = RectTransformUtility.WorldToScreenPoint(_mainCamera, crosshairRectTransform.position) + offsetAim;
-            else screenPoint = new Vector2 (Screen.width * 0.5f, Screen.height * 0.5f) + offsetAim;
+            else screenPoint = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f) + offsetAim;
 
             screenPoint.y += offsetAimYAtFOV.Evaluate(_mainCamera.fieldOfView);
             return new Vector3(screenPoint.x, screenPoint.y, 0f);
@@ -710,17 +749,20 @@ namespace SimpleCharController
             }
             return null;
         }
+        #endregion
 
-        // Публичные методы для внешнего доступа
-        
+        #region API
+
+        public void UpdeteStamina(float stamina)
+        {
+            _currentStamina = stamina;
+        }
+
         public float TimeToMaxCharge()
         {
             return timeToMaxCharge;
         }
+        #endregion
 
-        public float TimeToOverload()
-        {
-            return overheatThresholdTime;
-        }
     }
 }
