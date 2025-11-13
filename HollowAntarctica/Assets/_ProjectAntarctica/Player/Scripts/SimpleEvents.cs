@@ -54,6 +54,6 @@ namespace SimpleCharController
     [Serializable]
     public class SimpleCharacterEvents
     {
-        public UnityEvent<float> OnChengedStamine;
+        public UnityEvent<float> OnChengedStamina;
     }
 }

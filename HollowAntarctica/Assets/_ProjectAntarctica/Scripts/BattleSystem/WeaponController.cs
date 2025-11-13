@@ -42,7 +42,7 @@ namespace SimpleCharController
         [SerializeField] private AnimationCurve offsetAimYAtFOV;
 
         [Space(15)]
-        [SerializeField] private KickController kickController;
+        [SerializeField] public KickController kickController;
         #endregion
 
         #region Events
@@ -64,7 +64,7 @@ namespace SimpleCharController
         private int _lastChargeLevel = -1;
         private float _chargePercent;
         private float _overheatPercent;
-        private float _currentStamina;
+        private float _currentStamina = 100f;
         private Coroutine _autoFireCoroutine;
         private Coroutine _spreadFireCoroutine;
         #endregion

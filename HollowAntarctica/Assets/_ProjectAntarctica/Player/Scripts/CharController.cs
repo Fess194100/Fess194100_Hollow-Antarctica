@@ -395,11 +395,7 @@ namespace SimpleCharController
             {
                 if (_input.move.y != -1)
                 {
-                    // Тратим стамину при спринте
-                    currentStamina -= speedDownStamina * Time.deltaTime;
-                    currentStamina = Mathf.Max(currentStamina, 0f);
-                    normalStamina = currentStamina / maxStamina;
-                    _timeSinceLastSprint = 0f;
+                    ChangeStamina(-speedDownStamina * Time.fixedDeltaTime);
 
                     // Если стамина закончилась, отключаем спринт
                     if (currentStamina <= 0f)
@@ -407,7 +403,7 @@ namespace SimpleCharController
                         _input.sprint = false;
                     }
 
-                    characterEvents.OnChengedStamine.Invoke(currentStamina);
+                    //characterEvents.OnChengedStamine.Invoke(currentStamina);
                 }
                 else StaminaRecovery();
             }
@@ -421,10 +417,7 @@ namespace SimpleCharController
             // Восстанавливаем стамину после задержки
             if (_timeSinceLastSprint >= staminaRegenDelay && currentStamina < maxStamina)
             {
-                currentStamina += speedUpStamina * Time.fixedDeltaTime;
-                currentStamina = Mathf.Min(currentStamina, maxStamina);
-                normalStamina = currentStamina / maxStamina;
-                characterEvents.OnChengedStamine.Invoke(currentStamina);
+                ChangeStamina(speedUpStamina * Time.fixedDeltaTime);
             }
         }
         private void MoveToTarget(Transform targetObject, byte typeTransition)
@@ -693,7 +686,9 @@ namespace SimpleCharController
         public void ChangeStamina(float amountStamina)
         {
             currentStamina = Mathf.Clamp(currentStamina + amountStamina, 0f, maxStamina);
-            characterEvents.OnChengedStamine.Invoke(currentStamina);
+            normalStamina = currentStamina / maxStamina;
+            if (amountStamina < 0) _timeSinceLastSprint = 0f;
+            characterEvents.OnChengedStamina.Invoke(currentStamina);
         }
         #endregion
     }
