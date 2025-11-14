@@ -35,7 +35,7 @@ AnimatorStateMachine:
     m_Position: {x: 550, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3177635631223912587}
-    m_Position: {x: 566.0309, y: 109.59517, z: 0}
+    m_Position: {x: 570, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8009364008197683942}
     m_Position: {x: 450, y: 310, z: 0}
@@ -432,8 +432,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: b9f21849a36d9b240b10ebf35899e7f1,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: 46a5d24ab0f3cc84abc8b4ed0e06ab89, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -441,8 +440,7 @@ BlendTree:
     m_DirectBlendParameter: MoveSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: eb8b267ae90bf2043ba1e4b1a7cb42c1,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: fff084f292bd65942a027bca2be511b9, type: 2}
     m_Threshold: 0.5
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -450,8 +448,7 @@ BlendTree:
     m_DirectBlendParameter: MoveSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 95c59ec110f5e174ab259e00a5b5c545,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: c16a2accd6cb2864684cce2854261503, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -708,8 +705,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.29989862
-  m_TransitionOffset: 0.16943558
+  m_TransitionDuration: 0.15698111
+  m_TransitionOffset: 0.23386504
   m_ExitTime: 1.0024215
   m_HasExitTime: 0
   m_HasFixedDuration: 1
@@ -1337,7 +1334,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
-  m_Speed: 1.5
+  m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6382138608697169516}
@@ -1638,7 +1635,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AirKick
-  m_Speed: 1
+  m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2056561408611583236}

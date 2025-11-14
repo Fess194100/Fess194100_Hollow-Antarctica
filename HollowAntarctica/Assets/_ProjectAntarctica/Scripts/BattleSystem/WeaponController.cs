@@ -8,14 +8,19 @@ namespace SimpleCharController
     [System.Serializable]
     public class KickController
     {
-        [SerializeField] private bool canKick =true;
+        [SerializeField] private bool canKick = true;
+        [SerializeField] private float damageKick = 5f;
         [SerializeField] private float costKick;
+        [SerializeField] private float timeKick = 1.12f;
 
         [Space(10)]
-        public UnityEvent<float> OnKick;
+        [Tooltip("cost, damage, time")]
+        public UnityEvent<float, float, float> OnKick;
 
         public bool CanKick => canKick;
         public float CostKick => costKick;
+        public float DamageKick => damageKick;
+        public float TimeKick => timeKick;
     }
     public class WeaponController : MonoBehaviour
     {
@@ -508,9 +513,9 @@ namespace SimpleCharController
 
         private void HandleKick()
         {
-            if (kickController.CanKick && _currentStamina > kickController.CostKick)
+            if (kickController.CanKick && _currentStamina > Mathf.Abs(kickController.CostKick))
             {
-                kickController.OnKick?.Invoke(kickController.CostKick);
+                kickController.OnKick?.Invoke(kickController.CostKick, kickController.DamageKick, kickController.TimeKick);
             }
         }
         #endregion
