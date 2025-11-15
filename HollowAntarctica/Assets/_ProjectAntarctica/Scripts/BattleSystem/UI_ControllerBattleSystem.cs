@@ -83,6 +83,10 @@ namespace SimpleCharController
                 case WeaponState.Overloaded:
                     uiColorBattles[4].SwitchColorSlider();
                     break;
+                case WeaponState.Blocked:
+                    uiColorBattles[5].SwitchColorSlider();
+                    uiColorBattles[6].SwitchColorSlider();
+                    break;
             }
         }
     }

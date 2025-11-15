@@ -82,6 +82,11 @@ namespace SimpleCharController
             _mainCamera = Camera.main;
         }
 
+        private void Start()
+        {
+            StartCoroutine(StartStateWeapon());
+        }
+
         private void OnDestroy()
         {
             UnsubscribeFromEvents();
@@ -199,13 +204,28 @@ namespace SimpleCharController
 
         private void HandleWeaponSwitch()
         {
-            ProjectileType newType = (ProjectileType)(inputActions.selectedWeaponSlot - 1);
-
-            if (newType != currentProjectileType && IsValidProjectileType(newType))
+            if (inputActions.selectedWeaponSlot == 1)
             {
-                currentProjectileType = newType;
-                stateWeapon.OnWeaponTypeChanged?.Invoke(currentProjectileType);
-                CancelCharging();
+                BlockingWeapons();
+                return;
+            }
+            else
+            {
+                if (currentWeaponState == WeaponState.Blocked)
+                {
+                    currentProjectileType = (ProjectileType)inputActions.selectedWeaponSlot - 2;
+                    UnlockingWeapons();
+                    return;
+                }
+
+                ProjectileType newType = (ProjectileType)(inputActions.selectedWeaponSlot - 2);
+
+                if (newType != currentProjectileType)
+                {
+                    currentProjectileType = newType;
+                    stateWeapon.OnWeaponTypeChanged?.Invoke(currentProjectileType);
+                    CancelCharging();
+                }
             }
         }
 
@@ -278,10 +298,14 @@ namespace SimpleCharController
         {
             currentChargeTime = overheatTimer = _chargePercent = _overheatPercent = 0f;
             _lastChargeLevel = -1;
-            progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
-            progressChargeWeapon.OnOverheatProgressChanged?.Invoke(0f);
             stateWeapon.OnChargeFinished?.Invoke();
-            SetWeaponState(WeaponState.Ready);
+
+            if (currentWeaponState != WeaponState.Blocked)
+            {
+                progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
+                progressChargeWeapon.OnOverheatProgressChanged?.Invoke(0f);
+                SetWeaponState(WeaponState.Ready);
+            }
         }
 
         private void CheckChargeLevelEvents()
@@ -521,6 +545,13 @@ namespace SimpleCharController
         #endregion
 
         #region IEnumenators
+        private IEnumerator StartStateWeapon()
+        {
+            yield return new WaitForSeconds(0.4f);
+
+            HandleWeaponSwitch();
+        }
+
         private IEnumerator AutoFireRoutine(WeaponProjectileData data)
         {
             while (inputActions.fire && currentWeaponState == WeaponState.Firing)
@@ -669,10 +700,6 @@ namespace SimpleCharController
         #endregion
 
         #region Determinate Function
-        private bool IsValidProjectileType(ProjectileType type)
-        {
-            return type >= ProjectileType.Green && type <= ProjectileType.Orange;
-        }
 
         private List<Vector2> GenerateSpreadAngles(float maxSpreadAngle, int count)
         {
@@ -766,6 +793,22 @@ namespace SimpleCharController
         public float TimeToMaxCharge()
         {
             return timeToMaxCharge;
+        }
+
+        public void BlockingWeapons()
+        {
+            SetWeaponState(WeaponState.Blocked);
+            CancelCharging();
+            progressChargeWeapon.OnChargeProgressChanged?.Invoke(1f);
+            progressChargeWeapon.OnOverheatProgressChanged?.Invoke(1f);
+            
+        }
+
+        public void UnlockingWeapons()
+        {
+            SetWeaponState(WeaponState.Ready);
+            stateWeapon.OnWeaponTypeChanged?.Invoke(currentProjectileType);
+            ResetCharged();
         }
         #endregion
 

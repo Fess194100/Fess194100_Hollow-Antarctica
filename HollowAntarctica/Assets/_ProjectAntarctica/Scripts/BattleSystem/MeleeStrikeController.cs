@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using SimpleCharController;
+using UnityEditor.Playables;
 
 public class MeleeStrikeController : MonoBehaviour
 {
@@ -45,16 +46,26 @@ public class MeleeStrikeController : MonoBehaviour
         animator.SetTrigger("Kick");
         float timer = 0f;
 
-        yield return new WaitUntil(() =>
+        while (timer < duration)
         {
+            yield return new WaitForFixedUpdate();
             timer += Time.fixedDeltaTime;
-            return timer >= duration;
-        });
+        }
 
         isKick = false;
         charController.canControl = previsionCanControl;
     }
 
+    private IEnumerator ReleaseAirKick(float cost)
+    {
+        isKick = true;
+        charController.ChangeStamina(-cost*2);
+        animator.SetTrigger("Kick");
+        StartMelleKick();
+        yield return new WaitUntil(() => charController.isGrounded);
+        EndMelleKick();
+        isKick = false;
+    }
     private void MelleKick(bool enable)
     {
         if (meleeHitKick == null) return;
@@ -75,7 +86,8 @@ public class MeleeStrikeController : MonoBehaviour
             if (!isKick && !charController.isClimbing && charController.canControl && charController.CurrentStamine >= cost)
             {
                 currentDamage = damage;
-                StartCoroutine(ReleaseKick(cost, duration));
+                if (charController.isGrounded) StartCoroutine(ReleaseKick(cost, duration));
+                else StartCoroutine(ReleaseAirKick(cost));
             }
         }
     }
