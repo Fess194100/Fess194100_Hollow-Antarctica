@@ -22,6 +22,14 @@ namespace SimpleCharController
         public float DamageKick => damageKick;
         public float TimeKick => timeKick;
     }
+
+    [System.Serializable]
+    public class PunchController
+    {
+        [Tooltip("cost, damage, time, chargeLevel")]
+        public UnityEvent<float, float, float, int> OnPunch;
+    }
+
     public class WeaponController : MonoBehaviour
     {
         #region Variables
@@ -48,6 +56,9 @@ namespace SimpleCharController
 
         [Space(15)]
         [SerializeField] public KickController kickController;
+
+        [Space(15)]
+        [SerializeField] public PunchController punchController;
         #endregion
 
         #region Events
@@ -72,6 +83,7 @@ namespace SimpleCharController
         private float _currentStamina = 100f;
         private Coroutine _autoFireCoroutine;
         private Coroutine _spreadFireCoroutine;
+        private Coroutine _punchChargingCoroutine;
         #endregion
 
         #region System Function
@@ -152,6 +164,12 @@ namespace SimpleCharController
 
         private void HandleFire()
         {
+            if (currentWeaponState == WeaponState.Blocked)
+            {
+                PerformPunch(-1);
+                return;
+            }
+
             if (currentWeaponState != WeaponState.Ready) return;
 
             WeaponProjectileData data = GetCurrentProjectileData();
@@ -206,6 +224,7 @@ namespace SimpleCharController
         {
             if (inputActions.selectedWeaponSlot == 1)
             {
+                CancelCharging();
                 BlockingWeapons();
                 return;
             }
@@ -213,12 +232,13 @@ namespace SimpleCharController
             {
                 if (currentWeaponState == WeaponState.Blocked)
                 {
-                    currentProjectileType = (ProjectileType)inputActions.selectedWeaponSlot - 2;
+                    currentProjectileType = projectileData[inputActions.selectedWeaponSlot - 1].Type;
+                    CancelCharging();
                     UnlockingWeapons();
                     return;
                 }
 
-                ProjectileType newType = (ProjectileType)(inputActions.selectedWeaponSlot - 2);
+                ProjectileType newType = projectileData[inputActions.selectedWeaponSlot - 1].Type;
 
                 if (newType != currentProjectileType)
                 {
@@ -240,6 +260,12 @@ namespace SimpleCharController
 
         private void StartCharging()
         {
+            if (currentWeaponState == WeaponState.Blocked)
+            {
+                StartPunchCharging();
+                return;
+            }
+
             if (currentWeaponState != WeaponState.Ready) return;
 
             isAltFireHeld = true;
@@ -287,6 +313,12 @@ namespace SimpleCharController
 
         private void CancelCharging()
         {
+            if (currentWeaponState == WeaponState.Blocked)
+            {
+                CancelPunchCharging();
+                return;
+            }
+
             if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating) return;
 
             isAltFireHeld = false;
@@ -344,6 +376,12 @@ namespace SimpleCharController
 
         private void ReleaseChargedShot()
         {
+            if (currentWeaponState == WeaponState.Blocked)
+            {
+                ReleasePunchShot();
+                return;
+            }
+
             if (currentWeaponState != WeaponState.Charging && currentWeaponState != WeaponState.Overheating) return;
 
             isAltFireHeld = false;
@@ -542,6 +580,84 @@ namespace SimpleCharController
                 kickController.OnKick?.Invoke(kickController.CostKick, kickController.DamageKick, kickController.TimeKick);
             }
         }
+
+        #region Punch Logic
+        private void StartPunchCharging()
+        {
+            if (_punchChargingCoroutine != null) return;
+
+            isAltFireHeld = true;
+            currentChargeTime = 0f;
+            _punchChargingCoroutine = StartCoroutine(PunchChargingRoutine());
+        }
+
+        private void ReleasePunchShot()
+        {
+            if (_punchChargingCoroutine == null) return;
+
+            isAltFireHeld = false;
+            StopCoroutine(_punchChargingCoroutine);
+            _punchChargingCoroutine = null;
+
+            int chargeLevel = CalculateChargeLevel();
+            PerformPunch(chargeLevel);
+        }
+
+        private void CancelPunchCharging()
+        {
+            if (_punchChargingCoroutine == null) return;
+
+            isAltFireHeld = false;
+            StopCoroutine(_punchChargingCoroutine);
+            _punchChargingCoroutine = null;
+            currentChargeTime = 0f;
+            progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
+        }
+
+        private void PerformPunch(int chargeLevel)
+        {
+            WeaponProjectileData punchData = GetPunchData();
+            if (punchData == null) return;
+
+            float cost = 0f;
+            float damage = 0f;
+            float time = 0f;
+
+            switch (chargeLevel)
+            {
+                case -1: // Стандартный удар
+                    cost = punchData.StandardAmmoCost;
+                    damage = punchData.baseDamageStandard;
+                    time = 1f / punchData.StandardFireRate;
+                    break;
+                case 0:
+                    cost = punchData.ChargedLvl0AmmoCost;
+                    damage = punchData.baseDamageLvl0;
+                    time = 1f / punchData.Lvl0FireRate;
+                    break;
+                case 1:
+                    cost = punchData.ChargedLvl1AmmoCost;
+                    damage = punchData.baseDamageLvl1;
+                    time = punchData.ChargedLvl1ProjectileSpeed;
+                    break;
+                case 2:
+                    cost = punchData.ChargedLvl2AmmoCost;
+                    damage = punchData.baseDamageLvl2;
+                    time = punchData.ChargedLvl2ProjectileSpeed;
+                    break;
+                case 3:
+                    cost = punchData.ChargedLvl3AmmoCost;
+                    damage = punchData.baseDamageLvl3;
+                    time = punchData.ChargedLvl3ProjectileSpeed;
+                    break;
+            }
+
+            punchController.OnPunch?.Invoke(cost, damage, time, chargeLevel);
+            currentChargeTime = 0f;
+            progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
+        }
+        #endregion
+
         #endregion
 
         #region IEnumenators
@@ -697,6 +813,20 @@ namespace SimpleCharController
                 SetWeaponState(WeaponState.Ready);
             }
         }
+
+        private IEnumerator PunchChargingRoutine()
+        {
+            while (isAltFireHeld)
+            {
+                currentChargeTime += Time.deltaTime;
+                _chargePercent = Mathf.Clamp01(currentChargeTime / timeToMaxCharge);
+
+                progressChargeWeapon.OnChargeProgressChanged?.Invoke(_chargePercent);
+                CheckChargeLevelEvents();
+
+                yield return null;
+            }
+        }
         #endregion
 
         #region Determinate Function
@@ -774,10 +904,21 @@ namespace SimpleCharController
 
         private WeaponProjectileData GetCurrentProjectileData()
         {
-            int index = (int)currentProjectileType;
+            int index = inputActions.selectedWeaponSlot - 1;
             if (index >= 0 && index < projectileData.Length)
             {
                 return projectileData[index];
+            }
+            return null;
+        }
+
+        private WeaponProjectileData GetPunchData()
+        {
+            // Используем projectileData[0] для параметров ближнего удара
+            int punchIndex = 0;
+            if (punchIndex >= 0 && punchIndex < projectileData.Length)
+            {
+                return projectileData[punchIndex];
             }
             return null;
         }

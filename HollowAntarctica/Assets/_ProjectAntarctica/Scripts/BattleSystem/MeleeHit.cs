@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace SimpleCharController
 {
@@ -15,6 +16,9 @@ namespace SimpleCharController
 
         [Space(10)]
         public LayerMask excludeLayersForPlayer;
+
+        [Space(10)]
+        public UnityEvent OnMeleeHit;
         #endregion
 
         #region Private Variables
@@ -90,7 +94,7 @@ namespace SimpleCharController
             _projectileType = projectileType;
             _isAttackActive = true;
             SetWeaponCollider(true);
-
+            OnMeleeHit.Invoke();
             if (debugMode) Debug.Log($"Melee attack started: {damage} damage, charge level {chargeLevel}");
         }
 

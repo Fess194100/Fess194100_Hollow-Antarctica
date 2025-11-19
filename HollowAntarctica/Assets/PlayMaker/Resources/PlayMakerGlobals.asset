@@ -394,13 +394,141 @@ MonoBehaviour:
       networkSync: 0
       typeName: UnityEngine.AudioClip
       value: {fileID: 8300000, guid: 208ed76cca71c9946b7c7d372ac5b0ec, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Hit_06
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 139278e4416e0b8449c3e092f4d897eb, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Hit_05
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 9210b04e7e5676f478ba05923d47314f, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Hit_01
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 74f94272790df914b856f216ac7d9558, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Hit_02
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: a1b7066f213029948be507833abf658a, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Hit_03
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: f9406565d3a225c4192b73fd76e73600, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Hit_04
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 849978531e89fd047b96b21d70d96afa, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Punch_03
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: b1732e95afafa9a47b36bbe6cec218d1, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Punch_02
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 5a6c7aa32332212448672c8d22cee7f4, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Battle/Punch_01
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 43b1b8bdfab8e5d468958574f2447c55, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Step_04
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 3271d271477f3ef40a7f590a99604f2f, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Step_03
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 2b4e5a2ba546f4f49b2a8ba3eda5a995, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Step_02
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 77f0fde522a90fd45b44d2e86e12ecfc, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Step_01
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 1b913595dd8d6a14fb7844b63dc12a33, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Growl_03
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: fbbcdd058b1ce2d429694942226d0cb5, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Growl_02
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 7e3e74a7614f91c43a8d7fedb7764926, type: 3}
+    - useVariable: 1
+      name: Audio/Sound/Dino/Growl_01
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      typeName: UnityEngine.AudioClip
+      value: {fileID: 8300000, guid: 23e53bf36f1c1f94d83bc5cd243a1b6c, type: 3}
     materialVariables: []
     textureVariables: []
-    arrayVariables: []
+    arrayVariables:
+    - useVariable: 1
+      name: Audio/Sound/Battle/Punch_Array
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      type: 12
+      objectTypeName: UnityEngine.AudioClip
+      floatValues: []
+      intValues: 
+      boolValues: 
+      stringValues: []
+      vector4Values: []
+      objectReferences:
+      - {fileID: 8300000, guid: 43b1b8bdfab8e5d468958574f2447c55, type: 3}
+      - {fileID: 8300000, guid: 5a6c7aa32332212448672c8d22cee7f4, type: 3}
+      - {fileID: 8300000, guid: b1732e95afafa9a47b36bbe6cec218d1, type: 3}
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   events:
   - IsInViewCam
   - OffInView

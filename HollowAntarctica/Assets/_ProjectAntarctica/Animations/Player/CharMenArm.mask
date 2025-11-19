@@ -6,17 +6,15 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DinoBodyArm
-  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Name: CharMenArm
+  m_Mask: 00000000000000000000000000000000000000000100000001000000010000000100000000000000000000000100000001000000
   m_Elements:
   - m_Path: 
-    m_Weight: 1
-  - m_Path: Dino_01
     m_Weight: 1
   - m_Path: mixamorig:Hips
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot
@@ -26,7 +24,7 @@ AvatarMask:
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot/mixamorig:LeftToeBase/mixamorig:LeftToe_End
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg/mixamorig:RightFoot
@@ -36,7 +34,7 @@ AvatarMask:
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg/mixamorig:RightFoot/mixamorig:RightToeBase/mixamorig:RightToe_End
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:Spine
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2
@@ -62,4 +60,6 @@ AvatarMask:
   - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand
+    m_Weight: 1
+  - m_Path: tripo_node_74c8ef13-4d07-4e47-a314-b15a10095424
     m_Weight: 1

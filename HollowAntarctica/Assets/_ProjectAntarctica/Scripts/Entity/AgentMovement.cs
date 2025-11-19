@@ -216,7 +216,7 @@ namespace AdaptivEntityAgent
                 }
 
                 navMeshAgent.SetPath(newPath);
-                if (navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+                if (navMeshAgent.isStopped && stateController.GetCurrentState() != AgentState.Dead) navMeshAgent.isStopped = false;
             }
             else
             {
