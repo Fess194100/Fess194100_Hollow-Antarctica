@@ -8,11 +8,12 @@ public class MeleeStrikeController : MonoBehaviour
     #region Variables
     [Header("References")]
     [SerializeField] private CharController charController;
-    //[SerializeField] private WeaponController weaponController;
-    [SerializeField] private MeleeHit meleeHitKick;
-    [SerializeField] private List <MeleeHit> meleeHitPunch;
     [SerializeField] private Animator animator;
 
+    [Space(10)]
+    [SerializeField] private MeleeHit meleeHitKick;
+    [SerializeField] private List <MeleeHit> meleeHitPunch;
+    
     [Space(10)]
     [Header("Settings")]
     [SerializeField] private AnimationCurve directionKickAtAngleXCam;

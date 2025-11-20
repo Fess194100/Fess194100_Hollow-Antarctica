@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6993a0f48654d4390c72cb7530dd17, type: 3}
+  m_Name: Data_Projectile_Dino_Melee
+  m_EditorClassIdentifier: 
+  Type: 0
+  StandardProjectilePrefab: {fileID: 0}
+  soundShot_Standart: {fileID: 0}
+  StandardAmmoCost: 8
+  StandardProjectileSpeed: 0
+  StandardFireRate: 3
+  baseDamageStandard: 10
+  pitchSound_Standart: {x: 1, y: 1}
+  typeShootingStandard: 0
+  standardSpreadSettings:
+    projectilesCount: 5
+    spreadAngle: 15
+    delayBetweenShots: 0.1
+  ChargedLvl0ProjectilePrefab: {fileID: 0}
+  soundShot_0: {fileID: 0}
+  ChargedLvl0AmmoCost: 14
+  ChargedLvl0ProjectileSpeed: 0
+  Lvl0FireRate: 1.5
+  baseDamageLvl0: 3
+  pitchSound_0: {x: 1, y: 1}
+  typeShootingLvl0: 0
+  lvl0SpreadSettings:
+    projectilesCount: 5
+    spreadAngle: 15
+    delayBetweenShots: 0.1
+  ChargedLvl1ProjectilePrefab: {fileID: 0}
+  soundShot_1: {fileID: 0}
+  typeMovementLvl1: 0
+  ChargedLvl1AmmoCost: 12
+  ChargedLvl1ProjectileSpeed: 1.12
+  baseDamageLvl1: 8
+  pitchSound_1: {x: 1, y: 1}
+  ChargedLvl2ProjectilePrefab: {fileID: 0}
+  soundShot_2: {fileID: 0}
+  typeMovementLvl2: 1
+  ChargedLvl2AmmoCost: 18
+  ChargedLvl2ProjectileSpeed: 1.12
+  baseDamageLvl2: 10
+  pitchSound_2: {x: 1, y: 1}
+  ChargedLvl3ProjectilePrefab: {fileID: 0}
+  soundShot_3: {fileID: 0}
+  typeMovementLvl3: 1
+  ChargedLvl3AmmoCost: 25
+  ChargedLvl3ProjectileSpeed: 1.12
+  baseDamageLvl3: 15
+  pitchSound_3: {x: 1, y: 1}
+  OverloadDamageToPlayer: 0
+  OverloadDuration: 0.5

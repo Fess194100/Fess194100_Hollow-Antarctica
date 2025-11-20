@@ -21,13 +21,22 @@ namespace SimpleCharController
         public float CostKick => costKick;
         public float DamageKick => damageKick;
         public float TimeKick => timeKick;
+
+        public void SetCanKick(bool canUseKick) => canKick = canUseKick;
     }
 
     [System.Serializable]
     public class PunchController
     {
+        [SerializeField] private bool canPunch = true;
+
+        [Space(10)]
         [Tooltip("cost, damage, time, chargeLevel")]
         public UnityEvent<float, float, float, int> OnPunch;
+
+        public bool CanPunch => canPunch;
+
+        public void SetCanPunch(bool canUsePunch) => canPunch = canUsePunch;
     }
 
     public class WeaponController : MonoBehaviour
@@ -166,7 +175,8 @@ namespace SimpleCharController
         {
             if (currentWeaponState == WeaponState.Blocked)
             {
-                PerformPunch(-1);
+                if (punchController.CanPunch) PerformPunch(-1);
+
                 return;
             }
 
@@ -378,7 +388,8 @@ namespace SimpleCharController
         {
             if (currentWeaponState == WeaponState.Blocked)
             {
-                ReleasePunchShot();
+                if (punchController.CanPunch) ReleasePunchShot();
+
                 return;
             }
 
@@ -550,10 +561,10 @@ namespace SimpleCharController
 
         private void SpawnProjectile(GameObject projectilePrefab, float speed, float damage, int chargeLevel, Vector3 directionOffset, TypeMovement typeMovement)
         {
+            if (projectilePrefab == null) return;
+
             Vector3 targetPoint = GetTargetPoint();
             Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
-
-
 
             if (directionOffset != Vector3.zero)
             {
@@ -584,7 +595,7 @@ namespace SimpleCharController
         #region Punch Logic
         private void StartPunchCharging()
         {
-            if (_punchChargingCoroutine != null) return;
+            if (_punchChargingCoroutine != null || !punchController.CanPunch) return;
 
             isAltFireHeld = true;
             currentChargeTime = 0f;
@@ -951,6 +962,9 @@ namespace SimpleCharController
             stateWeapon.OnWeaponTypeChanged?.Invoke(currentProjectileType);
             ResetCharged();
         }
+
+        public void SetCanKick(bool canUseKick) => kickController.SetCanKick(canUseKick);
+        public void SetCanPunch(bool canUsePunch) => punchController.SetCanPunch(canUsePunch);
         #endregion
 
     }

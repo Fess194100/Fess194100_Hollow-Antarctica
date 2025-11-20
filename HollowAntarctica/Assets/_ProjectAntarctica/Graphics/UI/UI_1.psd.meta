@@ -428,10 +428,10 @@ TextureImporter:
       name: UI_Prew_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1000
-        height: 1000
+        x: 1606
+        y: 60
+        width: 380
+        height: 248
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1054,6 +1054,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI_ScreenFX_TakeDamage_01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 341
+        width: 1022
+        height: 171
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c38094113baa9243b0f3008cc4724ed
+      internalID: 1802554848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_ScreenFX_TakeDamage_02
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 173
+        width: 1024
+        height: 167
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cd6e9a57585ea54f84121ae9dca2425
+      internalID: 1239791172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_ScreenFX_TakeDamage_03
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 281e5556845e9094187677bc68b2351c
+      internalID: -1658025431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1107,6 +1170,9 @@ TextureImporter:
       UI_Mask_Slider: -1453028924
       UI_PopUp: 1103040026
       UI_Prew_1: 1831888356
+      UI_ScreenFX_TakeDamage_01: 1802554848
+      UI_ScreenFX_TakeDamage_02: 1239791172
+      UI_ScreenFX_TakeDamage_03: -1658025431
       UI_Slider: 2050020553
       UI_Statuette: 571255099
       UI_Window: -829725212
