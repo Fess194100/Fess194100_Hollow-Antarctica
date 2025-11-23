@@ -106,6 +106,7 @@ namespace SimpleCharController
         public bool isFalling = false;
         public bool isClimbing = false;
         public bool isOffClimb = false;
+        public bool isDead = false;
 
         [Space(10)] //-------------------------------------------------------------------------------------------------------------------------------------------------
         public SimpleCharacterEvents characterEvents;
@@ -674,6 +675,7 @@ namespace SimpleCharController
             canControl = false;
             canJump = false;
             canClimb = false;
+            isDead = true;
         }
 
         public void OnRespawn()
@@ -681,6 +683,7 @@ namespace SimpleCharController
             canControl = true;
             canJump = true;
             canClimb = true;
+            isDead = false;
         }
 
         public void ChangeStamina(float amountStamina)

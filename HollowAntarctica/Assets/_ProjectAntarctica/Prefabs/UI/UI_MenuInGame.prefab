@@ -558,6 +558,140 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1207628378757004469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2622091050233760970}
+  - component: {fileID: 8356068265368839503}
+  - component: {fileID: 2030425221609048040}
+  m_Layer: 5
+  m_Name: Text (TMP) Value
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2622091050233760970
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207628378757004469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5097675857482469422}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.60436094, y: 0.7321476}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000045776367, y: 0}
+  m_SizeDelta: {x: 0.000076293945, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &8356068265368839503
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207628378757004469}
+  m_CullTransparentMesh: 1
+--- !u!114 &2030425221609048040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207628378757004469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 50
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 28.75
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 1
+  m_fontSizeMax: 100
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 8192
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1207997296105484967
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +930,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 697558274855885365}
+  - {fileID: 2622091050233760970}
   - {fileID: 6738968405469452966}
   - {fileID: 5445325552131600908}
   m_Father: {fileID: 2208815064104636751}
@@ -837,10 +972,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5097675857482469422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.7321476}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: -0.00000006730307, y: 0.7321476}
+  m_AnchorMax: {x: 0.57621044, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.0000076293945, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4861461235892780883
 CanvasRenderer:
@@ -904,7 +1039,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 100
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1163,7 +1298,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 0.5
+          value: 50
         - useVariable: 1
           name: Settings/VolumeMusic
           tooltip: 
@@ -1271,14 +1406,16 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.UiSliderGetValue
+        - HutongGames.PlayMaker.Actions.SetProperty
         - HutongGames.PlayMaker.Actions.SendEvent
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000003000000
-        actionHashCodes: 32d594025e69bb04
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010101
+        actionStartIndex: 000000000300000005000000
+        actionHashCodes: 32d594025ac852045e69bb04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -1326,7 +1463,139 @@ MonoBehaviour:
             networkSync: 0
             value: 0
           fsmComponent: {fileID: 0}
-        fsmPropertyParams: []
+        fsmPropertyParams:
+        - TargetObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: UnityEngine.Object
+            value: {fileID: 2030425221609048040}
+          TargetTypeName: TMPro.TextMeshProUGUI
+          PropertyName: text
+          BoolParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          FloatParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          IntParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          GameObjectParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+          StringParameter:
+            useVariable: 1
+            name: Settings/Sesitive
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 
+          Vector2Parameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {x: 0, y: 0}
+          Vector3Parameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {x: 0, y: 0, z: 0}
+          RectParamater:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value:
+              serializedVersion: 2
+              x: 0
+              y: 0
+              width: 0
+              height: 0
+          QuaternionParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {x: 0, y: 0, z: 0, w: 0}
+          ObjectParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: System.String
+            value: {fileID: 0}
+          MaterialParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: 
+            value: {fileID: 0}
+          TextureParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            typeName: 
+            value: {fileID: 0}
+          ColorParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {r: 0, g: 0, b: 0, a: 1}
+          EnumParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            enumName: 
+            intValue: 0
+          ArrayParameter:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+          setProperty: 1
         layoutOptionParams: []
         fsmStringParams: []
         fsmObjectParams: []
@@ -1339,7 +1608,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 0.5
+          value: 50
         - useVariable: 0
           name: 
           tooltip: 
@@ -1355,22 +1624,24 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Settings_Cheng_Sensativ
-        byteData: 0000
+        byteData: 000000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f000000010000001f000000170000000f00000001000000
+        paramDataType: 140000000f0000000100000024000000010000001f000000170000000f00000001000000
         paramName:
         - gameObject
         - value
+        - everyFrame
+        - targetProperty
         - everyFrame
         - eventTarget
         - sendEvent
         - delay
         - everyFrame
-        paramDataPos: 00000000000000000000000000000000000000000100000001000000
-        paramByteDataSize: 00000000000000000100000000000000000000000000000001000000
+        paramDataPos: 000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 000000000000000001000000000000000100000000000000000000000000000001000000
     - name: State 3
       description: 
       colorIndex: 0
@@ -6718,7 +6989,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 0.5
+          value: 50
         - useVariable: 1
           name: Settings/VolumeMusic
           tooltip: 
@@ -9572,7 +9843,7 @@ PrefabInstance:
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.304
+      value: 0.3993994
       objectReference: {fileID: 0}
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -9737,7 +10008,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.304
+      value: 0.3993994
       objectReference: {fileID: 0}
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -9747,7 +10018,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.304
+      value: 0.3993994
       objectReference: {fileID: 0}
     - target: {fileID: 6257085999244867415, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -10252,7 +10523,7 @@ PrefabInstance:
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 510
+      value: 525.5725
       objectReference: {fileID: 0}
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
@@ -10297,7 +10568,7 @@ PrefabInstance:
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 255
+      value: 262.78625
       objectReference: {fileID: 0}
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
@@ -10648,7 +10919,7 @@ PrefabInstance:
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 510
+      value: 525.5725
       objectReference: {fileID: 0}
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
@@ -10693,7 +10964,7 @@ PrefabInstance:
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 255
+      value: 262.78625
       objectReference: {fileID: 0}
     - target: {fileID: 4495037533759820306, guid: 92453cf0382a05b4e8d1bd5ec7bcab31,
         type: 3}
@@ -10783,7 +11054,7 @@ PrefabInstance:
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.66
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -10963,7 +11234,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.66
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -10973,7 +11244,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.66
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6257085999244867415, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11053,7 +11324,7 @@ PrefabInstance:
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.304
+      value: 0.3993994
       objectReference: {fileID: 0}
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11218,7 +11489,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.304
+      value: 0.3993994
       objectReference: {fileID: 0}
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11228,7 +11499,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.304
+      value: 0.3993994
       objectReference: {fileID: 0}
     - target: {fileID: 6257085999244867415, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11308,7 +11579,7 @@ PrefabInstance:
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.47368422
+      value: 0.24623115
       objectReference: {fileID: 0}
     - target: {fileID: 3279535386274940483, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11318,17 +11589,22 @@ PrefabInstance:
     - target: {fileID: 3715277196748089613, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3715277196748089613, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_MaxValue
-      value: 2
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3715277196748089613, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_MinValue
-      value: 0.1
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3715277196748089613, guid: 687afec1988bab84cb6d0d061045ea13,
+        type: 3}
+      propertyPath: m_WholeNumbers
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3715277196748089613, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11488,7 +11764,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.47368422
+      value: 0.24623115
       objectReference: {fileID: 0}
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
@@ -11498,7 +11774,7 @@ PrefabInstance:
     - target: {fileID: 5084239866831337796, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.47368422
+      value: 0.24623115
       objectReference: {fileID: 0}
     - target: {fileID: 6257085999244867415, guid: 687afec1988bab84cb6d0d061045ea13,
         type: 3}

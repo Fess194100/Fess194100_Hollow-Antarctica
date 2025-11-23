@@ -82,7 +82,7 @@ public class MeleeStrikeController : MonoBehaviour
         }
 
         isKick = false;
-        charController.canControl = previsionCanControl;
+        if (!charController.isDead) charController.canControl = previsionCanControl;
     }
 
     private IEnumerator ReleaseAirKick(float cost)
