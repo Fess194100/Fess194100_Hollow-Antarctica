@@ -55,5 +55,8 @@ namespace SimpleCharController
     public class SimpleCharacterEvents
     {
         public UnityEvent<float> OnChengedStamina;
+
+        [Space(5)]
+        public UnityEvent<float> OnFall;
     }
 }

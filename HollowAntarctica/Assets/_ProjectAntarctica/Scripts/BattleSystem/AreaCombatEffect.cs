@@ -6,9 +6,22 @@ namespace SimpleCharController
 {
     public class AreaCombatEffect : MonoBehaviour
     {
+        #region ========== VARIABLES ==================
         [Header("DeBug Settings")]
         public bool DeBug = false;
         public bool showGizmos = false;
+
+        [Header("Area Damage Type Settings")]
+        public bool destroyAfterLifeTime = true;
+
+        [Space(5)]
+#if UNITY_EDITOR_RUS
+        [Tooltip("Single / Burst / Spread - разовый урон \n" + "Auto - постоянный урон пока цель в области\n")]
+#else   
+        [Tooltip("Single / Burst / Spread - single damage \n" + "Auto - Permanent damage while the target is in the area\n")]
+#endif
+        public TypeShooting shootingType = TypeShooting.Single;
+        public float autoFireRate = 1f;
 
         [Header("Area Effect Settings")]
         public ProjectileType projectileType;
@@ -22,47 +35,88 @@ namespace SimpleCharController
 
         [Header("VFX Settings")]
         public VFXCombatEffect VFXCombatEffect;
+        #endregion
 
-        #region ========== PRIVATE VALUE ==================
+        #region ========== PRIVATE VARIABLES ==================
         private GameObject _owner;
         private List<GameObject> _targets;
         private EssenceHealth _ownerHealth;
         private HandlerCombatEffects _ownerHandlerCombatEffects;
         private int _currentNumberTarget;
         private float _lifeTime;
+
+        // Для повторяющегося урона
+        private Dictionary<GameObject, float> _targetDamageAccumulator;
+        private List<GameObject> _targetsInArea;
         #endregion
 
+        #region ========== SYSTEM FUNCTIONS ==================
         private void Awake()
         {
             _targets = new List<GameObject>();
+            _targetsInArea = new List<GameObject>();
+            _targetDamageAccumulator = new Dictionary<GameObject, float>();
         }
 
-        public void Initialize(GameObject owner, EssenceHealth ownerHealth, HandlerCombatEffects ownerHandlerCombatEffects)
+        private void FixedUpdate()
         {
-            _owner = owner;
-            _ownerHealth = ownerHealth;
-            _ownerHandlerCombatEffects = ownerHandlerCombatEffects;
-            /*if (sphereCollider != null)
+            // Для повторяющегося урона проверяем все цели в области
+            if (shootingType == TypeShooting.Auto && _targetsInArea.Count > 0)
             {
-                sphereCollider.radius = _effectRadius;
-                sphereCollider.isTrigger = true;
-            }*/
-
-            // Запускаем таймер жизни эффекта
-            StartCoroutine(LifeTimeCoroutine());
-
-            // Применяем эффект сразу ко всем кто уже в области
-            ApplyEffectToExistingTargets();
-
-            // Запускаем VFX
-            //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
+                ProcessAutoDamage();
+            }
         }
 
-        public void InitializeAreaDamage()
+        private void OnTriggerEnter(Collider other)
         {
-            StartCoroutine(LifeTimeCoroutine());
-            ApplyEffectToExistingTargets();
+            if (DeBug) Debug.Log("OnTriggerEnter");
+
+            GameObject target = other.gameObject;
+
+            // Для всех типов стрельбы добавляем цель в список находящихся в области
+            if (IsValidTarget(target) && !_targetsInArea.Contains(target))
+            {
+                _targetsInArea.Add(target);
+
+                // Для Auto - инициализируем аккумулятор и наносим первый урон
+                if (shootingType == TypeShooting.Auto)
+                {
+                    _targetDamageAccumulator[target] = 0f;
+                }
+
+                ApplyEffectToTarget(target);
+            }
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (DeBug) Debug.Log("OnTriggerExit");
+
+            GameObject target = other.gameObject;
+
+            // Удаляем цель из списка находящихся в области
+            if (_targetsInArea.Contains(target))
+            {
+                _targetsInArea.Remove(target);
+
+                // Для Auto - удаляем из словаря аккумулятора
+                if (shootingType == TypeShooting.Auto && _targetDamageAccumulator.ContainsKey(target))
+                {
+                    _targetDamageAccumulator.Remove(target);
+                }
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!showGizmos) return;
+
+            Gizmos.color = GetEffectColor();
+            Gizmos.DrawWireSphere(transform.position, effectRadius);
+        }
+        #endregion
+
+        #region ========== PRIVATE METHODS ==================
         private void ApplyEffectToExistingTargets()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, effectRadius); // Нужна маска слоев!!!
@@ -80,17 +134,42 @@ namespace SimpleCharController
             _targets.Clear();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void ProcessAutoDamage()
         {
-            if (DeBug) Debug.Log("OnTrigger");
-            ApplyEffectToTarget(other.gameObject);
+            float damageInterval = 1f / autoFireRate;
+
+            foreach (GameObject target in _targetsInArea)
+            {
+                if (target == null) continue;
+
+                if (!_targetDamageAccumulator.ContainsKey(target))
+                {
+                    _targetDamageAccumulator[target] = 0f;
+                }
+
+                // Накопление времени с учетом Time.timeScale
+                _targetDamageAccumulator[target] += Time.fixedDeltaTime;
+
+                if (_targetDamageAccumulator[target] >= damageInterval)
+                {
+                    ApplyEffectToTarget(target);
+                    _targetDamageAccumulator[target] = 0f; // Сбрасываем аккумулятор
+                }
+            }
         }
 
         private void ApplyEffectToTarget(GameObject target)
         {
+            if (DeBug) Debug.Log("ApplyEffectToTarget");
+
+            if (!IsValidTarget(target)) return;
+
             HitBox hitBox = target.GetComponent<HitBox>();
 
+            if (DeBug) Debug.Log($"ApplyEffectToTarget - HITBOX = {target.gameObject.name}");
             if (hitBox == null || !hitBox.isAffectedByAreaEffects) return;
+
+            if (DeBug) Debug.Log($"ApplyEffectToTarget - isAffectedByAreaEffects = {hitBox.isAffectedByAreaEffects}");
 
             _currentNumberTarget += 1;
             _targets.Add(target);
@@ -106,28 +185,33 @@ namespace SimpleCharController
             if (targetHandler == null || targetHandler == _ownerHandlerCombatEffects) return;
 
             // Применяем соответствующий эффект
+            ApplyStatusEffect(targetHandler);
+        }
+
+        private void ApplyStatusEffect(HandlerCombatEffects targetHandler)
+        {
             switch (effectType)
             {
                 case StatusEffectType.Freeze:
                     targetHandler.ApplyFreezeEffect(effectPower, effectDuration);
-                    //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
                     break;
 
                 case StatusEffectType.Frostbite:
                     targetHandler.ApplyFrostbiteEffect(effectPower, effectDuration);
-                    //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
                     break;
 
                 case StatusEffectType.ElectroShort:
                     targetHandler.ApplyElectroShortEffect(effectDuration);
-                    //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
                     break;
+
                 case StatusEffectType.ChainLightning:
                     targetHandler.ApplyElectroShortEffect(effectDuration);
                     break;
             }
         }
+        #endregion
 
+        #region ========== ENUMERATORS ==================
         private IEnumerator LifeTimeCoroutine()
         {
             _lifeTime = 0f;
@@ -141,17 +225,25 @@ namespace SimpleCharController
             // Запускаем эффект исчезновения VFX
             VFXCombatEffect.StopAreaEffectVFX();
 
-            Destroy(gameObject);
+            if (destroyAfterLifeTime) Destroy(gameObject);
         }
+        #endregion
 
-        #region ======== DeBug =================
-        // Визуализация радиуса в редакторе
-        private void OnDrawGizmos()
+        #region ========== DETERMINISTIC FUNCTIONS ==================
+        private bool IsValidTarget(GameObject target)
         {
-            if (!showGizmos) return;
+            if (target == null) return false;
 
-            Gizmos.color = GetEffectColor();
-            Gizmos.DrawWireSphere(transform.position, effectRadius);
+            HitBox hitBox = target.GetComponent<HitBox>();
+            if (hitBox == null || !hitBox.isAffectedByAreaEffects) return false;
+
+            EssenceHealth targetEssenceHealth = hitBox.EssencelHealth;
+            if (targetEssenceHealth == null || targetEssenceHealth == _ownerHealth) return false;
+
+            HandlerCombatEffects targetHandler = hitBox.GetCombatEffects();
+            if (targetHandler == null || targetHandler == _ownerHandlerCombatEffects) return false;
+
+            return true;
         }
 
         private Color GetEffectColor()
@@ -163,6 +255,26 @@ namespace SimpleCharController
                 StatusEffectType.ElectroShort => Color.yellow,
                 _ => Color.white
             };
+        }
+        #endregion
+
+        #region ========== PUBLIC API ==================
+        public void Initialize(GameObject owner, EssenceHealth ownerHealth, HandlerCombatEffects ownerHandlerCombatEffects)
+        {
+            _owner = owner;
+            _ownerHealth = ownerHealth;
+            _ownerHandlerCombatEffects = ownerHandlerCombatEffects;
+
+            InitializeAreaDamage();
+
+            // Запускаем VFX
+            //VFXCombatEffect.PlayAreaEffectVFX(effectType, effectRadius);
+        }
+
+        public void InitializeAreaDamage()
+        {
+            StartCoroutine(LifeTimeCoroutine());
+            ApplyEffectToExistingTargets();
         }
         #endregion
     }

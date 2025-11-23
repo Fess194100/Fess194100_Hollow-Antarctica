@@ -125,6 +125,10 @@ namespace SimpleCharController
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
+        // Fall tracking
+        private float _fallTime = 0f;
+        private bool _wasGrounded = true;
+
         //Climb
         private bool wasGroundedOnClimb = false;
         private bool canClimbAgain = true;
@@ -177,6 +181,8 @@ namespace SimpleCharController
 
         private void FixedUpdate()
         {
+            bool wasGroundedBefore = isGrounded;
+
             GroundedCheck();
             PermissionCheck();
 
@@ -201,6 +207,8 @@ namespace SimpleCharController
             UpdateFOV();
 
             if (applyNoiseCamera && _noiseVirtualCamera != null) UpdateNoiseCamera();
+
+            ProcessFallEvent(wasGroundedBefore);
         }        
 
         private void GroundedCheck()
@@ -288,6 +296,19 @@ namespace SimpleCharController
                     ExitModeClimb();
                 }
             }
+        }
+
+        private void ProcessFallEvent(bool wasGroundedBefore)
+        {
+            if (!wasGroundedBefore && isGrounded && _fallTime > 0.3f)
+            {
+                characterEvents.OnFall?.Invoke(_fallTime);
+                _fallTime = 0f;
+            }
+            if (!isClimbing && !isGrounded && !isDead && !isOffClimb) _fallTime += Time.fixedDeltaTime;
+            else _fallTime = 0f;
+
+            _wasGrounded = isGrounded;
         }
 
         #region Move

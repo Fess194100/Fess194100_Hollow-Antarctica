@@ -52800,6 +52800,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    OnFall:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6200174266677484524}
+          m_TargetAssemblyTypeName: SimpleCharController.EssenceHealth, Assembly-CSharp
+          m_MethodName: TakeDamageFall
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &4571770688186773690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65643,6 +65658,39 @@ MonoBehaviour:
   handlerCombatEffects: {fileID: 2401443997797990867}
   maxHealth: 100
   currentHealth: 100
+  damageAtTimeFalling:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.8
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.85
+      value: 5
+      inSlope: 2.517774
+      outSlope: 2.517774
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.5754879
+    - serializedVersion: 3
+      time: 3
+      value: 75
+      inSlope: 141.1134
+      outSlope: 141.1134
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.1791462
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls:
@@ -65740,30 +65788,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5942207060873644670}
-        m_TargetAssemblyTypeName: SimpleCharController.CharController, Assembly-CSharp
-        m_MethodName: OnRespawn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayMakerFSM, PlayMaker
-        m_MethodName: SendEvent
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Life
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2401443997797990867

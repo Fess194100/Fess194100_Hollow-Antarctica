@@ -5,6 +5,7 @@ namespace SimpleCharController
 {
     public class EssenceHealth : MonoBehaviour, IDamageable
     {
+        #region Variables
         public bool DeBug = false;
 
         [Header("References")]
@@ -12,23 +13,64 @@ namespace SimpleCharController
 
         [Space(10)]
         [Header("Health Settings")]
+        [SerializeField] private bool canTakeDamage = true;
         [SerializeField] private float maxHealth = 100f;
         [SerializeField] private float currentHealth = 100f;
-        
+
+        [Space(5)]
+        [SerializeField] private bool canTakeDamageFall = true;
+        [SerializeField] private AnimationCurve damageAtTimeFalling;
+        #endregion
+
+        #region Private Variables
+        private bool _isDead = false;
+        #endregion
+
+        #region Events
         [Header("Events")]
         public UnityEvent<float> OnHealthChanged; // Текущее здоровье
         public UnityEvent<float, BodyPart> OnDamageTaken;   // Количество полученного урона
         public UnityEvent<float> OnHealthRestored; // Количество восстановленного здоровья
         public UnityEvent OnDeath;
         public UnityEvent OnRespawn;
+        #endregion
 
-        private bool _isDead = false;
+        #region Public Property
+        public bool CanTakeDamage => canTakeDamage;
+        public bool CanTakeDamageFall => canTakeDamageFall;
+        #endregion
 
+        #region System Functions
         private void Start()
         {
             currentHealth = maxHealth;
         }
+        #endregion
 
+        #region Private Methods
+        private void Die()
+        {
+            if (_isDead) return;
+
+            _isDead = true;
+            currentHealth = 0f;
+            OnHealthChanged?.Invoke(0f);
+            OnDeath?.Invoke();
+
+            // Здесь можно добавить логику смерти (анимация, отключение управления и т.д.)
+            if (DeBug) Debug.Log("Player died!");
+        }
+        #endregion
+
+        #region Deterministic function
+        public bool IsDead() => _isDead;
+        public float GetCurrentHealth() => currentHealth;
+        public float GetMaxHealth() => maxHealth;
+        public float GetHealthPercentage() => currentHealth / maxHealth;
+        public HandlerCombatEffects GetCombatEffects() => handlerCombatEffects;
+        #endregion
+
+        #region Public API
         public void TakeDamage(float damage, ProjectileType projectileType, int chargeLevel, BodyPart bodyPart, GameObject sender, bool isPlayer, bool hitReaction)
         {
             if (!_isDead)
@@ -56,7 +98,13 @@ namespace SimpleCharController
             TakeDamage(damage, damageType, chargeLevel, BodyPart.Body, sender, isPlayer, hitReaction);
         }
 
-        // Восстановление здоровья игроку
+        public void TakeDamageFall(float timeFallin)
+        {
+            if (DeBug)Debug.Log($"Время падения = {timeFallin}");
+            float damage = damageAtTimeFalling.Evaluate(timeFallin);
+            if (damage > 0.1f && canTakeDamageFall) TakeDamage(damage, ProjectileType.Green, 0, BodyPart.Body, null, true, true);
+        }
+
         public void RestoreHealth(float healAmount)
         {
             if (_isDead) return;
@@ -68,7 +116,6 @@ namespace SimpleCharController
             OnHealthRestored?.Invoke(healAmount);
         }
 
-        // Установка здоровья напрямую
         public void SetHealth(float health)
         {
             if (_isDead) return;
@@ -82,21 +129,6 @@ namespace SimpleCharController
             }
         }
 
-        // Смерть игрока
-        private void Die()
-        {
-            if (_isDead) return;
-
-            _isDead = true;
-            currentHealth = 0f;
-            OnHealthChanged?.Invoke(0f);
-            OnDeath?.Invoke();
-
-            // Здесь можно добавить логику смерти (анимация, отключение управления и т.д.)
-            if (DeBug) Debug.Log("Player died!");
-        }
-
-        // Воскрешение игрока
         public void Respawn()
         {
             _isDead = false;
@@ -105,37 +137,10 @@ namespace SimpleCharController
             OnRespawn?.Invoke();
         }
 
-        // Проверка, мертв ли игрок
-        public bool IsDead()
-        {
-            return _isDead;
-        }
-
-        // Получение текущего здоровья
-        public float GetCurrentHealth()
-        {
-            return currentHealth;
-        }
-
         public void AddHealth(float countHealth)
         {
             SetHealth(countHealth + currentHealth);
         }
-        // Получение максимального здоровья
-        public float GetMaxHealth()
-        {
-            return maxHealth;
-        }
-
-        // Получение процента здоровья (0-1)
-        public float GetHealthPercentage()
-        {
-            return currentHealth / maxHealth;
-        }
-
-        public HandlerCombatEffects GetCombatEffects()
-        {
-            return handlerCombatEffects;
-        }
+        #endregion
     }
 }

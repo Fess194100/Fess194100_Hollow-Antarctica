@@ -43,7 +43,7 @@ MonoBehaviour:
       tooltip: 
       showInInspector: 0
       networkSync: 0
-      value: 0.5
+      value: 50
     - useVariable: 1
       name: Player/Energy/FlashLight
       tooltip: 
