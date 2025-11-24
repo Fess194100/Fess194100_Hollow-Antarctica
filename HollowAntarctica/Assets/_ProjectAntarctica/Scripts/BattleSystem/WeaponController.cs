@@ -937,7 +937,7 @@ namespace SimpleCharController
 
         #region API
 
-        public void UpdeteStamina(float stamina)
+        public void UpdateStamina(float stamina)
         {
             _currentStamina = stamina;
         }
@@ -951,9 +951,11 @@ namespace SimpleCharController
         {
             SetWeaponState(WeaponState.Blocked);
             CancelCharging();
-            progressChargeWeapon.OnChargeProgressChanged?.Invoke(1f);
+            progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
             progressChargeWeapon.OnOverheatProgressChanged?.Invoke(1f);
-            
+            stateWeapon.OnBlocked?.Invoke();
+
+
         }
 
         public void UnlockingWeapons()

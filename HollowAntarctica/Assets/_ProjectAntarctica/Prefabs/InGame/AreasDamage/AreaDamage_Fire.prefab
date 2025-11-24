@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 433596270302860704}
   - component: {fileID: 2661812140847516445}
   - component: {fileID: 3396879325090076910}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AreaDamage_CombatEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

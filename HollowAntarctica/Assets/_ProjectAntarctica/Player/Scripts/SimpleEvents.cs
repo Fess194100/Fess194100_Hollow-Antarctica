@@ -28,8 +28,11 @@ namespace SimpleCharController
         public UnityEvent OnChargeLevel1Reached;
         public UnityEvent OnChargeLevel2Reached;
         public UnityEvent OnChargeLevel3Reached;
+
+        [Space(10)]
         public UnityEvent OnChargeFinished;
         public UnityEvent OnOverloadFinished;
+        public UnityEvent OnBlocked;
     }
 
     [Serializable]

@@ -3853,7 +3853,7 @@ MonoBehaviour:
         - 
         actionEnabled: 0101
         actionIsOpen: 0101
-        actionStartIndex: 0000000011000000
+        actionStartIndex: 0000000013000000
         actionHashCodes: d3bd7b055e69bb04
         unityObjectParams: []
         fsmGameObjectParams:
@@ -3947,6 +3947,18 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 6
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 10
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 11
         fsmBoolParams:
         - useVariable: 1
           name: 
@@ -4005,12 +4017,12 @@ MonoBehaviour:
         - NextState
         - '-'
         byteData: 0000000000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 03000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmInt
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000001c0000001c000000070000000f0000001700000011000000130000001c0000001c0000000f000000100000000c000000100000001100000019000000110000001f000000170000000f00000001000000
+        paramDataType: 140000001c0000001c000000070000000f0000001700000011000000130000001c0000001c0000000f000000100000000c0000001000000010000000100000001100000019000000110000001f000000170000000f00000001000000
         paramName:
         - fromGameObject
         - fromPosition
@@ -4026,6 +4038,8 @@ MonoBehaviour:
         - repeatInterval
         - layerMask
         - 
+        - 
+        - 
         - invertMask
         - debugColor
         - debug
@@ -4033,8 +4047,8 @@ MonoBehaviour:
         - sendEvent
         - delay
         - everyFrame
-        paramDataPos: 000000000000000001000000000000000000000000000000000000000000000002000000030000000100000000000000000000000100000001000000000000000200000000000000010000000200000004000000
-        paramByteDataSize: 000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000
+        paramDataPos: 0000000000000000010000000000000000000000000000000000000000000000020000000300000001000000000000000000000001000000020000000300000001000000000000000200000000000000010000000200000004000000
+        paramByteDataSize: 0000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000
     - name: State 9
       description: 
       colorIndex: 0

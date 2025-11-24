@@ -51,8 +51,8 @@ namespace SimpleCharController
 
         private void Start()
         {
-            SetColorSlider(ProjectileType.Green);
-            SetColorSlider(WeaponState.Ready);
+            //SetColorSlider(ProjectileType.Green);
+            //SetColorSlider(WeaponState.Ready);
             SetValueChargeLevel(0);
             SetValueOverheadLevel(0);
         }
