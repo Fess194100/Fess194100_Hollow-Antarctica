@@ -1058,27 +1058,6 @@ TextureImporter:
       name: UI_ScreenFX_TakeDamage_01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 341
-        width: 1022
-        height: 171
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c38094113baa9243b0f3008cc4724ed
-      internalID: 1802554848
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_ScreenFX_TakeDamage_02
-      rect:
-        serializedVersion: 2
         x: 0
         y: 173
         width: 1024
@@ -1097,7 +1076,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_ScreenFX_TakeDamage_03
+      name: UI_ScreenFX_TakeDamage_02
       rect:
         serializedVersion: 2
         x: 0
@@ -1113,6 +1092,132 @@ TextureImporter:
       bones: []
       spriteID: 281e5556845e9094187677bc68b2351c
       internalID: -1658025431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Hand
+      rect:
+        serializedVersion: 2
+        x: 1472
+        y: 1185
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a926cc229cdce74099fa0eb7dd456a4
+      internalID: 1484305996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Weapon_Fire
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 1185
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 721860735d1db57478fd94df14b3a2cc
+      internalID: 1925117148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Weapon_Snow
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 1185
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20f1c0ceccf52dd4391b5a9fb68de6a5
+      internalID: -689198078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Weapon_Flash
+      rect:
+        serializedVersion: 2
+        x: 1472
+        y: 1079
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3ffd995597ffdc46bfe6eb9ec3dcf6d
+      internalID: 121556406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Weapon_Heal
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 1079
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a08c753127bcb149a74cad2db3e9b38
+      internalID: 269448596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Weapon_Shied
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 1079
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e913b16c11772fc4d815b8ef8cc3ec5a
+      internalID: -1148954842
       vertices: []
       indices: 
       edges: []
@@ -1136,6 +1241,7 @@ TextureImporter:
       UI_Charge_Marker: 1532262643
       UI_Charge_Slider: 2095762947
       UI_Frame_Item: 1973118725
+      UI_Hand: 1484305996
       UI_Handler: -1225120248
       UI_Label: 1248650758
       UI_Light: -496759488
@@ -1170,11 +1276,15 @@ TextureImporter:
       UI_Mask_Slider: -1453028924
       UI_PopUp: 1103040026
       UI_Prew_1: 1831888356
-      UI_ScreenFX_TakeDamage_01: 1802554848
-      UI_ScreenFX_TakeDamage_02: 1239791172
-      UI_ScreenFX_TakeDamage_03: -1658025431
+      UI_ScreenFX_TakeDamage_01: 1239791172
+      UI_ScreenFX_TakeDamage_02: -1658025431
       UI_Slider: 2050020553
       UI_Statuette: 571255099
+      UI_Weapon_Fire: 1925117148
+      UI_Weapon_Flash: 121556406
+      UI_Weapon_Heal: 269448596
+      UI_Weapon_Shied: -1148954842
+      UI_Weapon_Snow: -689198078
       UI_Window: -829725212
   mipmapLimitGroupName: 
   pSDRemoveMatte: 1

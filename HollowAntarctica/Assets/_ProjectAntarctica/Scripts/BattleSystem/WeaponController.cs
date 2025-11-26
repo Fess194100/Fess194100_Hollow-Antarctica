@@ -228,6 +228,10 @@ namespace SimpleCharController
             {
                 SpawnProjectile(data.StandardProjectilePrefab, data.StandardProjectileSpeed, data.baseDamageStandard, 0, Vector3.zero, TypeMovement.Linear);
             }
+            else 
+            {
+                if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
+            }
         }
 
         private void HandleWeaponSwitch()
@@ -298,7 +302,7 @@ namespace SimpleCharController
             SetWeaponState(WeaponState.Overloaded);
             StopAllCoroutines();
 
-            if(essenceHealth != null && essenceCombatEffects != null) ApplyOwerloarEffect(data);
+            if (essenceHealth != null && essenceCombatEffects != null) ApplyOwerloarEffect(data);
 
             ammoInventory.ConsumeAmmo(currentProjectileType, data.ChargedLvl3AmmoCost);
             StartCoroutine(OverloadRoutine(data.OverloadDuration));
@@ -454,6 +458,10 @@ namespace SimpleCharController
                 SpawnProjectile(data.ChargedLvl0ProjectilePrefab, data.ChargedLvl0ProjectileSpeed, data.baseDamageLvl0, 0, Vector3.zero, TypeMovement.Linear);
                 playSound?.Invoke(data.soundShot_0, data.pitchSound_0);
             }
+            else
+            {
+                if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
+            }
         }
 
         private void HandleHigherChargeLevels(WeaponProjectileData data, int chargeLevel)
@@ -537,6 +545,10 @@ namespace SimpleCharController
                         projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage,
                             TypeMovement.Linear, true, hitReaction);
                     }
+                }
+                else
+                {
+                    if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
                 }
             }
         }
@@ -808,6 +820,10 @@ namespace SimpleCharController
                     }
 
                     playSound?.Invoke(soundShot, pitch);
+                }
+                else
+                {
+                    if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
                 }
 
                 yield return new WaitForSeconds(spreadSettings.delayBetweenShots);
