@@ -1,25 +1,22 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using HutongGames.PlayMaker.Actions;
 
 namespace SimpleCharController
 {
     public class AreaCombatEffect : MonoBehaviour
     {
         #region ========== VARIABLES ==================
-        [Header("DeBug Settings")]
         public bool DeBug = false;
         public bool showGizmos = false;
 
-        [Header("Area Damage Type Settings")]
-        public bool destroyAfterLifeTime = true;
+        [Header("Area Settings")]
+        [Tooltip("Value <= 0 - infinity. ")]
+        public float lifeTime = 0.5f;
 
         [Space(5)]
-#if UNITY_EDITOR_RUS
-        [Tooltip("Single / Burst / Spread - разовый урон \n" + "Auto - постоянный урон пока цель в области\n")]
-#else   
         [Tooltip("Single / Burst / Spread - single damage \n" + "Auto - Permanent damage while the target is in the area\n")]
-#endif
         public TypeShooting shootingType = TypeShooting.Single;
         public float autoFireRate = 1f;
 
@@ -216,16 +213,17 @@ namespace SimpleCharController
         {
             _lifeTime = 0f;
 
-            while (_lifeTime < VFXCombatEffect.durationVFX)
+            while (_lifeTime < lifeTime)
             {
                 _lifeTime += Time.deltaTime;
                 yield return null;
             }
 
-            // Запускаем эффект исчезновения VFX
             VFXCombatEffect.StopAreaEffectVFX();
+            GameObject parent = transform.parent?.gameObject;
 
-            if (destroyAfterLifeTime) Destroy(gameObject);
+            if (parent != null) Destroy(parent);
+            else Destroy(gameObject);
         }
         #endregion
 
@@ -240,8 +238,8 @@ namespace SimpleCharController
             EssenceHealth targetEssenceHealth = hitBox.EssencelHealth;
             if (targetEssenceHealth == null || targetEssenceHealth == _ownerHealth) return false;
 
-            HandlerCombatEffects targetHandler = hitBox.GetCombatEffects();
-            if (targetHandler == null || targetHandler == _ownerHandlerCombatEffects) return false;
+            /*HandlerCombatEffects targetHandler = hitBox.GetCombatEffects();
+            if (targetHandler == null || targetHandler == _ownerHandlerCombatEffects) return false;*/
 
             return true;
         }
@@ -273,7 +271,7 @@ namespace SimpleCharController
 
         public void InitializeAreaDamage()
         {
-            StartCoroutine(LifeTimeCoroutine());
+            if (lifeTime > 0f) StartCoroutine(LifeTimeCoroutine());
             ApplyEffectToExistingTargets();
         }
         #endregion

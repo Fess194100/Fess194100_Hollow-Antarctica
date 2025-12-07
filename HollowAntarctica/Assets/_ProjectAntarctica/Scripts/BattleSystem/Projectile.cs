@@ -233,7 +233,7 @@ namespace SimpleCharController
             if (prefabCombatEffect != null)
             {
                 GameObject areaEffect = Instantiate(prefabCombatEffect, transform.position, Quaternion.identity);
-                AreaCombatEffect areaScript = areaEffect.GetComponent<AreaCombatEffect>();
+                AreaCombatEffect areaScript = areaEffect.GetComponentInChildren<AreaCombatEffect>();
 
                 if (areaScript != null)
                 {

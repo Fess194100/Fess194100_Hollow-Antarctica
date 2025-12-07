@@ -19,6 +19,9 @@ public class MeleeStrikeController : MonoBehaviour
     [SerializeField] private AnimationCurve directionKickAtAngleXCam;
     #endregion
 
+    #region Public Property
+    public bool IsKick => isKick;
+    #endregion
     #region Private Variables
     private bool hasInitialized;
     private bool isKick = false;

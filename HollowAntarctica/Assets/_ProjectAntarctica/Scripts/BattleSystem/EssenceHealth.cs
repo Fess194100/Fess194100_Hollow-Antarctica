@@ -129,6 +129,11 @@ namespace SimpleCharController
             }
         }
 
+        public void SetMaxHealth(float maximusHealth)
+        {
+            maxHealth = Mathf.Clamp(maximusHealth, 0f, maximusHealth);
+        }
+
         public void Respawn()
         {
             _isDead = false;

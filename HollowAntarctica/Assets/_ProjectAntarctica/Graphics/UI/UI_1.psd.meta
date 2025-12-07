@@ -404,7 +404,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Lock
+      name: UI_Lock_01
       rect:
         serializedVersion: 2
         x: 1888
@@ -1189,7 +1189,7 @@ TextureImporter:
         width: 106
         height: 106
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1210,7 +1210,7 @@ TextureImporter:
         width: 106
         height: 106
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1218,6 +1218,27 @@ TextureImporter:
       bones: []
       spriteID: e913b16c11772fc4d815b8ef8cc3ec5a
       internalID: -1148954842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Lock_02
+      rect:
+        serializedVersion: 2
+        x: 1790
+        y: 1079
+        width: 98
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d041d124b75f094ba8c880ceb9711b8
+      internalID: 1693085208
       vertices: []
       indices: 
       edges: []
@@ -1247,7 +1268,8 @@ TextureImporter:
       UI_Light: -496759488
       UI_Light_Broken: -50249097
       UI_LineHorizont: 1462435155
-      UI_Lock: -1564056008
+      UI_Lock_01: -1564056008
+      UI_Lock_02: 1693085208
       UI_MG_BG: 263873619
       UI_MG_Chest_BoxTarget_1: -344047256
       UI_MG_Chest_BoxTarget_2: 1017875337

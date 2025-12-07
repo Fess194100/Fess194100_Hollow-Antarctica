@@ -10,7 +10,7 @@ SketchUpImporter:
       name: Atlas_Level_1
     second: {fileID: 2100000, guid: 0e3796be37d49ba4bb138684c0d4eee3, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 2
     materialSearch: 0
     materialLocation: 1
@@ -41,14 +41,14 @@ SketchUpImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 0.0254
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 1
+    importCameras: 0
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
@@ -112,7 +112,7 @@ SketchUpImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  generateBackFace: 1
+  generateBackFace: 0
   mergeCoplanarFaces: 0
   selectedNodes: 000000000700000008000000090000000a0000000b0000000c0000000d0000000e0000003d0000003e0000003f00000040000000
   assetHash:

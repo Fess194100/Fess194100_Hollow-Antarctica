@@ -183,9 +183,11 @@ namespace SimpleCharController
         {
             bool wasGroundedBefore = isGrounded;
 
+            
             GroundedCheck();
             PermissionCheck();
 
+            ProcessFallEvent(wasGroundedBefore);
             JumpAndGravity();
 
             if (!isClimbing)
@@ -208,7 +210,7 @@ namespace SimpleCharController
 
             if (applyNoiseCamera && _noiseVirtualCamera != null) UpdateNoiseCamera();
 
-            ProcessFallEvent(wasGroundedBefore);
+            
         }        
 
         private void GroundedCheck()
@@ -305,7 +307,7 @@ namespace SimpleCharController
                 characterEvents.OnFall?.Invoke(_fallTime);
                 _fallTime = 0f;
             }
-            if (!isClimbing && !isGrounded && !isDead && !isOffClimb) _fallTime += Time.fixedDeltaTime;
+            if (!isClimbing && !isGrounded && !isDead && !isOffClimb && _verticalVelocity < 0) _fallTime += Time.fixedDeltaTime;
             else _fallTime = 0f;
 
             _wasGrounded = isGrounded;

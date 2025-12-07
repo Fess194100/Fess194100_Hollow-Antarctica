@@ -796,14 +796,20 @@ namespace SimpleCharController
             float damage = isCharged ? data.baseDamageLvl0 : data.baseDamageStandard;
 
             if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost * spreadSettings.projectilesCount))
+            {
+                if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
                 yield break;
+            }
 
             List<Vector2> spreadAngles = GenerateSpreadAngles(spreadSettings.spreadAngle, spreadSettings.projectilesCount);
 
             for (int i = 0; i < spreadSettings.projectilesCount; i++)
             {
                 if (!ammoInventory.HasEnoughAmmo(currentProjectileType, ammoCost))
+                {
+                    if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
                     yield break;
+                }
 
                 Vector3 currentBaseDirection = (GetTargetPoint() - firePoint.position).normalized;
                 Vector3 spreadDirection = CalculateSpreadDirection(currentBaseDirection, spreadAngles[i]);

@@ -63,6 +63,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boulder_03_Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3141604988455056459, guid: e561bd5483af17543be0c8504816125f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a021591f29b0b7b43a289b6b3da6cdb8, type: 2}
+    - target: {fileID: 8721359942034974486, guid: e561bd5483af17543be0c8504816125f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a021591f29b0b7b43a289b6b3da6cdb8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
