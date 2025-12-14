@@ -9759,6 +9759,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeBug: 0
   showGizmos: 0
+  lifeTime: 4.1
+  shootingType: 0
+  autoFireRate: 1
   projectileType: 0
   effectType: 0
   hitRaection: 0

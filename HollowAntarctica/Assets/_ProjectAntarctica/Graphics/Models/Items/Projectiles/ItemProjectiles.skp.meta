@@ -12,6 +12,11 @@ SketchUpImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Blue
+    second: {fileID: 2100000, guid: 2fdabf2e0e2a9e342b6632ffbde16594, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Crystal_Green_WorldSpase_01
     second: {fileID: 2100000, guid: 177402f9802da2845bea0d236fa42817, type: 2}
   materials:
@@ -119,8 +124,8 @@ SketchUpImporter:
   assetBundleVariant: 
   generateBackFace: 0
   mergeCoplanarFaces: 0
-  selectedNodes: 00000000030000000400000021000000220000002d0000002e000000
+  selectedNodes: 0000000001000000020000001f000000200000002b0000002c0000002f00000030000000
   assetHash:
     serializedVersion: 2
-    Hash: 85153cf26412ce7f951828be8416333b
+    Hash: bb95fd8e8d417013b68e28f6c373ad13
   fileUnit: 0

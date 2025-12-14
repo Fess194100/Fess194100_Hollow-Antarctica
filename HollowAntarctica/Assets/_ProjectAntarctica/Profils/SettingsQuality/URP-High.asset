@@ -27,7 +27,7 @@ MonoBehaviour:
   m_HDRColorBufferPrecision: 0
   m_MSAA: 4
   m_RenderScale: 1
-  m_UpscalingFilter: 0
+  m_UpscalingFilter: 2
   m_FsrOverrideSharpness: 0
   m_FsrSharpness: 0.92
   m_EnableLODCrossFade: 1
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Cascade3Split: {x: 0.05, y: 0.278125}
   m_Cascade4Split: {x: 0.03, y: 0.171, z: 0.49852425}
   m_CascadeBorder: 0.03889059
-  m_ShadowDepthBias: 1
+  m_ShadowDepthBias: 2
   m_ShadowNormalBias: 0
   m_AnyShadowsSupported: 1
   m_SoftShadowsSupported: 1
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_AdditionalLightsCookieResolution: 4096
   m_AdditionalLightsCookieFormat: 2
   m_UseSRPBatcher: 1
-  m_SupportsDynamicBatching: 0
+  m_SupportsDynamicBatching: 1
   m_MixedLightingSupported: 1
   m_SupportsLightCookies: 1
   m_SupportsLightLayers: 1

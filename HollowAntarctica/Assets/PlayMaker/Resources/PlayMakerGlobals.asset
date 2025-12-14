@@ -674,3 +674,4 @@ MonoBehaviour:
   - Player_Died
   - Player_Respawn
   - Player_GetAmmo
+  - Player_TakeDamage

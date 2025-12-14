@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8018755199496299570
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Resources_CrtstalBlue_WorldSpase
+  m_Shader: {fileID: -6465566751694194690, guid: 14d26ba6f9123ae4abc07f331fdfb7d6,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ParallaxMapping_445ed4b4165f4d86b2038028effa3c0f_Heightmap_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMapping_ad95a2dc2990487cb1650d5b80f8596e_Heightmap_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMapping_e946125dd15842a69d526b50945c3fb1_Heightmap_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tri_MainTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AO: 0.2
+    - _AmplitydeParallax_1LvL: 50
+    - _AmplitydeParallax_2LvL: 1
+    - _AmplitydeParallax_3LvL: 200
+    - _Emission: 0.05
+    - _Metallic: 0.8
+    - _OpacityNoise: 1.8
+    - _PowerNoise_LvL1: 0.0001
+    - _PowerNoise_LvL2: 0.00001
+    - _PowerNoise_LvL3: 0.003
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ScaleNoise_1LvL: 400
+    - _ScaleNoise_2vL: 80
+    - _ScaleNoise_3vL: 10
+    - _Smoothness: 0.65
+    - _SpeedNoise_1LvL: 0.015
+    - _SpeedNoise_2LvL: -0.03
+    - _SpeedNoise_3LvL: 0.2
+    - _Tri_UV_Scale: 1
+    - _UseTexture: 1
+    m_Colors:
+    - _Color_1LvL: {r: 0.6212028, g: 1.4626693, b: 4.541206, a: 1}
+    - _Color_2LvL: {r: 1.7529001, g: 3.388175, b: 7.9066987, a: 1}
+    - _Color_3LvL: {r: 0.25982195, g: 0.60073125, b: 4.237095, a: 1}
+    - _Tri_Color: {r: 0, g: 0.4069249, b: 1.6055586, a: 1}
+  m_BuildTextureStacks: []

@@ -27,6 +27,7 @@ Material:
   m_ValidKeywords:
   - _COLOROVERLAY_ON
   - _EMISSION
+  - _FADING_ON
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _FLIPBOOKBLENDING_OFF
@@ -107,9 +108,9 @@ Material:
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
     - _BumpScale: 1
-    - _CameraFadingEnabled: 0
-    - _CameraFarFadeDistance: 2
-    - _CameraNearFadeDistance: 1
+    - _CameraFadingEnabled: 1
+    - _CameraFarFadeDistance: 16
+    - _CameraNearFadeDistance: 24
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorMode: 3
@@ -149,7 +150,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
+    - _CameraFadeParams: {r: 24, g: -0.125, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.24705882, g: 0.24705882, b: 0.24705882, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
