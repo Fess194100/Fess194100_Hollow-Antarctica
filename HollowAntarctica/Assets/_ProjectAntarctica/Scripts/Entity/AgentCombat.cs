@@ -166,7 +166,7 @@ namespace AdaptivEntityAgent
         {
             canRotation = false;
             currentAttackType = ChooseAttackType(distance);
-            attackPosition = CalculateAttackPosition(target, currentAttackType);
+            attackPosition = CalculateAttackPosition(target, currentAttackType, distance);
 
             if (debug) Debug.Log($"AgentCombat - HandleMovementPhase.attackPosition = {attackPosition}");
 
@@ -188,7 +188,7 @@ namespace AdaptivEntityAgent
 
             if (currentAttackType == AttackType.Ranged)
             {
-                distanceToSwitchAttackPosition = rangedAttackSettings.optimalDistance / 2.3f;
+                distanceToSwitchAttackPosition = rangedAttackSettings.optimalDistance - (meleeAttackSettings.optimalDistance * 2.2f); // / 2.3f
             }
             else
             {
@@ -203,7 +203,7 @@ namespace AdaptivEntityAgent
                 agentMovement.MoveToPosition(attackPosition, target.transform.position);
                 if (debug) Debug.Log($"Moving to attack position for {currentAttackType} attack, Distance: {distanceToAttackPosition:F1}");
 
-                if (currentAttackType == AttackType.Ranged && perception.CurrentTargetDistance < distanceToAttackPosition && !isFlee)
+                if (currentAttackType == AttackType.Ranged && perception.CurrentTargetDistance < meleeAttackSettings.optimalDistance * 1.8f && !isFlee)
                 {
                     // Agent is Flee
                     isFlee = true;
@@ -318,11 +318,9 @@ namespace AdaptivEntityAgent
             if (distance <= meleeMaxDistance) return AttackType.Melee;
             if (distance >= rangeMinDistance) return AttackType.Ranged;
 
-            float normalizedDistance = Mathf.InverseLerp(meleeMaxDistance, rangeMinDistance, distance);
-            float decisionThreshold = 0.5f + (0.5f - attackTypeWeight) * 0.4f;
-
-            if (debug) Debug.Log($"AgentCombat - ChooseAttackType || normalizedDistance = {normalizedDistance} ||| decisionThreshold = {decisionThreshold}");
-            return normalizedDistance > decisionThreshold ? AttackType.Ranged : AttackType.Melee;
+            float normalizedDistance = Mathf.Lerp(meleeMaxDistance, rangeMinDistance, distance);
+            if (debug) Debug.Log($"AgentCombat - ChooseAttackType || normalizedDistance = {normalizedDistance} ||| decisionThreshold = decisionThreshold");
+            return normalizedDistance > attackTypeWeight ? AttackType.Ranged : AttackType.Melee;
         }
 
         private bool IsReadyToAttack(GameObject target)
@@ -344,7 +342,7 @@ namespace AdaptivEntityAgent
             return angleToTarget < currentOptimalAngle;
         }
 
-        private Vector3 CalculateAttackPosition(GameObject target, AttackType attackType)
+        private Vector3 CalculateAttackPosition(GameObject target, AttackType attackType, float distance)
         {
             AttackSettings settings = GetAttackSettings(attackType);
             Vector3 targetPosition = target.transform.position;

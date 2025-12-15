@@ -67,30 +67,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AO: 0.1
-    - _AmplitydeParallax_1LvL: 2
-    - _AmplitydeParallax_2LvL: 39.7
-    - _AmplitydeParallax_3LvL: 500
-    - _Emission: 0.05
-    - _Metallic: 0.1
+    - _AO: 0.2
+    - _AmplitydeParallax_1LvL: 100
+    - _AmplitydeParallax_2LvL: 1
+    - _AmplitydeParallax_3LvL: 200
+    - _Emission: 0.3
+    - _Metallic: 0.5
     - _OpacityNoise: 1.8
-    - _PowerNoise_LvL1: 0.00001
-    - _PowerNoise_LvL2: 0.003
-    - _PowerNoise_LvL3: 0.27
+    - _PowerNoise_LvL1: 0.00005
+    - _PowerNoise_LvL2: 0.005
+    - _PowerNoise_LvL3: 0.05
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScaleNoise_1LvL: 700
-    - _ScaleNoise_2vL: 71.5
-    - _ScaleNoise_3vL: 10.1
-    - _Smoothness: 0.63
-    - _SpeedNoise_1LvL: 0.004
-    - _SpeedNoise_2LvL: 0.005
-    - _SpeedNoise_3LvL: 0
+    - _ScaleNoise_1LvL: 60
+    - _ScaleNoise_2vL: 20
+    - _ScaleNoise_3vL: 15
+    - _Smoothness: 0.65
+    - _SpeedNoise_1LvL: 0.05
+    - _SpeedNoise_2LvL: -0.1
+    - _SpeedNoise_3LvL: 0.1
     - _Tri_UV_Scale: 1
-    - _UseTexture: 0
+    - _UseTexture: 1
     m_Colors:
-    - _Color_1LvL: {r: 0, g: 9.734288, b: 0.048568115, a: 1}
-    - _Color_2LvL: {r: 0.37970436, g: 2.9960787, b: 0, a: 1}
-    - _Color_3LvL: {r: 0, g: 1, b: 0.037703037, a: 1}
-    - _Tri_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Color_1LvL: {r: 0.73184556, g: 3.2111173, b: 0.3530547, a: 1}
+    - _Color_2LvL: {r: 0, g: 1.4142135, b: 0.03369489, a: 1}
+    - _Color_3LvL: {r: 0, g: 1, b: 0.2699511, a: 1}
+    - _Tri_Color: {r: 0.07629776, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
