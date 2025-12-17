@@ -99,13 +99,14 @@ public class MeleeStrikeController : MonoBehaviour
         isKick = false;
     }
 
-    private IEnumerator ReleasePunch(float cost,float duration, float charged)
+    private IEnumerator ReleasePunch(float cost,float duration, float charged, float inputSpeed)
     {
         isPunch = true;
         charController.ChangeStamina(-cost);
         animator.SetFloat("Direction", charged);
         animator.SetTrigger("Punch");
         float timer = 0f;
+        charController.AdditionalInput(duration, inputSpeed);
 
         while (timer < duration)
         {
@@ -130,15 +131,15 @@ public class MeleeStrikeController : MonoBehaviour
             }
         }
     }
-
-    public void HandlerPunch(float cost, float damage, float duration, int charged)
+    //float cost, float damage, float duration, int charged, float inputSpeed
+    public void HandlerPunch(PunchData structurePunchData)
     {
         if (hasInitialized)
         {
-            if (!isKick && !isPunch && !charController.isClimbing && charController.canControl && charController.CurrentStamine >= cost)
+            if (!isKick && !isPunch && !charController.isClimbing && charController.canControl && charController.CurrentStamine >= structurePunchData.cost)
             {
-                currentDamage = damage;
-                StartCoroutine(ReleasePunch(cost, duration, (float)charged));
+                currentDamage = structurePunchData.damage;
+                StartCoroutine(ReleasePunch(structurePunchData.cost, structurePunchData.time, (float)structurePunchData.chargeLevel, structurePunchData.inputSpeed));
             }
         }
     }

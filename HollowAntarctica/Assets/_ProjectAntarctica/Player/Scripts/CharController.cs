@@ -119,6 +119,7 @@ namespace SimpleCharController
         private float currentValueEvaluate;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
+        private float _addInputForward;
 
         //Jump&Gravity
         private float _verticalVelocity;
@@ -133,7 +134,6 @@ namespace SimpleCharController
         private bool wasGroundedOnClimb = false;
         private bool canClimbAgain = true;
         private float _speedOffClimbObj;
-        //private float distanceToClimbObj;
 
         // Cinemachine
         private CinemachineBasicMultiChannelPerlin _noiseVirtualCamera;
@@ -150,8 +150,7 @@ namespace SimpleCharController
         private int _animParamIsJump;
         private int _animParamIsGround;
         private int _animParamIsFailing;
-        private int _animParamTypeClimb; 
-        //private int _animParamIsOffClimb;
+        private int _animParamTypeClimb;
 
         //Ower
         private SimpleInputActions _input;
@@ -329,9 +328,10 @@ namespace SimpleCharController
             if (canControl)
             {
                 inputDirection.x = _input.move.x;
-                inputDirection.z = _input.move.y;
+                inputDirection.z = _input.move.y + _addInputForward;
                 inputDirection.Normalize();
                 inputMagnitude = _input.move.magnitude == 0 ? 0 : 1;
+                //inputMagnitude = new Vector2 (inputDirection.x, inputDirection.z).magnitude == 0 ? 0 : 1; // Move at _addInputForward != 0
             }
 
             // Get Target Speed
@@ -343,7 +343,7 @@ namespace SimpleCharController
             _currentSpeed = curveMoveSpeedForward.Evaluate(currentValueEvaluate);
 
             // Rotation Character
-            if (_input.move != Vector2.zero && canControl)
+            if (canControl && (_addInputForward != 0 || _input.move != Vector2.zero))
             {
                 if (inputDirection.z < 0) { inputDirection.x *= -1; }
 
@@ -444,6 +444,7 @@ namespace SimpleCharController
                 ChangeStamina(speedUpStamina * Time.fixedDeltaTime);
             }
         }
+
         private void MoveToTarget(Transform targetObject, byte typeTransition)
         {
             if (targetObject == null)
@@ -530,6 +531,20 @@ namespace SimpleCharController
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             }
             else charInTargetRotation = true;
+        }
+
+        private IEnumerator AdditionalInputCoroutine(float duration, float inputSpeed)
+        {
+            _addInputForward = inputSpeed;
+            float currentTime = duration;
+
+            while (currentTime > 0)
+            {
+                currentTime -= Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            _addInputForward = 0f;
         }
         #endregion
 
@@ -716,6 +731,8 @@ namespace SimpleCharController
             if (amountStamina < 0) _timeSinceLastSprint = 0f;
             characterEvents.OnChengedStamina.Invoke(currentStamina);
         }
+
+        public void AdditionalInput(float duration, float inputSpeed = 1f) => StartCoroutine(AdditionalInputCoroutine(duration, inputSpeed));
         #endregion
     }
 }

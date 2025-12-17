@@ -26,13 +26,23 @@ namespace SimpleCharController
     }
 
     [System.Serializable]
+    public struct PunchData
+    {
+        public float cost;
+        public float damage;
+        public float time;
+        public int chargeLevel;
+        public float inputSpeed;
+    }
+
+    [System.Serializable]
     public class PunchController
     {
         [SerializeField] private bool canPunch = true;
 
         [Space(10)]
-        [Tooltip("cost, damage, time, chargeLevel")]
-        public UnityEvent<float, float, float, int> OnPunch;
+        [Tooltip("cost, damage, time, chargeLevel, inputSpeed (additional input forward)")]
+        public UnityEvent<PunchData> OnPunch;
 
         public bool CanPunch => canPunch;
 
@@ -642,40 +652,44 @@ namespace SimpleCharController
             WeaponProjectileData punchData = GetPunchData();
             if (punchData == null) return;
 
-            float cost = 0f;
-            float damage = 0f;
-            float time = 0f;
+            PunchData structurePunchData = new PunchData();
+            structurePunchData.chargeLevel = chargeLevel;
 
             switch (chargeLevel)
             {
                 case -1: // Стандартный удар
-                    cost = punchData.StandardAmmoCost;
-                    damage = punchData.baseDamageStandard;
-                    time = 1f / punchData.StandardFireRate;
+                    structurePunchData.cost = punchData.StandardAmmoCost;
+                    structurePunchData.damage = punchData.baseDamageStandard;
+                    structurePunchData.time = 1f / punchData.StandardFireRate;
+                    structurePunchData.inputSpeed = punchData.StandardProjectileSpeed;
                     break;
                 case 0:
-                    cost = punchData.ChargedLvl0AmmoCost;
-                    damage = punchData.baseDamageLvl0;
-                    time = 1f / punchData.Lvl0FireRate;
+                    structurePunchData.cost = punchData.ChargedLvl0AmmoCost;
+                    structurePunchData.damage = punchData.baseDamageLvl0;
+                    structurePunchData.time = 1f / punchData.Lvl0FireRate;
+                    structurePunchData.inputSpeed = punchData.ChargedLvl0ProjectileSpeed;
                     break;
                 case 1:
-                    cost = punchData.ChargedLvl1AmmoCost;
-                    damage = punchData.baseDamageLvl1;
-                    time = punchData.ChargedLvl1ProjectileSpeed;
+                    structurePunchData.cost = punchData.ChargedLvl1AmmoCost;
+                    structurePunchData.damage = punchData.baseDamageLvl1;
+                    structurePunchData.time = 1f / punchData.Lvl0FireRate;
+                    structurePunchData.inputSpeed = punchData.ChargedLvl1ProjectileSpeed;
                     break;
                 case 2:
-                    cost = punchData.ChargedLvl2AmmoCost;
-                    damage = punchData.baseDamageLvl2;
-                    time = punchData.ChargedLvl2ProjectileSpeed;
+                    structurePunchData.cost = punchData.ChargedLvl2AmmoCost;
+                    structurePunchData.damage = punchData.baseDamageLvl2;
+                    structurePunchData.time = 1f / punchData.Lvl0FireRate;
+                    structurePunchData.inputSpeed = punchData.ChargedLvl2ProjectileSpeed;
                     break;
                 case 3:
-                    cost = punchData.ChargedLvl3AmmoCost;
-                    damage = punchData.baseDamageLvl3;
-                    time = punchData.ChargedLvl3ProjectileSpeed;
+                    structurePunchData.cost = punchData.ChargedLvl3AmmoCost;
+                    structurePunchData.damage = punchData.baseDamageLvl3;
+                    structurePunchData.time = 1f / punchData.Lvl0FireRate;
+                    structurePunchData.inputSpeed = punchData.ChargedLvl3ProjectileSpeed;
                     break;
             }
 
-            punchController.OnPunch?.Invoke(cost, damage, time, chargeLevel);
+            punchController.OnPunch?.Invoke(structurePunchData);
             currentChargeTime = 0f;
             progressChargeWeapon.OnChargeProgressChanged?.Invoke(0f);
         }
