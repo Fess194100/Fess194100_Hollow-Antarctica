@@ -85,7 +85,10 @@ namespace SimpleCharController
         [Header("Events")]
         public ProgressChargeWeaponEvents progressChargeWeapon;
         public StateWeaponEvents stateWeapon;
+        [Space(5)]
         public UnityEvent<AudioClip, Vector2> playSound;
+        [Space(5), Tooltip("int = charged level (-1 = standart shot)")]
+        public UnityEvent<int> releaseShot;
         #endregion
 
         #region Private Variables
@@ -205,6 +208,7 @@ namespace SimpleCharController
                         ReleaseStandardShot();
                         StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
                         playSound?.Invoke(data.soundShot_Standart, data.pitchSound_Standart);
+                        releaseShot?.Invoke(-1);
                         break;
 
                     case TypeShooting.Auto:
@@ -217,6 +221,7 @@ namespace SimpleCharController
                     case TypeShooting.Burst:
                         ReleaseBurstShot(data, data.standardSpreadSettings, false);
                         StartCoroutine(ResetFiringState(data.StandardFireRate, -1));
+                        releaseShot?.Invoke(-1);
                         break;
 
                     case TypeShooting.Spread:
@@ -418,6 +423,8 @@ namespace SimpleCharController
         {
             WeaponProjectileData data = GetCurrentProjectileData();
             if (data == null) return;
+
+            releaseShot?.Invoke(chargeLevel);
 
             if (chargeLevel == 0)
             {
@@ -713,6 +720,7 @@ namespace SimpleCharController
                 {
                     ReleaseStandardShot();
                     playSound?.Invoke(data.soundShot_Standart, data.pitchSound_Standart);
+                    releaseShot?.Invoke(-1);
                     yield return new WaitForSeconds(1f / (data.StandardFireRate * autoFireRateMultiplier));
                 }
                 else
@@ -833,13 +841,15 @@ namespace SimpleCharController
                 {
                     GameObject projectile = Instantiate(projectilePrefab, firePoint.position, projectileRotation);
                     Projectile projectileScript = projectile.GetComponent<Projectile>();
+                    int chargedLevel = isCharged ? 0 : -1;
 
                     if (projectileScript != null)
                     {
-                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, isCharged ? 0 : -1, damage, TypeMovement.Linear, true, hitReaction);
+                        projectileScript.Initialize(speed, gameObject, essenceHealth, currentProjectileType, chargedLevel, damage, TypeMovement.Linear, true, hitReaction);
                     }
 
                     playSound?.Invoke(soundShot, pitch);
+                    releaseShot?.Invoke(chargedLevel);
                 }
                 else
                 {

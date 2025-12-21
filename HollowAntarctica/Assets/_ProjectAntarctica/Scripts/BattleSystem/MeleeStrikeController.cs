@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SimpleCharController;
+using UnityEngine.Events;
 
 public class MeleeStrikeController : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class MeleeStrikeController : MonoBehaviour
     [Space(10)]
     [Header("Settings")]
     [SerializeField] private AnimationCurve directionKickAtAngleXCam;
+
+    [Space(10)]
+    [Header("Event")]
+    public UnityEvent<int> impulsePunch;
     #endregion
 
     #region Public Property
@@ -26,6 +31,7 @@ public class MeleeStrikeController : MonoBehaviour
     private bool hasInitialized;
     private bool isKick = false;
     private bool isPunch = false;
+    private int currentChargedLevel;
     private float currentDamage;
     #endregion
 
@@ -61,12 +67,18 @@ public class MeleeStrikeController : MonoBehaviour
             else meleeHit.EndAttack();
         }
     }
+
+    private void ImpulseAttack(int chargedLevel)
+    {
+        impulsePunch.Invoke(chargedLevel);
+    }
     #endregion
 
     #region IEnumerators
     private IEnumerator ReleaseKick(float cost, float duration)
     {
         isKick = true;
+        currentChargedLevel = 1;
         bool previsionCanControl = charController.canControl;
         float cameraAngleX = Camera.main.transform.localEulerAngles.x;
         charController.canControl = false;
@@ -131,21 +143,24 @@ public class MeleeStrikeController : MonoBehaviour
             }
         }
     }
-    //float cost, float damage, float duration, int charged, float inputSpeed
+
     public void HandlerPunch(PunchData structurePunchData)
     {
         if (hasInitialized)
         {
             if (!isKick && !isPunch && !charController.isClimbing && charController.canControl && charController.CurrentStamine >= structurePunchData.cost)
             {
+                currentChargedLevel = structurePunchData.chargeLevel;
                 currentDamage = structurePunchData.damage;
                 StartCoroutine(ReleasePunch(structurePunchData.cost, structurePunchData.time, (float)structurePunchData.chargeLevel, structurePunchData.inputSpeed));
             }
         }
     }
+
     public void StartMelleKick() => MelleKick(true);
     public void EndMelleKick() => MelleKick(false);
     public void StartMellePunch() => MellePunch(true);
     public void EndMellePunch() => MellePunch(false);
+    public void ImpulsePunch() => ImpulseAttack(currentChargedLevel);
     #endregion
 }

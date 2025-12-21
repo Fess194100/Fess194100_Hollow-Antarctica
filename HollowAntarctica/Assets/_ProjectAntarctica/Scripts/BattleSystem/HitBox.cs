@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SimpleCharController
 {
@@ -19,8 +20,8 @@ namespace SimpleCharController
         [SerializeField] private LayerMask deathLayer;
 
         [Space(10)]
-        [Header("FX Settings")]
-        [SerializeField] private FX_ParticleSystemEmission fX_ParticleSystemEmission;
+        [Header("Events")]
+        public UnityEvent OnHitImpact;
 
         #region Public Property
         public BodyPart BodyPart => bodyPart;
@@ -77,10 +78,7 @@ namespace SimpleCharController
 
             }
 
-            if (fX_ParticleSystemEmission != null)
-            {
-                fX_ParticleSystemEmission.SetEmission(true);
-            }
+            OnHitImpact?.Invoke();
         }
 
         public bool IsDead()

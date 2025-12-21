@@ -15,8 +15,8 @@ MonoBehaviour:
   Type: 0
   StandardProjectilePrefab: {fileID: 0}
   soundShot_Standart: {fileID: 0}
-  StandardAmmoCost: 3
-  StandardProjectileSpeed: 0
+  StandardAmmoCost: 2
+  StandardProjectileSpeed: 0.1
   StandardFireRate: 3
   baseDamageStandard: 1
   pitchSound_Standart: {x: 1, y: 1}
@@ -27,8 +27,8 @@ MonoBehaviour:
     delayBetweenShots: 0.1
   ChargedLvl0ProjectilePrefab: {fileID: 0}
   soundShot_0: {fileID: 0}
-  ChargedLvl0AmmoCost: 9
-  ChargedLvl0ProjectileSpeed: 0
+  ChargedLvl0AmmoCost: 6
+  ChargedLvl0ProjectileSpeed: 0.1
   Lvl0FireRate: 1.5
   baseDamageLvl0: 3
   pitchSound_0: {x: 1, y: 1}
@@ -41,21 +41,21 @@ MonoBehaviour:
   soundShot_1: {fileID: 0}
   typeMovementLvl1: 0
   ChargedLvl1AmmoCost: 12
-  ChargedLvl1ProjectileSpeed: 1.12
+  ChargedLvl1ProjectileSpeed: 0.1
   baseDamageLvl1: 10
   pitchSound_1: {x: 1, y: 1}
   ChargedLvl2ProjectilePrefab: {fileID: 0}
   soundShot_2: {fileID: 0}
   typeMovementLvl2: 1
   ChargedLvl2AmmoCost: 18
-  ChargedLvl2ProjectileSpeed: 1.12
+  ChargedLvl2ProjectileSpeed: 0.1
   baseDamageLvl2: 15
   pitchSound_2: {x: 1, y: 1}
   ChargedLvl3ProjectilePrefab: {fileID: 0}
   soundShot_3: {fileID: 0}
   typeMovementLvl3: 1
   ChargedLvl3AmmoCost: 25
-  ChargedLvl3ProjectileSpeed: 1.12
+  ChargedLvl3ProjectileSpeed: 0.1
   baseDamageLvl3: 25
   pitchSound_3: {x: 1, y: 1}
   OverloadDamageToPlayer: 0

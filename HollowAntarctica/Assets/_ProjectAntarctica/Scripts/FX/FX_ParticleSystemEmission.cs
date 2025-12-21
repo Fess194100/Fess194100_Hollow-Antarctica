@@ -143,4 +143,15 @@ public class FX_ParticleSystemEmission : MonoBehaviour
     }
 
     public int ParticleSystemCount => particleSystems.Count;
+
+    public void PlayParticleSystems()
+    {
+        foreach (var data in particleSystems)
+        {
+            if (data.particleSystem != null)
+            {
+                data.particleSystem.Play();
+            }
+        }
+    }
 }
