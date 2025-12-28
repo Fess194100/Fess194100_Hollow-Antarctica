@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_04_Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 573bd71b9fdbf1e448c7026c8a243078,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

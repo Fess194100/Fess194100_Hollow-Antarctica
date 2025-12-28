@@ -28298,7 +28298,7 @@ MonoBehaviour:
   kickController:
     canKick: 1
     damageKick: 10
-    costKick: 5
+    costKick: 4
     timeKick: 1.12
     OnKick:
       m_PersistentCalls:

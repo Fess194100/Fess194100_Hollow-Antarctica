@@ -7,25 +7,30 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CharMan
-  m_Shader: {fileID: 4800000, guid: c01ad61fc14967c438722c650bafcf4a, type: 3}
+  m_Name: Decal_CrackLine
+  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHAMODULATE_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
-  - _USEOCCLUSION_ON
+  - _FLIPBOOKBLENDING_OFF
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: ef7602de29fab2648a0c87692b41bd5a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 687ed9d1dddf83145ab47ad7edffadd7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -49,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ef7602de29fab2648a0c87692b41bd5a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -57,11 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: ef7602de29fab2648a0c87692b41bd5a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OutlineZOffsetMaskTex:
-        m_Texture: {fileID: 2800000, guid: ef7602de29fab2648a0c87692b41bd5a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -69,14 +70,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: ef7602de29fab2648a0c87692b41bd5a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -94,78 +87,62 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AdditionalLightIgnoreCelShade: 0.9
     - _AlphaClip: 0
-    - _AlphaCutoff: 0.5
     - _AlphaToMask: 0
-    - _Blend: 0
+    - _Blend: 3
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _BumpScale: 1
-    - _CelShadeMidPoint: 0.3
-    - _CelShadeSoftness: 0.05
+    - _CameraFadingEnabled: 0
+    - _CameraFarFadeDistance: 2
+    - _CameraNearFadeDistance: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DirectLightMultiplier: 1
+    - _DistortionBlend: 0.5
+    - _DistortionEnabled: 0
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0.1
     - _DstBlend: 0
-    - _DstBlendAlpha: 0
-    - _EmissionMulByBaseColor: 0
+    - _DstBlendAlpha: 1
     - _EnvironmentReflections: 1
+    - _FlipbookBlending: 0
+    - _FlipbookMode: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IndirectLightMultiplier: 1
-    - _IsFace: 1
-    - _LightPower: 1
-    - _MainLightIgnoreCelShade: 0
     - _Metallic: 0
-    - _OcclusionRemapEnd: 1
-    - _OcclusionRemapStart: 0.884
+    - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.6
-    - _OutlineZOffset: 0.159
-    - _OutlineZOffsetMaskRemapEnd: 1
-    - _OutlineZOffsetMaskRemapStart: 0.985
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _ReceiveShadowMappingAmount: 0.65
-    - _ReceiveShadowMappingPosOffset: 0
     - _ReceiveShadows: 1
-    - _RimStep: 0
-    - _RimStepSmooth: 0.33
-    - _ShadowStep: 0.1
-    - _ShadowStepSmooth: 0.02
+    - _SampleGI: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SoftParticlesEnabled: 0
+    - _SoftParticlesFarFadeDistance: 1
+    - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
-    - _SpecularStep: 0.02
-    - _SpecularStepSmooth: 0.02
-    - _SrcBlend: 1
-    - _SrcBlendAlpha: 1
-    - _Surface: 0
-    - _UseAlphaClipping: 0
-    - _UseEmission: 0
-    - _UseOcclusion: 1
+    - _SrcBlend: 2
+    - _SrcBlendAlpha: 0
+    - _Surface: 1
     - _WorkflowMode: 1
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 2.4622889, g: 2.4622889, b: 2.4622889, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
+    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EmissionMapChannelMask: {r: 1, g: 1, b: 1, a: 0}
-    - _IndirectLightMinColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OcclusionMapChannelMask: {r: 1, g: 1, b: 0, a: 0.8}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowMapColor: {r: 0.6132076, g: 0.54580224, b: 0.5293254, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &2242377526983372161
+--- !u!114 &1614596267019059034
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

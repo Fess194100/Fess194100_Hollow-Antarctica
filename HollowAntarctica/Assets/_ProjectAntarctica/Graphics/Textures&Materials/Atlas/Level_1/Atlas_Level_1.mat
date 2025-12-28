@@ -164,5 +164,5 @@ Material:
     - _OcclusionMapChannelMask: {r: 1, g: 1, b: 1, a: -0.21}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowMapColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
-    - _SpecColor: {r: 0.53773564, g: 0.4108711, b: 0.23589003, a: 0.13}
+    - _SpecColor: {r: 0.865, g: 0.865, b: 0.865, a: 0.13}
   m_BuildTextureStacks: []

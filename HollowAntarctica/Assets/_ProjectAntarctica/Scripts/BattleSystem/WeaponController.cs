@@ -730,7 +730,7 @@ namespace SimpleCharController
             }
 
             _autoFireCoroutine = null;
-            SetWeaponState(WeaponState.Ready);
+            if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
         }
 
         private IEnumerator ChargingRoutine()
@@ -867,7 +867,7 @@ namespace SimpleCharController
             else
             {
                 yield return new WaitForSeconds(1 / data.StandardFireRate);
-                SetWeaponState(WeaponState.Ready);
+                if (currentWeaponState != WeaponState.Blocked) SetWeaponState(WeaponState.Ready);
             }
         }
 
