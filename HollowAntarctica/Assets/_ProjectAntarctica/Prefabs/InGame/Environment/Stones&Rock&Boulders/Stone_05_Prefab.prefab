@@ -73,6 +73,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 76e9c8efaccdfd14e8032bbc17881849,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 76e9c8efaccdfd14e8032bbc17881849,
         type: 3}
       propertyPath: m_Name
@@ -81,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 76e9c8efaccdfd14e8032bbc17881849,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
