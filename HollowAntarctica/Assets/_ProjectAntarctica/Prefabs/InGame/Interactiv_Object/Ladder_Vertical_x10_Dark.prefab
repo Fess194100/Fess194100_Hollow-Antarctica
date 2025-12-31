@@ -47,7 +47,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8508393005306491904
 Transform:
@@ -162,10 +162,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3047956464367586807, guid: 0da57580206c23b4f90ccf98dd75378d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -1327813211526505335, guid: 0da57580206c23b4f90ccf98dd75378d,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0da57580206c23b4f90ccf98dd75378d,
         type: 3}
       propertyPath: m_Name
       value: Ladder_Vertical_x10_FBX
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0da57580206c23b4f90ccf98dd75378d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1034021100253232200, guid: 0da57580206c23b4f90ccf98dd75378d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

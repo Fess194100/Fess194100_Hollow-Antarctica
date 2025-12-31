@@ -231,6 +231,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6337144663919173807, guid: bfb9d10997aec9f40828088ccb727d4f,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5075111463244313169, guid: bfb9d10997aec9f40828088ccb727d4f,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -251,6 +256,16 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 3443548658728681765, guid: bfb9d10997aec9f40828088ccb727d4f,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3443548658728681765, guid: bfb9d10997aec9f40828088ccb727d4f,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5963754998216736639, guid: bfb9d10997aec9f40828088ccb727d4f,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -259,7 +274,7 @@ PrefabInstance:
     - target: {fileID: 8947528529227088291, guid: bfb9d10997aec9f40828088ccb727d4f,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
