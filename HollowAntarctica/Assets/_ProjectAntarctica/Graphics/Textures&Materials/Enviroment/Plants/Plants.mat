@@ -117,7 +117,7 @@ Material:
     - _CelShadeSoftness: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Clip: 0.5
+    - _Clip: 0.419
     - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -131,8 +131,8 @@ Material:
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _HeightGradient: 0.086
-    - _HeightStartGradient: 0.129
+    - _HeightGradient: 0.052
+    - _HeightStartGradient: 0.01
     - _IndirectLightMultiplier: 1
     - _IsFace: 0
     - _MainLightIgnoreCelShade: 0
@@ -164,7 +164,7 @@ Material:
     - _UseOcclusion: 0
     - _WindFoliageAmplitude: 0.016
     - _WindFoliageAmplitude1: 0.099
-    - _WindFoliageSpeed: 0.048
+    - _WindFoliageSpeed: 0.177
     - _WindFoliageSpeed1: 0.07
     - _WindTrunkAmplitude: 0
     - _WindTrunkAmplitude1: 0

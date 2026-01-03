@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useGUI: 1
   UIText: {fileID: 0}
-  textAreaPosition: {x: 40, y: 120}
-  textAreaSize: {x: 130, y: 90}
+  textAreaPosition: {x: 25, y: 180}
+  textAreaSize: {x: 130, y: 98.3}
 --- !u!114 &4390117806477866662
 MonoBehaviour:
   m_ObjectHideFlags: 0

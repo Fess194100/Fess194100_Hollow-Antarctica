@@ -13,6 +13,7 @@ public class DebugStats : MonoBehaviour
     private string statsText;
     private ProfilerRecorder setPassCallsRecorder;
     private ProfilerRecorder drawCallsRecorder;
+    private ProfilerRecorder batchesRecorder;
     private ProfilerRecorder verticesRecorder;
     private ProfilerRecorder trianglesRecorder; // Для подсчета треугольников
 
@@ -30,6 +31,7 @@ public class DebugStats : MonoBehaviour
         drawCallsRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Draw Calls Count");
         verticesRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Vertices Count");
         trianglesRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Triangles Count");
+        batchesRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Batches Count" );
 
         timeleft = updateInterval; // Инициализация таймера для FPS
     }
@@ -69,11 +71,16 @@ public class DebugStats : MonoBehaviour
             sb.AppendLine($"SetPass Calls: {setPassCallsRecorder.LastValue}");
         }
 
-        if (drawCallsRecorder.Valid && drawCallsRecorder.LastValue > 0)
+        if (drawCallsRecorder.Valid && batchesRecorder.LastValue > 0)
         {
-            sb.AppendLine($"Draw Calls: {drawCallsRecorder.LastValue}");
+            sb.AppendLine($"Batches: {batchesRecorder.LastValue}");
         }
 
+        if (drawCallsRecorder.Valid && drawCallsRecorder.LastValue > 0)
+        {
+            sb.AppendLine($"Save batching: {drawCallsRecorder.LastValue - batchesRecorder.LastValue}");
+        }
+        
         if (verticesRecorder.Valid && verticesRecorder.LastValue > 0)
         {
             sb.AppendLine($"Vertices: {verticesRecorder.LastValue}");

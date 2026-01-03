@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -109,8 +109,8 @@ Material:
     - _GrassAmount: 0.97
     - _GrassLevel: 2.94
     - _GreenSub: 0
-    - _HeightGradient: 0.109
-    - _HeightStartGradient: 0.07
+    - _HeightGradient: 0.047
+    - _HeightStartGradient: 0.041
     - _InflateGround: 35
     - _IntersectionPow: 5.78
     - _IntersectionScale: 1
@@ -127,7 +127,7 @@ Material:
     - _RedAdd: 0
     - _SCALE: 0
     - _Shadow: 0
-    - _ShadowControl: 0
+    - _ShadowControl: 0.37
     - _SmoothnessTextureChannel: 0
     - _SnowAmount: 0.34
     - _SnowMode: 1

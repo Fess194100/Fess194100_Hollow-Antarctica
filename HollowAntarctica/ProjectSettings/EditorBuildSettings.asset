@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_ProjectAntarctica/Scenes/Test_Player.unity
     guid: b5c034420c421cb46872f827eaeb2cc8
+  - enabled: 0
+    path: Assets/_ProjectAntarctica/Scenes/Test_SizeBuld.unity
+    guid: 11417f10b946d9f42af5440d05713f52
   - enabled: 1
     path: Assets/_ProjectAntarctica/Scenes/InBuild/MainMenu.unity
     guid: 1b1b3444f65cbc94caacea06b23fb10f
