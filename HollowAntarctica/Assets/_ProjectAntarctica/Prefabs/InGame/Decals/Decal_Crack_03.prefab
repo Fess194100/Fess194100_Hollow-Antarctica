@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6607197523440888250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 790035074710866729}
+  - component: {fileID: 2595664180093013714}
+  m_Layer: 0
+  m_Name: Decal_Crack_03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &790035074710866729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607197523440888250}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5251255, y: -0.46550742, z: 0.47334206, w: 0.53244096}
+  m_LocalPosition: {x: 1.333, y: 0.046, z: -0.636}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 89.132, y: 5.366, z: 88.56}
+--- !u!114 &2595664180093013714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607197523440888250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 99e1316596507e44899c36ebdd4bca7b, type: 2}
+  m_DrawDistance: 150
+  m_FadeScale: 0.9
+  m_StartAngleFade: 171.1848
+  m_EndAngleFade: 180
+  m_UVScale: {x: 0.25, y: 0.25}
+  m_UVBias: {x: 0.75, y: 0.625}
+  m_DecalLayerMask: 1
+  m_ScaleMode: 1
+  m_Offset: {x: 0, y: 0, z: 0.05}
+  m_Size: {x: 1.5, y: 1.5, z: 0.2}
+  m_FadeFactor: 1
