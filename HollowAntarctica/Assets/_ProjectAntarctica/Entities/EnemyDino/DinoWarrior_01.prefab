@@ -6053,7 +6053,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 010101010101
-        actionIsOpen: 000000000001
+        actionIsOpen: 010000000001
         actionStartIndex: 0000000004000000070000000c0000001100000019000000
         actionHashCodes: a4c8bf0027fbe103070f30006ba59301ca51e9005e69bb04
         unityObjectParams: []
@@ -6607,7 +6607,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: 0
+        value: 1
       stringVariables: []
       vector2Variables: []
       vector3Variables: []
@@ -6653,7 +6653,7 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         type: 12
-        objectTypeName: 
+        objectTypeName: UnityEngine.Object
         floatValues: []
         intValues: 
         boolValues: 
@@ -6666,7 +6666,7 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         type: 12
-        objectTypeName: 
+        objectTypeName: UnityEngine.Object
         floatValues: []
         intValues: 
         boolValues: 
